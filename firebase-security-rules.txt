@@ -3,6 +3,7 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    
     // Allow anyone to read public data
     match /community_chats/{document=**} {
       allow read: if true;
