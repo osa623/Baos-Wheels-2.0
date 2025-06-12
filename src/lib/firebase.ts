@@ -22,12 +22,7 @@ import {
   Timestamp,
   connectFirestoreEmulator,
   enableIndexedDbPersistence,
-  enableMultiTabIndexedDbPersistence,
-  doc,
-  updateDoc,
-  writeBatch,
-  limit,
-  onSnapshot
+  enableMultiTabIndexedDbPersistence
 } from "firebase/firestore";
 
 console.log("Initializing Firebase");
@@ -286,6 +281,7 @@ export interface Notification {
   type: string;     // Type of notification (e.g., 'reply', 'mention', etc.)
   fromUserId: string;  // Who created the notification
   fromUserName: string;
+  fromUserAvatar?: string;
   contentPreview: string; // Preview of the message content
   relatedMessageId?: string; // ID of the related message
   relatedReplyId?: string;  // ID of the related reply
@@ -304,216 +300,106 @@ export const notificationFunctions = {
         createdAt: serverTimestamp()
       };
       
-      // For development and testing, store notifications in localStorage if Firestore fails
-      const saveLocally = (data: any) => {
-        try {
-          // Get existing stored notifications
-          const storedNotifications = localStorage.getItem('local_notifications');
-          const notifications = storedNotifications ? JSON.parse(storedNotifications) : [];
-          
-          // Add new notification with ID and timestamp
-          const newNotification = {
-            ...data,
-            id: `local-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
-            createdAt: new Date().toISOString()
-          };
-          
-          notifications.push(newNotification);
-          
-          // Save back to localStorage
-          localStorage.setItem('local_notifications', JSON.stringify(notifications));
-          console.log("Notification saved locally:", newNotification.id);
-          
-          return newNotification.id;
-        } catch (e) {
-          console.error("Failed to save notification locally:", e);
-          return null;
-        }
-      };
-      
-      // Try to save to Firestore first
-      try {
-        const docRef = await addDoc(collection(db, 'notifications'), notificationData);
-        console.log("Notification created with ID:", docRef.id);
-        return docRef.id;
-      } catch (firestoreError) {
-        console.warn("Firestore save failed, using local storage fallback:", firestoreError);
-        return saveLocally(notificationData);
-      }
+      const docRef = await addDoc(collection(db, 'notifications'), notificationData);
+      console.log("Notification created with ID:", docRef.id);
+      return docRef.id;
     } catch (error) {
       console.error("Error creating notification:", error);
-      return null;
+      throw error;
     }
   },
   
   // Get all unread notifications for a user
   getUnreadNotifications: async (userId: string): Promise<Notification[]> => {
     try {
-      // First try Firestore
-      try {
-        const notificationsRef = collection(db, 'notifications');
-        const q = query(
-          notificationsRef,
-          where('userId', '==', userId),
-          where('isRead', '==', false),
-          orderBy('createdAt', 'desc')
-        );
-        
-        const querySnapshot = await getDocs(q);
-        const notifications: Notification[] = [];
-        
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          notifications.push({
-            id: doc.id,
-            userId: data.userId,
-            type: data.type,
-            fromUserId: data.fromUserId,
-            fromUserName: data.fromUserName,
-            contentPreview: data.contentPreview,
-            relatedMessageId: data.relatedMessageId,
-            relatedReplyId: data.relatedReplyId,
-            isRead: data.isRead,
-            createdAt: data.createdAt
-          });
-        });
-        
-        // If notifications found in Firestore, return them
-        if (notifications.length > 0) {
-          return notifications;
-        }
-      } catch (error) {
-        console.warn("Firestore notification fetch failed, checking local storage:", error);
-      }
+      const notificationsRef = collection(db, 'notifications');
+      const q = query(
+        notificationsRef,
+        where('userId', '==', userId),
+        where('isRead', '==', false),
+        orderBy('createdAt', 'desc')
+      );
       
-      // Fall back to localStorage if Firestore fails
-      try {
-        const storedNotifications = localStorage.getItem('local_notifications');
-        if (!storedNotifications) return [];
-        
-        const allNotifications = JSON.parse(storedNotifications);
-        return allNotifications
-          .filter((n: any) => n.userId === userId && !n.isRead)
-          .map((n: any) => ({
-            ...n,
-            createdAt: n.createdAt ? new Date(n.createdAt) : null
-          }));
-      } catch (error) {
-        console.error("Error fetching local notifications:", error);
-        return [];
-      }
+      const querySnapshot = await getDocs(q);
+      const notifications: Notification[] = [];
+      
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        notifications.push({
+          id: doc.id,
+          userId: data.userId,
+          type: data.type,
+          fromUserId: data.fromUserId,
+          fromUserName: data.fromUserName,
+          fromUserAvatar: data.fromUserAvatar,
+          contentPreview: data.contentPreview,
+          relatedMessageId: data.relatedMessageId,
+          relatedReplyId: data.relatedReplyId,
+          isRead: data.isRead,
+          createdAt: data.createdAt
+        });
+      });
+      
+      return notifications;
     } catch (error) {
-      console.error("Error in getUnreadNotifications:", error);
+      console.error("Error fetching unread notifications:", error);
       return [];
     }
   },
   
-  // Get all notifications for a user - with improved error handling
-  getAllNotifications: async (userId: string, limitCount = 20): Promise<Notification[]> => {
+  // Get all notifications for a user
+  getAllNotifications: async (userId: string, limit = 20): Promise<Notification[]> => {
     try {
-      if (!userId) {
-        console.warn("getAllNotifications called with empty userId");
-        return [];
-      }
+      const notificationsRef = collection(db, 'notifications');
+      const q = query(
+        notificationsRef,
+        where('userId', '==', userId),
+        orderBy('createdAt', 'desc'),
+        limit(limit)
+      );
       
-      console.log(`Getting all notifications for user ${userId}`);
+      const querySnapshot = await getDocs(q);
+      const notifications: Notification[] = [];
       
-      // First try Firestore
-      try {
-        const notificationsRef = collection(db, 'notifications');
-        const q = query(
-          notificationsRef,
-          where('userId', '==', userId),
-          orderBy('createdAt', 'desc'),
-          limit(limitCount)
-        );
-        
-        const querySnapshot = await getDocs(q);
-        const notifications: Notification[] = [];
-        
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          notifications.push({
-            id: doc.id,
-            userId: data.userId,
-            type: data.type,
-            fromUserId: data.fromUserId,
-            fromUserName: data.fromUserName,
-            contentPreview: data.contentPreview,
-            relatedMessageId: data.relatedMessageId,
-            relatedReplyId: data.relatedReplyId,
-            isRead: data.isRead,
-            createdAt: data.createdAt
-          });
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        notifications.push({
+          id: doc.id,
+          userId: data.userId,
+          type: data.type,
+          fromUserId: data.fromUserId,
+          fromUserName: data.fromUserName,
+          fromUserAvatar: data.fromUserAvatar,
+          contentPreview: data.contentPreview,
+          relatedMessageId: data.relatedMessageId,
+          relatedReplyId: data.relatedReplyId,
+          isRead: data.isRead,
+          createdAt: data.createdAt
         });
-        
-        console.log(`Found ${notifications.length} notifications in Firestore`);
-        
-        // If notifications found in Firestore, return them
-        if (notifications.length > 0) {
-          return notifications;
-        }
-      } catch (error) {
-        console.warn("Firestore notification fetch failed, checking local storage:", error);
-      }
+      });
       
-      // Fall back to localStorage if Firestore fails
-      try {
-        const storedNotifications = localStorage.getItem('local_notifications');
-        if (!storedNotifications) {
-          console.log("No local notifications found");
-          return [];
-        }
-        
-        const allNotifications = JSON.parse(storedNotifications);
-        const filteredNotifications = allNotifications
-          .filter((n: any) => n.userId === userId)
-          .slice(0, limitCount)
-          .map((n: any) => ({
-            ...n,
-            createdAt: n.createdAt ? new Date(n.createdAt) : null
-          }));
-        
-        console.log(`Found ${filteredNotifications.length} notifications in localStorage`);
-        return filteredNotifications;
-      } catch (error) {
-        console.error("Error fetching local notifications:", error);
-        return [];
-      }
+      return notifications;
     } catch (error) {
-      console.error("Error in getAllNotifications:", error);
+      console.error("Error fetching notifications:", error);
       return [];
     }
   },
   
-  // Mark notification as read - with error handling
-  markAsRead: async (notificationId: string): Promise<boolean> => {
+  // Mark notification as read
+  markAsRead: async (notificationId: string): Promise<void> => {
     try {
-      // Check if notification ID is valid
-      if (!notificationId) {
-        console.warn("markAsRead called with empty notificationId");
-        return false;
-      }
-      
       await updateDoc(doc(db, 'notifications', notificationId), {
         isRead: true
       });
-      return true;
     } catch (error) {
       console.error("Error marking notification as read:", error);
-      return false;
+      throw error;
     }
   },
   
-  // Mark all notifications as read for a user - with error handling
-  markAllAsRead: async (userId: string): Promise<boolean> => {
+  // Mark all notifications as read for a user
+  markAllAsRead: async (userId: string): Promise<void> => {
     try {
-      // Check if user ID is valid
-      if (!userId) {
-        console.warn("markAllAsRead called with empty userId");
-        return false;
-      }
-      
       const notificationsRef = collection(db, 'notifications');
       const q = query(
         notificationsRef,
@@ -523,11 +409,6 @@ export const notificationFunctions = {
       
       const querySnapshot = await getDocs(q);
       
-      // If no unread notifications, return success
-      if (querySnapshot.empty) {
-        return true;
-      }
-      
       const batch = writeBatch(db);
       querySnapshot.forEach((document) => {
         batch.update(document.ref, { isRead: true });
@@ -535,10 +416,9 @@ export const notificationFunctions = {
       
       await batch.commit();
       console.log("All notifications marked as read for user:", userId);
-      return true;
     } catch (error) {
       console.error("Error marking all notifications as read:", error);
-      return false;
+      throw error;
     }
   }
 };

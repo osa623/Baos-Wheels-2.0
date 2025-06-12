@@ -1,214 +1,227 @@
 import React, { useState, useEffect } from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { useAuth } from '@/contexts/AuthContext';
-import { notificationFunctions, Notification } from '@/lib/firebase';
-import { Card } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { CheckCheck, Bell, ChevronLeft } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import axios from 'axios';
+import { format } from 'date-fns';
+import { 
+  Container, 
+  Typography, 
+  Box, 
+  Paper, 
+  Divider, 
+  CircularProgress, 
+  Alert, 
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  IconButton,
+  Badge,
+  Chip
+} from '@mui/material';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import InfoIcon from '@mui/icons-material/Info';
+import WarningIcon from '@mui/icons-material/Warning';
 
-const Notifications = () => {
-  const { currentUser } = useAuth();
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!currentUser) return;
-
-    const fetchNotifications = async () => {
-      setLoading(true);
-      try {
-        const userNotifications = await notificationFunctions.getAllNotifications(currentUser.uid, 100);
-        setNotifications(userNotifications);
-      } catch (error) {
-        console.error("Error fetching notifications:", error);
-        setError("Failed to load notifications. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchNotifications();
-  }, [currentUser]);
-
-  // Format notification timestamp
-  const formatNotificationTime = (timestamp: any) => {
-    if (!timestamp) return 'Just now';
-    
-    try {
-      const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-      return formatDistanceToNow(date, { addSuffix: true });
-    } catch (error) {
-      return 'Recently';
-    }
-  };
-
-  const handleMarkAllAsRead = async () => {
-    if (!currentUser) return;
-    
-    try {
-      await notificationFunctions.markAllAsRead(currentUser.uid);
-      // Update local state
-      setNotifications(prev => 
-        prev.map(notification => ({
-          ...notification,
-          isRead: true
-        }))
-      );
-    } catch (error) {
-      console.error("Error marking notifications as read:", error);
-      setError("Failed to mark notifications as read.");
-    }
-  };
-
-  const unreadNotifications = notifications.filter(n => !n.isRead);
-  const readNotifications = notifications.filter(n => n.isRead);
-
-  return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
-      <Header />
-      
-      <div className="flex-grow mx-auto w-full max-w-4xl px-4 pt-24 pb-12">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
-          <div className="flex flex-col">
-            <Link to="/" className="inline-flex items-center text-sm mb-2 hover:text-primary transition-colors">
-              <ChevronLeft className="h-4 w-4 mr-1" />
-              Back to Home
-            </Link>
-            <h1 className="text-2xl sm:text-3xl font-bold">Notifications</h1>
-          </div>
-          
-          {unreadNotifications.length > 0 && (
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="text-sm"
-              onClick={handleMarkAllAsRead}
-            >
-              <CheckCheck className="h-4 w-4 mr-2" />
-              Mark all as read
-            </Button>
-          )}
-        </div>
-        
-        {error && (
-          <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded mb-4 shadow-sm">
-            <p>{error}</p>
-          </div>
-        )}
-        
-        <Tabs defaultValue="all">
-          <TabsList className="mb-6">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="unread">
-              Unread {unreadNotifications.length > 0 && `(${unreadNotifications.length})`}
-            </TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="all">
-            {loading ? (
-              <Card className="p-8 flex justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent"></div>
-              </Card>
-            ) : notifications.length === 0 ? (
-              <Card className="p-8 text-center">
-                <Bell className="h-12 w-12 mx-auto mb-4 text-muted-foreground opacity-50" />
-                <h3 className="text-lg font-medium mb-2">No notifications</h3>
-                <p className="text-muted-foreground">
-                  You don't have any notifications yet. When someone replies to your messages, you'll see them here.
-                </p>
-              </Card>
-            ) : (
-              <div className="space-y-3">
-                {notifications.map((notification) => (
-                  <NotificationItem 
-                    key={notification.id}
-                    notification={notification}
-                    formatTime={formatNotificationTime}
-                  />
-                ))}
-              </div>
-            )}
-          </TabsContent>
-          
-          <TabsContent value="unread">
-            {loading ? (
-              <Card className="p-8 flex justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent"></div>
-              </Card>
-            ) : unreadNotifications.length === 0 ? (
-              <Card className="p-8 text-center">
-                <CheckCheck className="h-12 w-12 mx-auto mb-4 text-green-500 opacity-50" />
-                <h3 className="text-lg font-medium mb-2">All caught up!</h3>
-                <p className="text-muted-foreground">
-                  You've read all your notifications.
-                </p>
-              </Card>
-            ) : (
-              <div className="space-y-3">
-                {unreadNotifications.map((notification) => (
-                  <NotificationItem 
-                    key={notification.id}
-                    notification={notification}
-                    formatTime={formatNotificationTime}
-                  />
-                ))}
-              </div>
-            )}
-          </TabsContent>
-        </Tabs>
-      </div>
-      
-      <Footer />
-    </div>
-  );
-};
-
-interface NotificationItemProps {
-  notification: Notification;
-  formatTime: (timestamp: any) => string;
+interface Notification {
+  id: string;
+  title: string;
+  message: string;
+  timestamp: string;
+  isRead: boolean;
+  type: 'info' | 'warning' | 'error' | 'success';
 }
 
-const NotificationItem = ({ notification, formatTime }: NotificationItemProps) => {
+const Notifications: React.FC = () => {
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const userId = "user123"; // This should be replaced with actual user ID from authentication
+
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+  const fetchNotifications = async () => {
+    try {
+      setLoading(true);
+      // Replace with your actual API endpoint
+      const response = await axios.get(`/api/notifications/${userId}`);
+      setNotifications(response.data);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching notifications:", err);
+      setError("Failed to load notifications. Please try again later.");
+      // For demo purposes, setting mock data
+      setNotifications([
+        {
+          id: "1",
+          title: "Appointment Confirmed",
+          message: "Your wheel alignment appointment has been confirmed for tomorrow at 2 PM.",
+          timestamp: new Date().toISOString(),
+          isRead: false,
+          type: "success"
+        },
+        {
+          id: "2",
+          title: "Payment Received",
+          message: "We've received your payment of $120 for the recent service.",
+          timestamp: new Date(Date.now() - 86400000).toISOString(),
+          isRead: true,
+          type: "info"
+        },
+        {
+          id: "3",
+          title: "Maintenance Reminder",
+          message: "Your vehicle is due for brake inspection in the next week.",
+          timestamp: new Date(Date.now() - 172800000).toISOString(),
+          isRead: false,
+          type: "warning"
+        }
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const markAsRead = async (notificationId: string) => {
+    try {
+      // Replace with your actual API endpoint
+      await axios.put(`/api/notifications/${notificationId}/read`);
+      // Update local state
+      setNotifications(notifications.map(notification => 
+        notification.id === notificationId 
+          ? { ...notification, isRead: true } 
+          : notification
+      ));
+    } catch (err) {
+      console.error("Error marking notification as read:", err);
+      // For demo, update state anyway
+      setNotifications(notifications.map(notification => 
+        notification.id === notificationId 
+          ? { ...notification, isRead: true } 
+          : notification
+      ));
+    }
+  };
+
+  const getNotificationIcon = (type: string) => {
+    switch(type) {
+      case 'info':
+        return <InfoIcon color="info" />;
+      case 'warning':
+        return <WarningIcon color="warning" />;
+      case 'error':
+        return <ErrorOutlineIcon color="error" />;
+      case 'success':
+        return <DoneAllIcon color="success" />;
+      default:
+        return <NotificationsIcon />;
+    }
+  };
+
+  const formatTimestamp = (timestamp: string): string => {
+    try {
+      return format(new Date(timestamp), 'MMM dd, yyyy • h:mm a');
+    } catch (e) {
+      return 'Invalid date';
+    }
+  };
+
   return (
-    <Card className={`p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors ${
-      !notification.isRead ? 'border-l-4 border-primary' : ''
-    }`}>
-      <Link 
-        to={notification.type === 'reply' ? '/community' : '/'}
-        className="flex items-start space-x-4"
-      >
-        <Avatar className="h-10 w-10 flex-shrink-0">
-          <AvatarImage src={notification.fromUserAvatar || undefined} />
-          <AvatarFallback className="bg-primary text-primary-foreground">
-            {notification.fromUserName?.substring(0, 2).toUpperCase() || 'UN'}
-          </AvatarFallback>
-        </Avatar>
-        <div className="flex-1">
-          <div className="flex items-start justify-between">
-            <div>
-              <p className="font-medium">
-                {notification.fromUserName}
-                {notification.type === 'reply' && ' replied to your message'}
-                {notification.type === 'mention' && ' mentioned you'}
-              </p>
-              <p className="text-sm text-muted-foreground mt-1">{notification.contentPreview}</p>
-            </div>
-            <span className="text-xs text-muted-foreground ml-4">
-              {formatTime(notification.createdAt)}
-            </span>
-          </div>
-        </div>
-        {!notification.isRead && (
-          <div className="h-3 w-3 bg-primary rounded-full flex-shrink-0 mt-1.5"></div>
+    <Container maxWidth="md" sx={{ py: 4 }}>
+      <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>
+        <Box display="flex" alignItems="center" mb={3}>
+          <NotificationsIcon sx={{ fontSize: 28, mr: 2, color: 'primary.main' }} />
+          <Typography variant="h5" component="h1" fontWeight="bold">
+            Notifications
+          </Typography>
+          <Badge 
+            badgeContent={notifications.filter(n => !n.isRead).length} 
+            color="primary"
+            sx={{ ml: 2 }}
+          >
+            <Chip label="Unread" size="small" color="primary" variant="outlined" />
+          </Badge>
+        </Box>
+
+        <Divider sx={{ mb: 3 }} />
+
+        {loading ? (
+          <Box display="flex" justifyContent="center" p={4}>
+            <CircularProgress />
+          </Box>
+        ) : error ? (
+          <Alert severity="error">{error}</Alert>
+        ) : notifications.length === 0 ? (
+          <Box textAlign="center" py={4}>
+            <Typography variant="body1" color="text.secondary">
+              You don't have any notifications yet.
+            </Typography>
+          </Box>
+        ) : (
+          <List>
+            {notifications.map((notification, index) => (
+              <React.Fragment key={notification.id}>
+                <ListItem
+                  alignItems="flex-start"
+                  sx={{
+                    bgcolor: notification.isRead ? 'transparent' : 'rgba(25, 118, 210, 0.05)',
+                    borderRadius: 1,
+                    mb: 1
+                  }}
+                >
+                  <ListItemIcon sx={{ minWidth: 40 }}>
+                    {getNotificationIcon(notification.type)}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography
+                        variant="subtitle1"
+                        fontWeight={notification.isRead ? 'normal' : 'bold'}
+                      >
+                        {notification.title}
+                      </Typography>
+                    }
+                    secondary={
+                      <>
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                          display="block"
+                          sx={{ mb: 0.5 }}
+                        >
+                          {notification.message}
+                        </Typography>
+                        <Typography
+                          component="span"
+                          variant="caption"
+                          color="text.secondary"
+                        >
+                          {formatTimestamp(notification.timestamp)}
+                        </Typography>
+                      </>
+                    }
+                  />
+                  {!notification.isRead && (
+                    <IconButton 
+                      size="small" 
+                      onClick={() => markAsRead(notification.id)}
+                      sx={{ mt: 1 }}
+                      title="Mark as read"
+                    >
+                      <DoneAllIcon fontSize="small" />
+                    </IconButton>
+                  )}
+                </ListItem>
+                {index < notifications.length - 1 && <Divider variant="inset" component="li" />}
+              </React.Fragment>
+            ))}
+          </List>
         )}
-      </Link>
-    </Card>
+      </Paper>
+    </Container>
   );
 };
 

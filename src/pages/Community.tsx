@@ -10,11 +10,10 @@ import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { MessageCircle, Trash2, SendHorizonal, Reply, ChevronLeft, MailWarning, MailWarningIcon } from 'lucide-react';
-import { db, notificationFunctions } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import { collection, query, orderBy, addDoc, serverTimestamp, getDocs, deleteDoc, doc, where, onSnapshot, Timestamp } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
-import NotificationPermissionAlert from '@/components/NotificationPermissionAlert';
 
 interface Message {
   id: string;
@@ -51,7 +50,6 @@ const Community = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [replyingToReply, setReplyingToReply] = useState<string | null>(null);
   const [expandedMessages, setExpandedMessages] = useState<Record<string, boolean>>({});
-  const [showPermissionAlert, setShowPermissionAlert] = useState(false);
   // Maximum number of replies to show before collapsing
   const MAX_VISIBLE_REPLIES = 3;
   
@@ -209,11 +207,6 @@ const Community = () => {
           parentId: replyingTo
         };
         
-        // Target user ID - who should get the notification
-        let targetUserId = '';
-        let originalMessage = '';
-        let notificationType = 'reply';
-        
         // If replying to a reply, add the replyToId, replyToUser and a preview of the message
         if (replyingToReply) {
           const replyBeingRepliedTo = replies.find(r => r.id === replyingToReply);
@@ -225,10 +218,6 @@ const Community = () => {
               ? replyBeingRepliedTo.message.substring(0, 97) + '...' 
               : replyBeingRepliedTo.message;
             replyData.replyToMessage = previewMessage;
-            originalMessage = previewMessage;
-            
-            // Set the target user ID for notification
-            targetUserId = replyBeingRepliedTo.userId;
           }
         } else {
           // If replying directly to a message, include a preview of the message
@@ -239,48 +228,14 @@ const Community = () => {
               ? messageBeingRepliedTo.message.substring(0, 97) + '...' 
               : messageBeingRepliedTo.message;
             replyData.replyToMessage = previewMessage;
-            originalMessage = previewMessage;
-            
-            // Set the target user ID for notification
-            targetUserId = messageBeingRepliedTo.userId;
           }
         }
         
-        // Add the reply to the database - this is the critical operation
-        const replyDocRef = await addDoc(collection(db, 'community_replies'), replyData);
-        console.log("Reply added with ID:", replyDocRef.id);
+        // Debug logging
+        console.log("Reply data:", JSON.stringify(replyData));
         
-        // Create notification for the user being replied to
-        // Only create notification if we're not replying to ourselves
-        if (targetUserId && targetUserId !== currentUser.uid) {
-          try {
-            const notificationId = await notificationFunctions.createNotification({
-              userId: targetUserId,
-              type: notificationType,
-              fromUserId: currentUser.uid,
-              fromUserName: currentUser.displayName || 'Anonymous User',
-              contentPreview: replyContent.length > 100 
-                ? replyContent.substring(0, 97) + '...' 
-                : replyContent,
-              relatedMessageId: replyingTo,
-              relatedReplyId: replyDocRef.id
-            });
-            
-            if (notificationId) {
-              console.log("Notification created for user:", targetUserId);
-            } else {
-              console.log("Notification creation skipped or failed, but reply was still sent");
-              // Show the permission alert if notification creation fails
-              setShowPermissionAlert(true);
-            }
-          } catch (error) {
-            console.error("Failed to create notification:", error);
-            // Show the permission alert if notification creation fails with error
-            setShowPermissionAlert(true);
-          }
-        }
+        await addDoc(collection(db, 'community_replies'), replyData);
         
-        // Clear form regardless of notification success/failure
         setReplyContent('');
         setReplyingTo(null);
         setReplyingToReply(null);
@@ -398,10 +353,6 @@ const Community = () => {
               </div>
          </div>     
         </div>
-        
-        {showPermissionAlert && (
-          <NotificationPermissionAlert onDismiss={() => setShowPermissionAlert(false)} />
-        )}
         
         {error && (
           <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded mb-4 shadow-sm">
@@ -778,7 +729,7 @@ const Community = () => {
           </Card>
         )}
       </div>
-    
+    <Footer/>
      
     </div>
   );

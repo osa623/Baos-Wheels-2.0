@@ -7,7 +7,7 @@ import Hero from '@/components/Hero';
 import ProductCard, { Article } from '@/components/ArticleCard';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { articlesApi, reviewsApi, Review } from '@/api';
+import { articlesApi, reviewsApi, newsApi } from '@/api';
 
 //imports 
 import workspace from '../assets/workspace.jpg';
@@ -124,6 +124,7 @@ const Index = () => {
   const aboutRef = useRef<HTMLDivElement>(null);
   const [fetchArticles, setFetchArticles] = useState<Article[]>([]);
   const [fetchReviews, setFetchReviews] = useState<Review[]>([]);
+  const [latestNews, setLatestNews] = useState<any>(null);
 
   // Fetch articles from the API
   useEffect(() => {
@@ -137,6 +138,32 @@ const Index = () => {
     };
 
     loadArticles();
+  }, []);
+
+  //fetch news from the API
+  useEffect(()=> {
+    
+    const loadnews = async () => {
+      try {
+
+        const news = await newsApi.getAll();
+        if (news && news.length > 0) {
+          // Assuming you want to display the first news item
+          const firstNews = news[0];
+          setLatestNews(firstNews);
+          console.log('Latest News:', firstNews);
+        } else {
+          setLatestNews(null);
+          console.warn('No news available');
+        }
+      } catch (error){
+        setLatestNews(null);
+        console.error('Failed to load news:', error);
+      }
+    };
+
+    loadnews();
+
   }, []);
 
   // Fetch reviews from the API
@@ -181,7 +208,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-hidden">
       <Header />
       
       {/* Hero Section */}
@@ -232,6 +259,7 @@ const Index = () => {
         className="custom-scroll-text font-bold text-border"
           />
       </div>
+       
       <style>
         {`
           .text-border {
@@ -304,8 +332,8 @@ const Index = () => {
       </section>
 
 
-      {/* Turboss Banner */}
-      <section className="py-24 px-6">
+        {/* Turboss Banner */}
+        <section className="py-24 px-6">
               <div className="max-w-7xl mx-auto">
 
                 <div className="relative overflow-hidden rounded-xl bg-black">
@@ -490,8 +518,7 @@ const Index = () => {
       </section>
 
 
-
-      {/* About Section */}
+      {/* Test Section */}
       <section className="py-20 px-6">
         <div 
           ref={aboutRef}
@@ -503,12 +530,9 @@ const Index = () => {
               <span className="inline-block px-3 py-1 mb-6 text-xs font-medium bg-secondary rounded-full">
                 News of the Day
               </span>
-              <h2 className="text-3xl font-semibold mb-6">Merging Art with Functionality</h2>
+              <h2 className="text-3xl font-semibold mb-6">{latestNews?.title || 'No News Available'}</h2>
               <p className="text-muted-foreground mb-6">
-                At Roodhy, we believe that great design solves problems without sacrificing beauty. Each product is thoughtfully created to enhance your daily life through its form and function.
-              </p>
-              <p className="text-muted-foreground mb-8">
-                Our commitment to quality materials and craftsmanship ensures that everything we offer is built to last, becoming a cherished part of your environment for years to come.
+                {latestNews?.subtitle}
               </p>
               <Button 
                 variant="outline" 
@@ -520,7 +544,7 @@ const Index = () => {
             <div className="relative">
               <div className="aspect-[4/3] rounded-lg overflow-hidden">
                 <img 
-                  src={workspace}
+                  src={latestNews?.images[1] || workspace}
                   alt="Design workspace"
                   className="w-full h-full object-cover"
                 />
@@ -528,18 +552,18 @@ const Index = () => {
               <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-gray-50 rounded-lg p-4 shadow-sm hidden md:block">
                 <div className="h-full flex flex-col justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground">Founded</p>
-                    <p className="text-xl font-semibold">2014</p>
+                    <p className="text-sm text-muted-foreground">By</p>
+                    <p className="text-xs font-semibold">{latestNews?.author}</p>
                   </div>
                   <Separator className="my-3" />
                   <div>
-                    <p className="text-sm text-muted-foreground">Products</p>
-                    <p className="text-xl font-semibold">250+</p>
+                    <p className="text-sm text-muted-foreground">Date</p>
+                    <p className="text-xs font-semibold">{latestNews?.date}</p>
                   </div>
                   <Separator className="my-3" />
                   <div>
-                    <p className="text-sm text-muted-foreground">Countries</p>
-                    <p className="text-xl font-semibold">42</p>
+                    <p className="text-sm text-muted-foreground">Category</p>
+                    <p className="text-xs font-semibold">{latestNews?.category}</p>
                   </div>
                 </div>
               </div>
@@ -547,8 +571,17 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Define a velocity value for the ScrollVelocity component */}
+      <div className='flex w-auto h-auto py-24 -rotate-2 overflow-hidden'>
+          <ScrollVelocity
+        texts={['#baoswheels', '#driveYourPassion']} 
+        velocity={10} 
+        className="custom-scroll-text font-bold text-border"
+          />
+      </div>
       
-      {/* Testimonials Section */}
+      {/* Testimonials Section 
       <section className="py-20 px-6 bg-gray-50">
         <div 
           ref={testimonialsRef}
@@ -582,7 +615,7 @@ const Index = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
       
       {/* Newsletter Section */}
       <section className="py-24 px-6 bg-gradient-to-r from-gray-100 to-white">

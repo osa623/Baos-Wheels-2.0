@@ -19,6 +19,7 @@ import Electriccars from "./pages/Electriccars";
 import NotFound from "./pages/NotFound";
 import Profile from './pages/Profile';
 import Community from './pages/Community';
+import Notifications from './pages/Notifications';
 
 // Create QueryClient
 const queryClient = new QueryClient({
@@ -46,6 +47,7 @@ function App() {
               <Route path="/products" element={<Navigate to="/reviews" replace />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/collections" element={<Collections />} />
+              <Route path="/notifications" element={<Notifications />} />
               <Route path="/community" element={<Community />} />
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login />} />

@@ -45,6 +45,21 @@ export interface Review {
   cons?: string[];
 }
 
+// news interface
+export interface News {
+  _id?: string;
+  id: number | string;
+  title: string;
+  subtitle: string;
+  keywords: string[];
+  images: string[];
+  content: string;
+  author: string;
+  date: string;
+  category: string;
+
+}
+
 // Type for API error responses
 export interface ApiError {
   message: string;
@@ -112,6 +127,83 @@ export const articlesApi = {
       console.error(`Error fetching article ${id}:`, error);
       throw {
         message: `Failed to fetch article ${id}`,
+        status: error.response?.status,
+        details: error.message
+      } as ApiError;
+    }
+  }
+};
+
+// News Apis
+export const newsApi = {
+
+  // Get all news
+  getAll: async (): Promise<News[]> => {
+    try {
+      const response = await axios.get(getApiUrl('/api/news/get'));
+      if (Array.isArray(response.data)) {
+        return response.data;
+      }
+      throw new Error('Unexpected API response format');
+    } catch (error: any) {
+      console.error('Error fetching news articles:', error);
+
+      // Return fallback data during development
+      if (import.meta.env.DEV) {
+        return [
+          // You can add mock news data here if needed
+        ];
+      }
+
+      throw {
+        message: 'Failed to fetch news articles',
+        status: error.response?.status,
+        details: error.message
+      } as ApiError;
+    }
+  },
+
+  // Get news by ID
+  getById: async (id: number | string): Promise<News> => {
+    try {
+      const idParam = typeof id === 'string' && id.length === 24 ? id : `${id}`;
+      const response = await axios.get(getApiUrl(`/api/news/get/${idParam}`));
+      if (!response.data) {
+        throw new Error("Empty response from API");
+      }
+      return response.data;
+    } catch (error: any) {
+      console.error(`Error fetching news article ${id}:`, error);
+      throw {
+        message: `Failed to fetch news article ${id}`,
+        status: error.response?.status,
+        details: error.message
+      } as ApiError;
+    }
+  },
+
+  // Get latest news (fetches the most recent news article)
+  getLatest: async (): Promise<News | null> => {
+    try {
+      const response = await axios.get(getApiUrl('/api/news/get'));
+      if (Array.isArray(response.data) && response.data.length > 0) {
+        // Assuming news are sorted by date descending, otherwise sort here
+        const sorted = response.data.sort((a: News, b: News) =>
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        return sorted[0];
+      }
+      return null;
+    } catch (error: any) {
+      console.error('Error fetching latest news:', error);
+
+      // Return fallback data during development
+      if (import.meta.env.DEV) {
+        return null;
+      }
+
+      throw {
+        message: 'Failed to fetch latest news',
         status: error.response?.status,
         details: error.message
       } as ApiError;

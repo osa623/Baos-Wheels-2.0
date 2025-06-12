@@ -5,6 +5,7 @@ import { ArrowDown } from 'lucide-react';
 
 //images 
 import heroImage from '../assets/furBack.png';
+import heroImageSm from '../assets/furBacksm.png';
 import StarBorder from './StarBorder';
 
 //video
@@ -42,8 +43,16 @@ const Hero = () => {
     <section className="relative h-screen overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-transparent">
-        <img src={heroImage} alt="Hero Background" className="w-full h-full object-cover opacity-50" />
+        <img src={heroImage} alt="Hero Background" className="hidden lg:flex md:flex w-full h-full object-cover opacity-50" />
+        
       </div>
+            <div className="absolute inset-0 bg-transparent">
+              <img
+                src={heroImageSm}
+                alt="Hero Background Small"
+                className="flex lg:hidden md:hidden w-full h-full object-cover opacity-50"
+              />
+            </div>
       
       {/* Hero content */}
       <div 
