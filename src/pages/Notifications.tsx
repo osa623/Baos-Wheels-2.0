@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { format } from 'date-fns';
 import { 
   Container, 
@@ -15,70 +14,86 @@ import {
   ListItemIcon,
   IconButton,
   Badge,
-  Chip
+  Chip,
+  Avatar
 } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import InfoIcon from '@mui/icons-material/Info';
 import WarningIcon from '@mui/icons-material/Warning';
+import ChatIcon from '@mui/icons-material/Chat';
+import { useAuth } from '@/contexts/AuthContext';
 
+// Import Firebase functionality
+import { 
+  getFirestore, 
+  collection, 
+  query, 
+  where, 
+  orderBy, 
+  limit, 
+  getDocs, 
+  updateDoc, 
+  doc, 
+  Timestamp 
+} from 'firebase/firestore';
+import { getApp } from 'firebase/app';
+
+// Define Notification interface directly in this file
 interface Notification {
   id: string;
-  title: string;
-  message: string;
-  timestamp: string;
+  userId: string;
+  type: 'reply' | 'mention' | 'like' | 'system' | 'info' | 'warning' | 'error' | 'success';
+  fromUserId?: string;
+  fromUserName?: string;
+  fromUserAvatar?: string;
+  contentPreview: string;
+  contentId?: string;
   isRead: boolean;
-  type: 'info' | 'warning' | 'error' | 'success';
+  createdAt: any; // Using "any" to handle Firestore Timestamp
+  url?: string;
 }
 
-const Notifications: React.FC = () => {
+// Firebase notification functions
+const db = getFirestore(getApp());
+const notificationsCollection = collection(db, 'notifications');
+
+const NotificationsPage: React.FC = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const userId = "user123"; // This should be replaced with actual user ID from authentication
+  const { currentUser } = useAuth();
 
   useEffect(() => {
+    if (!currentUser) return;
     fetchNotifications();
-  }, []);
+  }, [currentUser]);
 
   const fetchNotifications = async () => {
+    if (!currentUser) return;
+    
     try {
       setLoading(true);
-      // Replace with your actual API endpoint
-      const response = await axios.get(`/api/notifications/${userId}`);
-      setNotifications(response.data);
+      
+      // Create query with proper imports
+      const q = query(
+        notificationsCollection,
+        where('userId', '==', currentUser.uid),
+        orderBy('createdAt', 'desc'),
+        limit(50)
+      );
+      
+      const querySnapshot = await getDocs(q);
+      setNotifications(querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as Notification[]);
+      
       setError(null);
     } catch (err) {
       console.error("Error fetching notifications:", err);
       setError("Failed to load notifications. Please try again later.");
-      // For demo purposes, setting mock data
-      setNotifications([
-        {
-          id: "1",
-          title: "Appointment Confirmed",
-          message: "Your wheel alignment appointment has been confirmed for tomorrow at 2 PM.",
-          timestamp: new Date().toISOString(),
-          isRead: false,
-          type: "success"
-        },
-        {
-          id: "2",
-          title: "Payment Received",
-          message: "We've received your payment of $120 for the recent service.",
-          timestamp: new Date(Date.now() - 86400000).toISOString(),
-          isRead: true,
-          type: "info"
-        },
-        {
-          id: "3",
-          title: "Maintenance Reminder",
-          message: "Your vehicle is due for brake inspection in the next week.",
-          timestamp: new Date(Date.now() - 172800000).toISOString(),
-          isRead: false,
-          type: "warning"
-        }
-      ]);
     } finally {
       setLoading(false);
     }
@@ -86,8 +101,9 @@ const Notifications: React.FC = () => {
 
   const markAsRead = async (notificationId: string) => {
     try {
-      // Replace with your actual API endpoint
-      await axios.put(`/api/notifications/${notificationId}/read`);
+      const notificationRef = doc(db, 'notifications', notificationId);
+      await updateDoc(notificationRef, { isRead: true });
+      
       // Update local state
       setNotifications(notifications.map(notification => 
         notification.id === notificationId 
@@ -96,17 +112,13 @@ const Notifications: React.FC = () => {
       ));
     } catch (err) {
       console.error("Error marking notification as read:", err);
-      // For demo, update state anyway
-      setNotifications(notifications.map(notification => 
-        notification.id === notificationId 
-          ? { ...notification, isRead: true } 
-          : notification
-      ));
     }
   };
 
   const getNotificationIcon = (type: string) => {
     switch(type) {
+      case 'reply':
+        return <ChatIcon color="primary" />;
       case 'info':
         return <InfoIcon color="info" />;
       case 'warning':
@@ -120,9 +132,10 @@ const Notifications: React.FC = () => {
     }
   };
 
-  const formatTimestamp = (timestamp: string): string => {
+  const formatTimestamp = (timestamp: any): string => {
     try {
-      return format(new Date(timestamp), 'MMM dd, yyyy • h:mm a');
+      const date = timestamp?.toDate ? timestamp.toDate() : new Date(timestamp);
+      return format(date, 'MMM dd, yyyy • h:mm a');
     } catch (e) {
       return 'Invalid date';
     }
@@ -172,7 +185,11 @@ const Notifications: React.FC = () => {
                   }}
                 >
                   <ListItemIcon sx={{ minWidth: 40 }}>
-                    {getNotificationIcon(notification.type)}
+                    {notification.fromUserAvatar ? (
+                      <Avatar src={notification.fromUserAvatar} alt={notification.fromUserName || 'User'} />
+                    ) : (
+                      getNotificationIcon(notification.type)
+                    )}
                   </ListItemIcon>
                   <ListItemText
                     primary={
@@ -180,7 +197,9 @@ const Notifications: React.FC = () => {
                         variant="subtitle1"
                         fontWeight={notification.isRead ? 'normal' : 'bold'}
                       >
-                        {notification.title}
+                        {notification.type === 'reply' 
+                          ? `${notification.fromUserName || 'Someone'} replied to your message` 
+                          : notification.fromUserName || 'Notification'}
                       </Typography>
                     }
                     secondary={
@@ -192,14 +211,14 @@ const Notifications: React.FC = () => {
                           display="block"
                           sx={{ mb: 0.5 }}
                         >
-                          {notification.message}
+                          {notification.contentPreview}
                         </Typography>
                         <Typography
                           component="span"
                           variant="caption"
                           color="text.secondary"
                         >
-                          {formatTimestamp(notification.timestamp)}
+                          {formatTimestamp(notification.createdAt)}
                         </Typography>
                       </>
                     }
@@ -225,4 +244,4 @@ const Notifications: React.FC = () => {
   );
 };
 
-export default Notifications;
+export default NotificationsPage;

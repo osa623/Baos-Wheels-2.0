@@ -22,7 +22,12 @@ import {
   Timestamp,
   connectFirestoreEmulator,
   enableIndexedDbPersistence,
-  enableMultiTabIndexedDbPersistence
+  enableMultiTabIndexedDbPersistence,
+  doc,
+  updateDoc,
+  writeBatch,
+  limit,
+  onSnapshot
 } from "firebase/firestore";
 
 console.log("Initializing Firebase");
@@ -281,7 +286,6 @@ export interface Notification {
   type: string;     // Type of notification (e.g., 'reply', 'mention', etc.)
   fromUserId: string;  // Who created the notification
   fromUserName: string;
-  fromUserAvatar?: string;
   contentPreview: string; // Preview of the message content
   relatedMessageId?: string; // ID of the related message
   relatedReplyId?: string;  // ID of the related reply
@@ -331,7 +335,6 @@ export const notificationFunctions = {
           type: data.type,
           fromUserId: data.fromUserId,
           fromUserName: data.fromUserName,
-          fromUserAvatar: data.fromUserAvatar,
           contentPreview: data.contentPreview,
           relatedMessageId: data.relatedMessageId,
           relatedReplyId: data.relatedReplyId,
@@ -369,7 +372,6 @@ export const notificationFunctions = {
           type: data.type,
           fromUserId: data.fromUserId,
           fromUserName: data.fromUserName,
-          fromUserAvatar: data.fromUserAvatar,
           contentPreview: data.contentPreview,
           relatedMessageId: data.relatedMessageId,
           relatedReplyId: data.relatedReplyId,

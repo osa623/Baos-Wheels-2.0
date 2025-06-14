@@ -12,15 +12,34 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { 
+  getFirestore, 
+  collection, 
+  query, 
+  where, 
+  orderBy, 
+  limit, 
+  getDocs, 
+  updateDoc, 
+  doc,
+  Timestamp,
+  writeBatch
+} from 'firebase/firestore';
+import { getApp } from 'firebase/app';
 import { notificationFunctions, Notification } from '@/lib/firebase';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatDistanceToNow } from 'date-fns';
+import { format } from 'date-fns';
 
 // Import mobile fixes CSS
 import '@/styles/mobile-fixes.css';
 
 //images
 import logo from '@/assets/RoundPhoto_Sep202021_165616.png';
+
+// Get Firestore instances directly like in Notifications.tsx
+const db = getFirestore(getApp());
+const notificationsCollection = collection(db, 'notifications');
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -37,7 +56,7 @@ const Header = () => {
   // Check if the current path matches the link
   const isActive = (path: string) => location.pathname === path;
 
-  // Fetch notifications for the current user
+  // Fetch notifications for the current user - using the same method as Notifications.tsx
   useEffect(() => {
     if (!currentUser) {
       console.log("No current user, skipping notification fetch");
@@ -50,14 +69,25 @@ const Header = () => {
 
     const fetchNotifications = async () => {
       try {
-        console.log("Starting notification fetch for user:", currentUser.uid);
-        const userNotifications = await notificationFunctions.getAllNotifications(currentUser.uid, 50);
-        console.log(`Fetched ${userNotifications.length} notifications`);
+        // Create query with proper imports - directly like in Notifications.tsx
+        const q = query(
+          notificationsCollection,
+          where('userId', '==', currentUser.uid),
+          orderBy('createdAt', 'desc'),
+          limit(50)
+        );
         
-        setNotifications(userNotifications);
+        const querySnapshot = await getDocs(q);
+        const fetchedNotifications = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Notification[];
+        
+        console.log(`Fetched ${fetchedNotifications.length} notifications`);
+        setNotifications(fetchedNotifications);
         
         // Calculate unread count
-        const unread = userNotifications.filter(n => !n.isRead).length;
+        const unread = fetchedNotifications.filter(n => !n.isRead).length;
         console.log(`Found ${unread} unread notifications`);
         setUnreadCount(unread);
         
@@ -72,7 +102,7 @@ const Header = () => {
 
     fetchNotifications();
     
-    // Set up polling for notifications
+    // Set up polling for notifications - keep the polling mechanism
     const interval = setInterval(fetchNotifications, 30000);
     
     return () => {
@@ -81,25 +111,75 @@ const Header = () => {
     };
   }, [currentUser]);
 
-  // Mark all notifications as read when dropdown is opened
+  // Mark all notifications as read using direct Firebase methods
+  const markAllNotificationsAsRead = async () => {
+    if (!currentUser) return;
+    
+    try {
+      // Get all unread notifications
+      const q = query(
+        notificationsCollection,
+        where('userId', '==', currentUser.uid),
+        where('isRead', '==', false)
+      );
+      
+      const querySnapshot = await getDocs(q);
+      
+      // No unread notifications
+      if (querySnapshot.empty) {
+        return;
+      }
+      
+      // Use batch write for better performance
+      const batch = writeBatch(db);
+      
+      querySnapshot.forEach((document) => {
+        batch.update(doc(db, 'notifications', document.id), { 
+          isRead: true 
+        });
+      });
+      
+      await batch.commit();
+      
+      // Update local state
+      setNotifications(prev => 
+        prev.map(notification => ({
+          ...notification,
+          isRead: true
+        }))
+      );
+      setUnreadCount(0);
+      
+      console.log("All notifications marked as read");
+    } catch (error) {
+      console.error("Error marking all notifications as read:", error);
+    }
+  };
+  
+  // Mark a specific notification as read
+  const markNotificationAsRead = async (notificationId: string) => {
+    try {
+      const notificationRef = doc(db, 'notifications', notificationId);
+      await updateDoc(notificationRef, { isRead: true });
+      
+      // Update local state
+      setNotifications(notifications.map(notification => 
+        notification.id === notificationId 
+          ? { ...notification, isRead: true } 
+          : notification
+      ));
+      
+      // Update unread count
+      setUnreadCount(prev => Math.max(0, prev - 1));
+    } catch (err) {
+      console.error("Error marking notification as read:", err);
+    }
+  };
+
+  // Replace the useEffect for marking all as read with a click handler
   useEffect(() => {
     if (isNotificationsOpen && unreadCount > 0 && currentUser) {
-      const markAsRead = async () => {
-        try {
-          await notificationFunctions.markAllAsRead(currentUser.uid);
-          // Update local state
-          setNotifications(prev => 
-            prev.map(notification => ({
-              ...notification,
-              isRead: true
-            }))
-          );
-          setUnreadCount(0);
-        } catch (error) {
-          console.error("Error marking notifications as read:", error);
-        }
-      };
-      markAsRead();
+      markAllNotificationsAsRead();
     }
   }, [isNotificationsOpen, unreadCount, currentUser]);
 
@@ -108,7 +188,7 @@ const Header = () => {
     if (!timestamp) return 'Just now';
     
     try {
-      const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+      const date = timestamp?.toDate ? timestamp.toDate() : new Date(timestamp);
       return formatDistanceToNow(date, { addSuffix: true });
     } catch (error) {
       return 'Recently';
@@ -296,7 +376,7 @@ const Header = () => {
           )}
           
           {currentUser && (
-            <DropdownMenu onOpenChange={setIsNotificationsOpen}>
+            <DropdownMenu open={isNotificationsOpen} onOpenChange={setIsNotificationsOpen}>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="relative rounded-full hover:bg-secondary transition-colors">
                   {isLoadingNotifications ? (
@@ -304,7 +384,7 @@ const Header = () => {
                   ) : (
                     <>
                       {unreadCount > 0 && (
-                        <span className="absolute right-0 top-0 rounded-full flex  w-5 h-5 items-center justify-center text-center text-xs text-white bg-red-500">
+                        <span className="absolute right-0 top-0 rounded-full flex w-5 h-5 items-center justify-center text-center text-xs text-white bg-red-500">
                           {unreadCount > 99 ? '99+' : unreadCount}
                         </span>
                       )}
@@ -321,22 +401,7 @@ const Header = () => {
                       variant="ghost" 
                       size="sm" 
                       className="text-xs h-7 hover:bg-muted"
-                      onClick={async () => {
-                        try {
-                          const success = await notificationFunctions.markAllAsRead(currentUser.uid);
-                          if (success) {
-                            setUnreadCount(0);
-                            setNotifications(prev => 
-                              prev.map(notification => ({
-                                ...notification,
-                                isRead: true
-                              }))
-                            );
-                          }
-                        } catch (error) {
-                          console.error("Error marking all as read:", error);
-                        }
-                      }}
+                      onClick={markAllNotificationsAsRead}
                     >
                       <CheckCheck className="h-3.5 w-3.5 mr-1.5" />
                       Mark all as read
@@ -425,27 +490,67 @@ const Header = () => {
         {/* Mobile Actions - Added visible actions to the header */}
         <div className="flex md:hidden items-center space-x-2">
           {currentUser && (
-            <div className="relative">
-              <Button 
-                variant="ghost" 
-                size="sm"
-                className="rounded-full p-1 h-8 w-8"
-                onClick={() => window.location.href = '/notifications'}
-              >
-                {isLoadingNotifications ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <>
-                    {unreadCount > 0 && (
-                      <span className="absolute right-0 top-0 rounded-full flex w-4 h-4 items-center justify-center text-center text-[10px] text-white bg-red-500">
-                        {unreadCount > 9 ? '9+' : unreadCount}
-                      </span>
-                    )}
-                    <Bell className="h-4 w-4" />
-                  </>
-                )}
-              </Button>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  className="rounded-full p-1 h-8 w-8 relative"
+                >
+                  {isLoadingNotifications ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <>
+                      {unreadCount > 0 && (
+                        <span className="absolute right-0 top-0 rounded-full flex w-4 h-4 items-center justify-center text-center text-[10px] text-white bg-red-500">
+                          {unreadCount > 9 ? '9+' : unreadCount}
+                        </span>
+                      )}
+                      <Bell className="h-4 w-4" />
+                    </>
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-64" sideOffset={8}>
+                <div className="p-2 text-sm border-b">
+                  <h3 className="font-semibold">Notifications</h3>
+                </div>
+                <ScrollArea className="max-h-[300px]">
+                  {isLoadingNotifications ? (
+                    <div className="p-4 flex justify-center">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    </div>
+                  ) : notifications.length === 0 ? (
+                    <div className="p-4 text-center text-sm text-muted-foreground">
+                      No notifications
+                    </div>
+                  ) : (
+                    notifications.slice(0, 5).map((notification) => (
+                      <DropdownMenuItem key={notification.id} className="p-2 focus:bg-muted" asChild>
+                        <Link to={notification.type === 'reply' ? '/community' : '/'} className="flex items-start space-x-2">
+                          <div className={`w-2 h-2 mt-1.5 flex-shrink-0 rounded-full ${!notification.isRead ? 'bg-primary' : 'bg-transparent'}`} />
+                          <div className="flex-1">
+                            <p className="text-xs line-clamp-2">
+                              <span className="font-medium">{notification.fromUserName}</span>
+                              {notification.type === 'reply' && ' replied: '}
+                              <span className="text-muted-foreground">{notification.contentPreview}</span>
+                            </p>
+                            <p className="text-[10px] text-muted-foreground mt-1">
+                              {formatNotificationTime(notification.createdAt)}
+                            </p>
+                          </div>
+                        </Link>
+                      </DropdownMenuItem>
+                    ))
+                  )}
+                </ScrollArea>
+                <div className="p-2 text-center border-t">
+                  <Button variant="ghost" size="sm" className="w-full h-7 text-xs" asChild>
+                    <Link to="/notifications">View All</Link>
+                  </Button>
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
           )}
 
           {/* Improved touch target for mobile search */}
