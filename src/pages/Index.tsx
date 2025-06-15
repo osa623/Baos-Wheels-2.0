@@ -8,6 +8,7 @@ import ProductCard, { Article } from '@/components/ArticleCard';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { articlesApi, reviewsApi, newsApi } from '@/api';
+import SplitText from '@/components/SplitText';
 
 //imports 
 import workspace from '../assets/workspace.jpg';
@@ -38,6 +39,7 @@ import ScrollVelocity from '@/components/ScrollVelocity';
 
 //images
 import communityBackground from '../assets/communityImage.jpg';
+import turbossImage from '../assets/turbossImage.jpg';
 
 
 
@@ -83,6 +85,11 @@ function shuffleArray<T>(array: T[]): T[] {
   }
   return arr;
 }
+
+//handle the section
+const handleAnimationComplete = () => {
+  console.log('All letters have animated!');
+};
 
 // Gather all imported images for car brands and styles
 const importedImages = [
@@ -274,7 +281,7 @@ const Index = () => {
       </style>
       
       {/* Categories Reviews Section */}
-      <section className="py-20 px-6 bg-gray-50">
+      <section className="py-20 px-6 z-30 bg-gray-50">
         <div 
           ref={categoryRef}
           className="max-w-7xl mx-auto opacity-0"
@@ -331,194 +338,182 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Banners */}
 
-        {/* Turboss Banner */}
-        <section className="py-24 px-6">
-              <div className="max-w-7xl mx-auto">
+      <div className='relative bg-gray-100 flex w-full'>
 
-                <div className="relative overflow-hidden rounded-xl bg-black">
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent z-20">
-                  
-                  </div>
+            {/* Banners for below section */}
+            <SplitText
+              text="What's New"
+              className="text-9xl text-border mt-6 hidden sm:abolsute text-nowrap z-20 w-full top-0 overflow-visible font-semibold absolute text-center"
+              delay={100}
+              duration={0.6}
+              ease="power3.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.1}
+              rootMargin="-100px"
+              textAlign="center"
+              onLetterAnimationComplete={handleAnimationComplete}
+            />
 
-                  {/* Text Section */}
-                                
-                <div className="absolute z-10 overflow-hidden flex right-0 sms:flex-col w-[60%]  sms:scale-90 sms:w-full bg-transparent h-auto items-center justify-center">
-                        
-                        <div className="flex flex-col sms:mt-12 lgs:h-auto lgs:w-full items-start lgs:space-y-8 lgs:p-12 justify-center overflow-hidden">
+            {/* Banners for below section */}
+            <SplitText
+              text="What's New"
+              className="text-8xl text-sidebar-border mt-6  text-nowrap z-10 w-full top-0 overflow-visible font-semibold absolute text-center"
+              delay={100}
+              duration={0.6}
+              ease="power3.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.1}
+              rootMargin="-100px"
+              textAlign="center"
+              onLetterAnimationComplete={handleAnimationComplete}
+            />
 
-                            <div className="flex lgs:w-auto lgs:scale-90 scale-75 sms:scale-75 ml-20 items-start justify-center">
-                                
-                                <div className="flex bg-gray-400 items-center justify-center overflow-hidden border-4 w-[4rem] h-[4rem] rounded-full" data-aos='zoom-in' data-aos-delay='350'>
-                                     MJ
-                                </div>
 
-                                <div className="flex flex-col bg-gray-300 rounded-2xl ml-2 items-start p-5 justify-center w-[30rem] lgs:h-[8rem]" data-aos='fade-left' data-aos-delay='400'
-                                style={{
-                                    boxShadow:'0px 0px 20px 5px rgba(0,0,0, 0.4), inset 0px 0px 10px 2px rgba(255,255,255, 0.4)'
-                                }}>
-                                    <h2 className="flex font-dmsans text-orange-600 lgs:text-sm"
-                                    style={{
-                                        fontWeight:'800'
-                                    }}>
-                                        Jessica Anderson<span className="ml-2 text-primary"
-                                        style={{
-                                            fontWeight:'200'
-                                        }}>
-                                            Tue 03:01
-                                        </span>
-                                    </h2>
-                                    <p className="flex font-dmsans text-primary lgs:text-lg"
-                                    style={{
-                                        fontWeight:'100'
-                                    }}>
-                                        Why does my car make a ticking noise when I start it, and then the sound goes away after a few minutes?
-                                    </p>
-                                </div>
 
-                            </div>
 
-                             <div className="flex lgs:w-auto lgs:scale-90 scale-75 sms:scale-75 lgs:ml-12 items-start justify-center">
-
-                                <div className="flex bg-gray-300 items-center justify-center overflow-hidden border-4 w-[4rem] h-[4rem] rounded-full" data-aos='zoom-in' data-aos-delay='350'>
-                                    JD
-                                </div>
-
-                                <div className="flex flex-col bg-gray-300 rounded-2xl ml-2 items-start p-5 justify-center w-[30rem] lgs:h-[8rem]" data-aos='fade-left' data-aos-delay='400'
-                                style={{
-                                    boxShadow:'0px 0px 20px 5px rgba(0,0,0, 0.4), inset 0px 0px 10px 2px rgba(255,255,255, 0.4)'
-                                }}>
-                                    <h2 className="flex font-dmsans text-orange-600 lgs:text-sm"
-                                    style={{
-                                        fontWeight:'800'
-                                    }}>
-                                        Jessica Anderson<span className="ml-2 text-primary"
-                                        style={{
-                                            fontWeight:'200'
-                                        }}>
-                                            Tue 03:01
-                                        </span>
-                                    </h2>
-                                    <p className="flex font-dmsans text-primary lgs:text-lg"
-                                    style={{
-                                        fontWeight:'100'
-                                    }}>
-                                        Why does my car make a ticking noise when I start it, and then the sound goes away after a few minutes?
-                                    </p>
-                                </div>
-
-                            </div>
-
-                            <div className="flex lgs:w-auto sms:ml-12  scale-100 items-start justify-center">
-                                
-                                <div className="flex bg-green-600 text-white items-center justify-center overflow-hidden border-4 w-[4rem] h-[4rem] rounded-full" data-aos='zoom-in' data-aos-delay='450'>
-                                   NI
-                                </div>
-
-                                <div className="flex flex-col bg-gray-400 rounded-2xl ml-2 items-start p-5 justify-center w-[30rem] sms:w-[25rem] lgs:h-[8rem]" 
-                                data-aos='fade-left' data-aos-delay='500'
-                                style={{
-                                    boxShadow:'0px 0px 20px 5px rgba(0,0,0, 0.4), inset 0px 0px 10px 2px rgba(255,255,255, 0.4)'
-                                }}>
-
-                                    <div className="flex bg-transparent items-center justify-start w-full h-auto">
-                                    <h2 className="flex font-dmsans text-orange-600 lgs:text-sm"
-                                    style={{
-                                        fontWeight:'800'
-                                    }}>
-                                        Jhon Dewik<span className="ml-2 text-primary"
-                                        style={{
-                                            fontWeight:'200'
-                                        }}>
-                                            Tue 03:15
-                                        </span>
-                                    </h2>
-                                    <h2 className="flex font-dmsans ml-2 text-primary bg-orange-600 p-1 rounded-full"
-                                    style={{
-                                        fontWeight:'800',
-                                        fontSize:'0.5rem'
-                                    }}>
-                                        Auto Expert
-                                    </h2>
-                                    </div>
-                                    <p className="flex font-dmsans lgs:mt-1 text-primary text-sm"
-                                    style={{
-                                        fontWeight:'100'
-                                    }}>
-                                        A ticking noise at startup that fades after a few minutes is often due to low oil levels, cold engine parts, or worn valve lifters. It’s usually harmless if it stops quickly, but if it continues, it’s best to get it checked to avoid engine damage
-                                    </p>
-                                </div>
-
-                            </div>
-                           
-                            <div className="flex lgs:w-auto  ml-2 scale-75 mt-2   items-start justify-center">
-                                
-                                <div className="flex bg-gray-400 items-center justify-center overflow-hidden border-4 w-[4rem] h-[4rem] rounded-full" data-aos='zoom-in' data-aos-delay='550'>
-                                    JO
-                                </div>
-
-                                <div className="flex flex-col bg-gray-300 rounded-2xl ml-2 items-start p-5 justify-center lgs:w-[30rem] lgs:h-[8rem]" data-aos='fade-left' data-aos-delay='600'
-                                style={{
-                                    boxShadow:'0px 0px 20px 5px rgba(0,0,0, 0.4), inset 0px 0px 10px 2px rgba(255,255,255, 0.4)'
-                                }}>
-                                    <h2 className="flex font-dmsans text-orange-600 lgs:text-sm"
-                                    style={{
-                                        fontWeight:'800'
-                                    }}>
-                                        David Jhohanson<span className="ml-2 text-primary"
-                                        style={{
-                                            fontWeight:'200'
-                                        }}>
-                                            Wed 08:01
-                                        </span>
-                                    </h2>
-                                    <p className="flex font-dmsans text-primary lgs:text-lg"
-                                    style={{
-                                        fontWeight:'100'
-                                    }}>
-                                        When I brake at high speeds, my car starts shaking. What could be the cause?
-                                    </p>
-                                </div>
-
-                            </div>
-
+            <section className="hidden z-30 lg:flex py-24 mt-24 px-6 w-full">
+                  <div className="w-[45%] mx-auto animate-slide-down">
+                    <div className="relative overflow-hidden rounded-xl bg-black">
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent z-20">
 
                         </div>
+                        <img
+                          src={communityBackground}
+                          alt="Seasonal collection"
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      <div className="relative z-20 px-8 py-24 md:px-16 lg:max-w-2xl">
+                        <span className="inline-block px-3 text-xs py-1 mb-2 font-medium bg-green-600 text-white rounded-full">
+                          Public
+                        </span>
+                        <h2 className="lg:text-4xl md:text-4xl font-semibold font-poppins mb-4 text-white">The BW Community</h2>
+                        <p className="text-white/80 mb-8 font-light">
+                          Turboss is your go-to place to explore car details from A to Z. From engine specs to the latest tech, we cover everything you need to know about cars in one easy-to-use platform.
+                        </p>
+                        <Link to="/community" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
+                        <StarBorder
+                          as="button"
+                          className="custom-class"
+                          color="cyan"
+                          speed="5s"
+                        >
+                          Check out the Community
+                        </StarBorder>
+                      </Link>
+                      </div>
 
-
-                </div>
-
-                    <img 
-                      src= {communityBackground}
-                      alt="Seasonal collection"
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                  <div className="relative z-20 px-8 py-24 md:px-16 lg:max-w-lg">
-                    <span className="inline-block px-3 text-xs py-1 mb-2 font-medium bg-green-600 text-white rounded-full">
-                       Public
-                    </span>
-                    <h2 className="text-3xl md:text-4xl font-semibold mb-4 text-white">The BW Community</h2>
-                    <p className="text-white/80 mb-8 font-light">
-                      Connect with fellow car enthusiasts by asking questions, sharing tips, or discussing anything automotive.
-                    </p>
-                    <Link to="/community" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
-                    <StarBorder
-                      as="button"
-                      className="custom-class"
-                      color="cyan"
-                      speed="5s"
-                    >
-                      Check out the Community
-                    </StarBorder>
-                  </Link>
+                    </div>
                   </div>
+                  <div className="w-[45%] mx-auto animate-slide-up">
+                    <div className="relative overflow-hidden rounded-xl bg-black">
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent z-20">
 
-                 </div>
-              </div>
-      </section>
+                        </div>
+                        <img
+                          src={turbossImage}
+                          alt="Seasonal collection"
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      <div className="relative z-20 px-8 py-24 md:px-16 lg:max-w-2xl">
+                        <span className="inline-block px-3 text-xs py-1 mb-2 font-medium bg-orange-600 text-white rounded-full">
+                          Digital Garage
+                        </span>
+                        <h2 className="text-3xl md:text-4xl font-semibold mb-4 text-white">TurBoss Digital Garage</h2>
+                        <p className="text-white/80 mb-8 font-light">
+                          Turboss is your go-to place to explore car details from A to Z. From engine specs to the latest tech, we cover everything you need to know about cars in one easy-to-use platform.
+                        </p>
+                        <Link to="/community" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
+                        <StarBorder
+                          as="button"
+                          className="custom-class w-[30rem]"
+                          color="cyan"
+                          speed="5s"
+                        >
+                          Digital Garage will be available soon
+                        </StarBorder>
+                      </Link>
+                      </div>
 
+                    </div>
+                  </div>
+            </section>
 
-      {/* Test Section */}
+            {/* Banners for smaller screens */}
+            <section className="md:hidden py-24 px-6 space-y-5 w-full">
+                    <div className="w-[100%] mx-auto animate-slide-down">
+                      <div className="relative overflow-hidden rounded-xl bg-black">
+                        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent z-20">
+
+                          </div>
+                          <img
+                            src={communityBackground}
+                            alt="Seasonal collection"
+                            className="absolute inset-0 w-full h-full object-cover"
+                          />
+                        <div className="relative z-20 px-8 py-24 md:px-16 lg:max-w-2xl">
+                          <span className="inline-block px-3 text-xs py-1 mb-2 font-medium bg-green-600 text-white rounded-full">
+                            Public
+                          </span>
+                          <h2 className="lg:text-4xl md:text-4xl font-semibold font-poppins mb-4 text-white">The BW Community</h2>
+                          <p className="text-white/80 mb-8 font-light">
+                            Turboss is your go-to place to explore car details from A to Z. From engine specs to the latest tech, we cover everything you need to know about cars in one easy-to-use platform.
+                          </p>
+                          <Link to="/community" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
+                          <StarBorder
+                            as="button"
+                            className="custom-class"
+                            color="cyan"
+                            speed="5s"
+                          >
+                            Check out the Community
+                          </StarBorder>
+                        </Link>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div className="w-[100%] mx-auto animate-slide-up">
+                      <div className="relative overflow-hidden rounded-xl bg-black">
+                        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent z-20">
+
+                          </div>
+                          <img
+                            src={turbossImage}
+                            alt="Seasonal collection"
+                            className="absolute inset-0 w-full h-full object-cover"
+                          />
+                        <div className="relative z-20 px-8 py-24 md:px-16 lg:max-w-2xl">
+                          <span className="inline-block px-3 text-xs py-1 mb-2 font-medium bg-orange-600 text-white rounded-full">
+                            Digital Garage
+                          </span>
+                          <h2 className="text-3xl md:text-4xl font-semibold mb-4 text-white">TurBoss Digital Garage</h2>
+                          <p className="text-white/80 mb-8 font-light">
+                            Turboss is your go-to place to explore car details from A to Z. From engine specs to the latest tech, we cover everything you need to know about cars in one easy-to-use platform.
+                          </p>
+                          <Link to="/community" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
+                          <StarBorder
+                            as="button"
+                            className="custom-class"
+                            color="cyan"
+                            speed="5s"
+                          >
+                            Check out the Community
+                          </StarBorder>
+                        </Link>
+                        </div>
+
+                      </div>
+                    </div>
+            </section>
+      </div>
+
+      {/* News Section */}
       <section className="py-20 px-6">
         <div 
           ref={aboutRef}

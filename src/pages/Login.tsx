@@ -144,6 +144,7 @@ const Login = () => {
       <Header />
       
       <div className="flex-grow relative flex items-center justify-center pt-16 pb-8 px-4 sm:px-6 lg:px-8">
+        
         {/* Background video with improved positioning */}
         <div className="fixed inset-0 -z-10 overflow-hidden">
           <video autoPlay loop muted className="w-full h-full object-cover blur-sm">
@@ -287,7 +288,7 @@ const Login = () => {
               <div className="text-center mt-6">
                 <p className="text-sm text-muted-foreground">
                   Don't have an account?{" "}
-                  <Link to="/signup" className="text-primary hover:underline font-medium">
+                  <Link to="/register" className="text-primary hover:underline font-medium">
                     Create an account
                   </Link>
                 </p>

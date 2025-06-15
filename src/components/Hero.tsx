@@ -7,9 +7,10 @@ import { ArrowDown } from 'lucide-react';
 import heroImage from '../assets/furBack.png';
 import heroImageSm from '../assets/furBacksm.png';
 import StarBorder from './StarBorder';
+import overlayImage from '../assets/overlayImage.png';
 
 //video
-import backgroundVideo from '../assets/Videos/backgroundVideo.mp4';
+import backgroundVideo from '../assets/Videos/backgroundVideo2.mp4';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -40,10 +41,11 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative h-screen overflow-hidden">
+    <section className="relative h-screen">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-transparent">
-        <img src={heroImage} alt="Hero Background" className="hidden lg:flex md:flex w-full h-full object-cover opacity-50" />
+        <video src={backgroundVideo} autoPlay loop muted className="w-full h-full object-cover opacity-50" />
+        <img src={overlayImage} alt="Hero Background" className="absolute z- lg:flex md:flex w-full h-full object-cover opacity-50" />
         
       </div>
             <div className="absolute inset-0 bg-transparent">
@@ -64,30 +66,28 @@ const Hero = () => {
             Drive the future
           </span>
           
-          <h1 className="lg:text-7xl text-4xl sm:text-5xl font-bold mb-6 tracking-tight leading-tight animate-slide-down">
+          <h1 className="lg:text-7xl lg:scale-110 text-4xl sm:text-5xl font-bold mb-6 tracking-tight leading-tight animate-slide-down">
             Where <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-800 to-gray-500">Innovation
                   </span> Fuels <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-gray-500">Every Journey</span>
           </h1>
           
-          <p className="text-muted-foreground text-gray-600 text-md mb-8 max-w-xl mx-auto animate-slide-up">
-            Discover our collection of meticulously crafted products, designed with Roodhy in mind, combining aesthetics with intuitive functionality.
-          </p>
+
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in">
+          <div className="flex flex-col  py-6  sm:flex-row items-center justify-center gap-4 animate-fade-in">
               <StarBorder
                 as="button"
-                className="custom-class"
+                className="custom-class button-hover"
                 color="cyan"
                 speed="5s"
               >
-                Get Started
+                Explore Reviews
               </StarBorder>
             <Button 
               variant="outline" 
               size="lg" 
               className="rounded-full px-8 button-hover"
             >
-              Explore Collection
+              Explore Articles
             </Button>
           </div>
         </div>

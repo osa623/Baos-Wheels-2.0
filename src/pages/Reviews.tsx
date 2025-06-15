@@ -230,11 +230,11 @@ const Reviews = () => {
   }, [reviews, priceRange, selectedCategories, selectedBrands, sortBy, searchTerm]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen ">
       <Header />
       
       {/* Page header */}
-      <div className="pt-24 pb-6 px-6 bg-gray-50">
+      <div className="pt-24 pb-6 px-6 bg-gray-50 z-40">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between text-center">
             <div className='flex flex-col'>

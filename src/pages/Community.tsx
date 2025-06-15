@@ -14,6 +14,7 @@ import { db } from '@/lib/firebase';
 import { collection, query, orderBy, addDoc, serverTimestamp, getDocs, deleteDoc, doc, where, onSnapshot, Timestamp } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
+import { createReplyNotification } from '@/utils/notificationUtils';
 
 interface Message {
   id: string;
@@ -208,6 +209,8 @@ const Community = () => {
         };
         
         // If replying to a reply, add the replyToId, replyToUser and a preview of the message
+        let recipientUserId = ''; // Track who should receive the notification
+        
         if (replyingToReply) {
           const replyBeingRepliedTo = replies.find(r => r.id === replyingToReply);
           if (replyBeingRepliedTo) {
@@ -218,6 +221,9 @@ const Community = () => {
               ? replyBeingRepliedTo.message.substring(0, 97) + '...' 
               : replyBeingRepliedTo.message;
             replyData.replyToMessage = previewMessage;
+            
+            // Set the recipient for notification (the author of the reply)
+            recipientUserId = replyBeingRepliedTo.userId;
           }
         } else {
           // If replying directly to a message, include a preview of the message
@@ -228,13 +234,35 @@ const Community = () => {
               ? messageBeingRepliedTo.message.substring(0, 97) + '...' 
               : messageBeingRepliedTo.message;
             replyData.replyToMessage = previewMessage;
+            
+            // Set the recipient for notification (the author of the original message)
+            recipientUserId = messageBeingRepliedTo.userId;
           }
         }
         
         // Debug logging
         console.log("Reply data:", JSON.stringify(replyData));
         
-        await addDoc(collection(db, 'community_replies'), replyData);
+        // Save the reply to Firestore
+        const replyDocRef = await addDoc(collection(db, 'community_replies'), replyData);
+        console.log("Reply added with ID:", replyDocRef.id);
+        
+        // Create a notification for the message/reply author (if different from current user)
+        if (recipientUserId && recipientUserId !== currentUser.uid) {
+          try {
+            await createReplyNotification({
+              recipientUserId: recipientUserId,
+              senderUserId: currentUser.uid,
+              senderUserName: currentUser.displayName || 'Anonymous User',
+              senderUserAvatar: currentUser.photoURL || null,
+              messageContent: replyContent.trim(),
+              originalMessageId: replyingTo,
+              chatId: 'community' // Since this is the community chat
+            });
+          } catch (notifError) {
+            console.error("Failed to create notification:", notifError);
+          }
+        }
         
         setReplyContent('');
         setReplyingTo(null);
