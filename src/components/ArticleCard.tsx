@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { Eye, ShoppingCart, Heart } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { cn } from '@/lib/utils';
+import { articlesApi } from '@/api/index'
 
 export interface Article {
-  id: number;
+  summary: string;
+  _id: number;
   title: string;
   category: string;
   images: string[];
@@ -47,19 +49,9 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ Article, index = 0 }) => {
             isHovered ? "opacity-100" : "opacity-0"
           )}
         >
-          <Button 
-            variant="secondary" 
-            size="icon" 
-            className="rounded-full bg-white shadow-sm hover:bg-white/90 transition-transform hover:scale-105"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-          >
-            <ShoppingCart className="h-4 w-4" />
-          </Button>
+
           
-          <Link to={`/articles/${Article.id}`}>
+          <Link to={`/articles/${Article._id}`}>
             <Button 
               variant="secondary" 
               size="icon" 
@@ -69,21 +61,6 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ Article, index = 0 }) => {
             </Button>
           </Link>
           
-          <Button 
-            variant="secondary" 
-            size="icon" 
-            className={cn(
-              "rounded-full transition-transform hover:scale-105",
-              isFavorite ? "bg-red-50 text-red-500" : "bg-white hover:bg-white/90"
-            )}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setIsFavorite(!isFavorite);
-            }}
-          >
-            <Heart className={cn("h-4 w-4", isFavorite && "fill-red-500")} />
-          </Button>
         </div>
         
         {/* Category tag */}

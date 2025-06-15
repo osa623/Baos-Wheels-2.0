@@ -243,7 +243,7 @@ const Reviews = () => {
                 Explore our collection of in-depth automotive reviews to help you make informed decisions. 
               </p>
             </div>
-            <div className="flex items-center mt-6 ml-8 w-full relative">
+            <div className="hidden lg:flex items-center mt-6 ml-8 w-full relative">
               <input
               type="text"
               placeholder="Search reviews..."
@@ -259,6 +259,15 @@ const Reviews = () => {
               </span>
             </div>
           </div>
+          <div className="lg:hidden mt-6">
+            <input
+              type="text"
+              placeholder="Search reviews..."
+              className="border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+            />
+            </div>
         </div>
       </div>
       

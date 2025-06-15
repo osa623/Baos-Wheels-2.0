@@ -231,7 +231,7 @@ const Index = () => {
                 Explore the latest articles about the automobile industry, get up-to-date auto news, and discover insights on trends, innovations, and expert tips to keep you informed and inspired.
               </p>
           </div>
-            <Link to="/products" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
+            <Link to="/articles" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
                <StarBorder
                 as="button"
                 className="custom-class"
@@ -244,7 +244,7 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {fetchArticles.map((article, index) => (
+            {fetchArticles.slice(0,4).map((article, index) => (
               <div 
                 key={article.id}
                 className="opacity-0 animate-fade-in"
@@ -345,7 +345,7 @@ const Index = () => {
             {/* Banners for below section */}
             <SplitText
               text="What's New"
-              className="text-9xl text-border mt-6 hidden sm:abolsute text-nowrap z-20 w-full top-0 overflow-visible font-semibold absolute text-center"
+              className="text-9xl text-border mt-6  text-nowrap z-20 w-full top-0 overflow-visible font-semibold absolute text-center"
               delay={100}
               duration={0.6}
               ease="power3.out"
@@ -612,25 +612,6 @@ const Index = () => {
         </div>
       </section> */}
       
-      {/* Newsletter Section */}
-      <section className="py-24 px-6 bg-gradient-to-r from-gray-100 to-white">
-        <div className="max-w-xl mx-auto text-center">
-          <h2 className="text-3xl font-semibold mb-4">Join Our Community</h2>
-          <p className="text-muted-foreground mb-8">
-            Subscribe to our newsletter to receive updates on new products, special offers, and design inspiration.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <input 
-              type="email" 
-              placeholder="Enter your email address" 
-              className="flex h-10 w-full rounded-full border border-input bg-white px-5 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            />
-            <Button className="rounded-full button-hover">
-              Subscribe
-            </Button>
-          </div>
-        </div>
-      </section>
       
       <Footer />
     </div>

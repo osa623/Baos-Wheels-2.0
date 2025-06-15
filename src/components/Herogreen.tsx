@@ -56,28 +56,11 @@ const Herogreen = () => {
             Where <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-800">Sustainability 
                   </span> Meets <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-gray-500">the Road</span>
           </h1>
+            <p className="text-muted-foreground text-gray-600 text-md mb-8 max-w-xl mx-auto animate-slide-up">
+            Discover our reviews of electric vehicles and Read Green Artcles.Find the perfect electric vehicle for your needs and pave your way to a greener future.
+            </p>
           
-          <p className="text-muted-foreground text-gray-600 text-md mb-8 max-w-xl mx-auto animate-slide-up">
-            Discover our collection of meticulously crafted products, designed with Roodhy in mind, combining aesthetics with intuitive functionality.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in">
-              <StarBorder
-                as="button"
-                className="custom-class"
-                color="cyan"
-                speed="5s"
-              >
-                Get Started
-              </StarBorder>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="rounded-full px-8 button-hover"
-            >
-              Explore Collection
-            </Button>
-          </div>
+
         </div>
       </div>
       

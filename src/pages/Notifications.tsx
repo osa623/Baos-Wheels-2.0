@@ -42,6 +42,8 @@ import {
   onSnapshot
 } from 'firebase/firestore';
 import { getApp } from 'firebase/app';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 // Define Notification interface directly in this file
 interface Notification {
@@ -256,7 +258,9 @@ const NotificationsPage: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
+    <div className='relative'>
+      <Header/>
+    <Container maxWidth="lg" className='mt-12' sx={{ py: 4 }}>
       <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>
         <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
           <Box display="flex" alignItems="center">
@@ -420,36 +424,9 @@ const NotificationsPage: React.FC = () => {
         </Alert>
       </Snackbar>
       
-      {/* Debug information - more detailed */}
-      <Paper elevation={1} sx={{ mt: 2, p: 2, bgcolor: 'background.default' }}>
-        <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-          Debug Information
-        </Typography>
-        <Typography variant="caption" component="pre" sx={{ whiteSpace: 'pre-wrap', overflow: 'auto' }}>
-          {`User ID: ${currentUser ? currentUser.uid : 'Not logged in'}
-Notifications Count: ${notifications.length}
-Status: ${loading ? 'Loading...' : error ? 'Error' : 'Ready'}
-Details: ${debugInfo}
-Latest notification: ${notifications[0] ? JSON.stringify({
-  id: notifications[0].id,
-  type: notifications[0].type,
-  from: notifications[0].fromUserName,
-  contentPreview: notifications[0].contentPreview?.substring(0, 30) + '...'
-}, null, 2) : 'None'}`}
-        </Typography>
-        <Button 
-          size="small" 
-          variant="outlined" 
-          sx={{ mt: 1 }}
-          onClick={() => {
-            console.log('Current notifications:', notifications);
-            fetchNotifications();
-          }}
-        >
-          Debug Refresh
-        </Button>
-      </Paper>
     </Container>
+    <Footer />
+    </div>
   );
 };
 

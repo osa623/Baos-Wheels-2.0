@@ -214,7 +214,9 @@ const Electriccars = () => {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {fetchArticles.map((article, index) => (
+            {fetchArticles
+              .filter(article => article.category === 'electric' || article.category === 'Electric')
+              .map((article, index) => (
               <div 
                 key={article.id}
                 className="opacity-0 animate-fade-in"
@@ -234,8 +236,21 @@ const Electriccars = () => {
       <ScrollVelocitymin
         texts={['#baoswheels', '#driveGreen']} 
         velocity={10} 
-        className="custom-scroll-text text-green-800"
+        className="custom-scroll-text text-border text-green-800"
       />
+
+            <style>
+        {`
+          .text-border {
+        color: white;
+        text-shadow:
+          -1px -1px 0 #067C02,  
+           1px -1px 0 #000,
+          -1px  1px 0 #000,
+           1px  1px 0 #000;
+          }
+        `}
+      </style>
       
       {/* Categories Reviews Section */}
       <section className="py-20 px-6 bg-gray-50">

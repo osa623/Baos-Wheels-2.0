@@ -307,7 +307,7 @@ const Header = () => {
           <Link to="/reviews" className={cn("nav-link text-sm", isActive('/reviews') && "text-primary after:w-full")}>
             Car Reviews
           </Link>
-          <Link to="/collections" className={cn("nav-link text-sm", isActive('/collections') && "text-primary after:w-full")}>
+          <Link to="/articles" className={cn("nav-link text-sm", isActive('/articles') && "text-primary after:w-full")}>
             Auto Articles
           </Link>
           <Link to="/electric" className={cn("nav-link text-sm", isActive('/electric') && "text-primary after:w-full")}>
@@ -382,7 +382,7 @@ const Header = () => {
           {currentUser && (
             <DropdownMenu open={isNotificationsOpen} onOpenChange={setIsNotificationsOpen}>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative rounded-full hover:bg-secondary transition-colors">
+                <Button variant="ghost" size="icon" className="relative cursor-pointer rounded-full hover:bg-secondary transition-colors">
                   {isLoadingNotifications ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
                   ) : (
@@ -693,9 +693,9 @@ const Header = () => {
               Car Reviews
             </Link>
             <Link 
-              to="/collections" 
+              to="/articles" 
               className={cn("text-base font-medium py-3 px-4 rounded-md hover:bg-gray-50", 
-                isActive('/collections') && "text-primary bg-primary/5")}
+                isActive('/articles') && "text-primary bg-primary/5")}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Auto Articles

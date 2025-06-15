@@ -60,6 +60,20 @@ export interface News {
 
 }
 
+// article interface
+export interface Article {
+  _id?: string;             
+  id: number | string;     
+  title: string;
+  category: string;
+  summary: string;
+  subtitle: string[];
+  description: string[];
+  images?: string[];
+  author?: string;
+  date?: string;  
+}
+
 // Search result interface - represents any searchable content
 export interface SearchResult {
   id: string | number;
@@ -134,12 +148,56 @@ export const articlesApi = {
   },
   
   // Get article by ID
-  getById: async (id: number): Promise<Article> => {
+  getById: async (id: number | string): Promise<Article> => {
     try {
-      const response = await axios.get(getApiUrl(`/api/article/get/${id}`));
-      return response.data;
+      console.log("API calling getById with ID:", id);
+      
+      // Check if this is a MongoDB ObjectId (24-character hex string)
+      const idParam = typeof id === 'string' && id.length === 24 ? id : `${id}`;
+      
+      // Fix: Use the correct endpoint - "article" instead of "articles"
+      const endpoint = `/api/article/get/${idParam}`;
+      console.log("API endpoint:", endpoint);
+      
+      const response = await axios.get(getApiUrl(endpoint));
+      console.log("API response for article:", response.data);
+
+      if (!response.data) {
+        throw new Error("Empty response from API");
+      }
+      
+      // Handle MongoDB style document with _id field
+      const articleData = response.data;
+      if (articleData._id && !articleData.id) {
+        articleData.id = articleData._id;
+      }
+
+      return articleData;
     } catch (error: any) {
       console.error(`Error fetching article ${id}:`, error);
+
+      // adding a mock data value if the article does not exist
+      if (import.meta.env.DEV) {
+        console.log("Providing mock article data in development");
+        
+        // Provide mock data with the right interface structure
+        return {
+          _id: id.toString(),
+          id: id,
+          title: `Sample Article ${id}`,
+          category: "Automotive",
+          summary: "This is a sample article summary",
+          subtitle: ["First subtitle", "Second subtitle"],
+          description: ["This is the first paragraph of the description.", "This is the second paragraph."],
+          images: [
+            "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=1974",
+            "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&q=80&w=1974"
+          ],
+          author: "Auto Enthusiast",
+          date: new Date().toISOString().split('T')[0]
+        };
+      }
+      
       throw {
         message: `Failed to fetch article ${id}`,
         status: error.response?.status,
@@ -646,7 +704,6 @@ export const searchApi = {
   }
 };
 
-// Helper functions for search
 
 // Create a snippet from content that highlights the search term
 function createSnippet(contentParts: (string | undefined)[], query: string): string {

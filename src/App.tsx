@@ -11,7 +11,7 @@ import Index from "./pages/Index";
 import ReviewView from "./pages/ReviewView";
 import Reviews from "./pages/Reviews";
 import Cart from "./pages/Cart";
-import Collections from "./pages/Collections";
+import Collections from "./pages/Articles";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -21,6 +21,8 @@ import Profile from './pages/Profile';
 import Community from './pages/Community';
 import Notifications from './pages/Notifications';
 import Search from './pages/Search';
+import Articles from './pages/Articles';
+import ArticleView from './pages/ArticleView';
 
 // Create QueryClient
 const queryClient = new QueryClient({
@@ -47,7 +49,8 @@ function App() {
               <Route path="/reviews/:id" element={<ReviewView />} />
               <Route path="/products" element={<Navigate to="/reviews" replace />} />
               <Route path="/cart" element={<Cart />} />
-              <Route path="/collections" element={<Collections />} />
+              <Route path="/articles" element={<Articles />} />
+              <Route path="/articles/:id" element={<ArticleView />} />
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/community" element={<Community />} />
               <Route path="/about" element={<About />} />

@@ -176,13 +176,21 @@ const ReviewView = () => {
           </div>  */}
           
           <Separator className="" />
-            <h2 className='flex flex-col text-2xl font-bold py-6'>
+            <h2 className='flex flex-col lg:text-2xl text-3xl font-bold py-6'>
                 Specifications
-                <p className='font-thin text-xs py-2 w-[60%]'>
+                <p className='font-normal text-xs py-2 lg:w-[60%]'>
                     The following specifications cover all essential technical and design aspects of the vehicle, including engine performance, dimensions, fuel economy, and advanced features.
                 </p>
             </h2>
-            <div className='grid grid-cols-2 gap-4 mb-8'>
+            <div className='hidden lg:grid grid-cols-2 gap-4 mb-8'>
+                <Badge variant="secondary" className='py-2 bg-gray-300'>{review.engine}</Badge>
+                <Badge variant="secondary" className='py-2 bg-gray-300'>{review.drivetrain}</Badge>
+                <Badge variant="secondary" className='py-2 bg-gray-300'>{review.fuelEconomy}</Badge>
+                <Badge variant="secondary" className='py-2 bg-gray-300'>{review.seatingCapacity}</Badge>
+                <Badge variant="secondary" className='py-2 bg-gray-300'>{review.singleprice}</Badge>
+                <Badge variant="secondary" className='py-2 bg-gray-300'>{review.transmission}</Badge>
+            </div>
+            <div className='grid lg:hidden grid-cols-1 gap-4 mb-8'>
                 <Badge variant="secondary" className='py-2 bg-gray-300'>{review.engine}</Badge>
                 <Badge variant="secondary" className='py-2 bg-gray-300'>{review.drivetrain}</Badge>
                 <Badge variant="secondary" className='py-2 bg-gray-300'>{review.fuelEconomy}</Badge>
@@ -192,17 +200,18 @@ const ReviewView = () => {
             </div>
 
 
+
           <Separator className="mb-8" />
           
           {/* Review content */}
           <div className="prose max-w-none mb-8">
-              <h2 className='flex flex-col text-3xl w-[70%] font-bold py-6'>
+              <h2 className='flex flex-col text-3xl lg:w-[70%] font-bold py-6'>
                  <span className='flex items-center'><div className='bg-black border-4 border-gray-500 h-5 w-5 mr-4 rounded-full' /><span>What You’re Really Getting</span></span>
                 <p className='font-light text-lg  py-4 w-[100%]'>
                   {review.overview}
                 </p>
             </h2>
-             <h2 className='flex flex-col text-3xl w-[70%] font-bold py-6'>
+             <h2 className='flex flex-col text-3xl lg:w-[70%] font-bold py-6'>
                  <span className='flex items-center'><div className='bg-black border-4 border-gray-500 h-5 w-5 mr-4 rounded-full' /><span>What Defines It's Look</span></span>
                 <p className='font-light text-lg py-4 w-[100%]'>
                   {review.exterior}
@@ -216,7 +225,7 @@ const ReviewView = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-             <h2 className='flex flex-col text-3xl w-[70%] font-extrabold py-6'>
+             <h2 className='flex flex-col text-3xl lg:w-[70%] font-extrabold py-6'>
                  <span className='flex items-center'><div className='bg-black border-4 border-gray-500 h-5 w-5 mr-4 rounded-full' /><span>What Surrounds You</span></span>
                 <p className='font-light text-lg  py-4 w-[100%]'>
                   {review.interior}
@@ -258,9 +267,9 @@ const ReviewView = () => {
                 </div>    
             
             </div> 
-             <h2 className='flex flex-col text-3xl w-[70%] font-bold py-6'>
+             <h2 className='flex flex-col text-3xl lg:w-[70%] font-bold py-6'>
                  <span className='flex items-center'><div className='bg-black border-4 border-gray-500 h-5 w-5 mr-4 rounded-full' /><span>What Drives It </span></span>
-                <p className='font-light text-lg  py-4 w-[100%]'>
+                <p className='font-light  text-lg  py-4 w-[100%]'>
                   {review.performance}
                 </p>
             </h2>
@@ -294,25 +303,6 @@ const ReviewView = () => {
 
           {/* Interaction buttons */}
           <div className="flex flex-wrap gap-4">
-            <Button 
-              variant="outline"
-              size="sm"
-              className="rounded-full"
-              onClick={() => setLikeCount(prev => prev + 1)}
-            >
-              <ThumbsUp className="h-4 w-4 mr-2" />
-              {likeCount} {likeCount === 1 ? 'Like' : 'Likes'}
-            </Button>
-            
-            <Button 
-              variant="outline"
-              size="sm"
-              className="rounded-full"
-            >
-              <MessageCircle className="h-4 w-4 mr-2" />
-              Comments
-            </Button>
-            
             <Button 
               variant="outline"
               size="sm"

@@ -221,7 +221,13 @@ const Search = () => {
     <div className='relative min-h-screen flex flex-col'>
       <Header />
       
-      <main className="flex-1 container max-w-6xl mx-auto px-4 py-8">
+      <main className="flex-1 container max-w-6xl mx-auto px-4 py-24">
+        <h1 onClick={() => window.location.href = '/'} className="text-sm cursor-pointer font-normal mb-1 flex items-center gap-2">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" className="inline-block text-muted-foreground" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          Back to Home
+        </h1>
         <h1 className="text-3xl font-bold mb-6">Search</h1>
         
         <form onSubmit={handleSearch} className="mb-8">
