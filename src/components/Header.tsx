@@ -218,15 +218,19 @@ const Header = () => {
       // Add a class to the body to prevent scrolling when menu is open
       document.body.classList.add('mobile-menu-open', 'menu-open');
       document.body.style.overflow = 'hidden';
+      // Ensure wrapper has higher stacking context
+      document.body.style.position = 'relative';
     } else {
       document.body.classList.remove('mobile-menu-open', 'menu-open');
       document.body.style.overflow = '';
+      document.body.style.position = '';
     }
     
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.body.classList.remove('mobile-menu-open', 'menu-open');
       document.body.style.overflow = '';
+      document.body.style.position = '';
     };
   }, [isMobileMenuOpen]);
 
@@ -316,7 +320,7 @@ const Header = () => {
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-4">
-          <Button variant="ghost" size="icon" className="rounded-full hover:bg-secondary transition-colors">
+          <Button onClick={() => {window.location.href = '/search'}} variant="ghost" size="icon" className="rounded-full hover:bg-secondary transition-colors">
             <Search className="h-5 w-5" />
           </Button>
           
@@ -564,11 +568,11 @@ const Header = () => {
           </Button>
         </div>
 
-        {/* Mobile Menu Button - improved for touch and visibility */}
+        {/* Mobile Menu Button - enhanced with higher z-index */}
         <Button 
           variant="ghost" 
           size="sm" 
-          className="md:hidden rounded-full hover:bg-secondary transition-colors z-[80] ml-1 h-10 w-10 p-2 header-menu-button" 
+          className="md:hidden rounded-full hover:bg-secondary transition-colors z-[10000] ml-1 h-10 w-10 p-2 header-menu-button" 
           onClick={() => {
             console.log("Mobile menu toggled:", !isMobileMenuOpen);
             setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -583,24 +587,55 @@ const Header = () => {
           aria-controls="mobile-menu"
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
         >
-          {isMobileMenuOpen ? <div className='hidden'/> : <Menu className="h-5 w-5" />}
+          {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </Button>
 
-        {/* Mobile Menu - improved z-index and display control */}
+        {/* Add a backdrop/overlay for the mobile menu */}
+        {isMobileMenuOpen && (
+          <div 
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[99990]" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            style={{
+              position: 'fixed',
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+              zIndex: 99990
+            }}
+            aria-hidden="true"
+          />
+        )}
+
+        {/* Mobile Menu - completely reworked for better visibility and z-index */}
         <div 
           id="mobile-menu"
           ref={mobileMenuRef}
           className={cn(
-            "fixed inset-0 bg-white z-[90] flex flex-col md:hidden transition-transform duration-300 ease-in-out overflow-auto",
+            "fixed inset-0 bg-white z-[99999] flex flex-col md:hidden transition-transform duration-300 ease-in-out overflow-auto",
             isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
           )}
+          style={{
+            position: 'fixed',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            zIndex: 99999,
+            willChange: 'transform',
+            maxWidth: '100%',
+            width: '100%',
+            height: '100%',
+            visibility: isMobileMenuOpen ? 'visible' : 'hidden',
+            display: 'flex'
+          }}
           aria-hidden={!isMobileMenuOpen}
         >
-          <div className="sticky top-0 flex justify-start px-4 py-3 bg-white/90 backdrop-blur-sm border-b border-gray-100 z-[91]">
+          <div className="sticky top-0 flex justify-start px-4 py-3 bg-white/95 backdrop-blur-sm border-b border-gray-100 z-[100000]">
             <Button 
               variant="ghost" 
               size="sm" 
-              className="rounded-full h-10 w-10 p-2"
+              className="rounded-full h-10 w-10 p-2 z-[100001]"
               onClick={() => {
                 console.log("Close button clicked");
                 setIsMobileMenuOpen(false);
@@ -610,6 +645,9 @@ const Header = () => {
             >
               <X className="h-5 w-5" />
             </Button>
+            <div className="ml-4 flex-1 text-center font-medium">
+              Menu
+            </div>
           </div>
           
           {/* Current user display in mobile menu - improved spacing */}

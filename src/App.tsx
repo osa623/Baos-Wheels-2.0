@@ -20,6 +20,7 @@ import NotFound from "./pages/NotFound";
 import Profile from './pages/Profile';
 import Community from './pages/Community';
 import Notifications from './pages/Notifications';
+import Search from './pages/Search';
 
 // Create QueryClient
 const queryClient = new QueryClient({
@@ -52,6 +53,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/search" element={<Search />} />
               <Route path="/electric" element={<Electriccars />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="*" element={<NotFound />} />

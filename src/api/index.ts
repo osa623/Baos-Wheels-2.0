@@ -60,6 +60,21 @@ export interface News {
 
 }
 
+// Search result interface - represents any searchable content
+export interface SearchResult {
+  id: string | number;
+  _id?: string;
+  title: string;
+  type: 'article' | 'news' | 'review';  // Content type
+  category: string;
+  date?: string;
+  images?: string[];
+  description?: string;
+  snippet?: string;  // Brief excerpt showing the search match
+  author?: string;
+  relevanceScore?: number;  // Optional score for sorting results
+}
+
 // Type for API error responses
 export interface ApiError {
   message: string;
@@ -380,9 +395,377 @@ export const reviewsApi = {
   }
 };
 
+// Search API
+export const searchApi = {
+  // Search across all content types
+  search: async (query: string): Promise<SearchResult[]> => {
+    try {
+      if (!query || query.trim() === '') {
+        return [];
+      }
+
+      console.log('Searching for:', query);
+      const sanitizedQuery = encodeURIComponent(query.trim());
+      const response = await axios.get(getApiUrl(`/api/search?q=${sanitizedQuery}`));
+      
+      if (Array.isArray(response.data)) {
+        return response.data;
+      }
+      
+      throw new Error('Unexpected API response format');
+    } catch (error: any) {
+      console.error('Error searching content:', error);
+      
+      // Return fallback data during development
+      if (import.meta.env.DEV) {
+        console.log('API: Providing mock search results in development for query:', query);
+        
+        // First get all content to search through
+        let allContent: SearchResult[] = [];
+        
+        // Collect reviews
+        try {
+          const reviews = await reviewsApi.getAll();
+          reviews.forEach(review => {
+            allContent.push({
+              id: review.id,
+              _id: review._id,
+              title: review.title,
+              type: 'review',
+              category: review.category,
+              date: review.date,
+              images: review.images,
+              description: review.description,
+              snippet: createSnippet([
+                review.title,
+                review.description,
+                review.overview,
+                review.exterior,
+                review.interior,
+                review.performance,
+                review.safety
+              ], query),
+              author: review.author,
+              relevanceScore: calculateRelevance(review, query)
+            });
+          });
+        } catch (e) {
+          console.error('Error getting reviews for search:', e);
+        }
+        
+        // Mock articles data for search
+        const mockArticles = [
+          {
+            id: "article-1",
+            title: "The Future of Electric Vehicles in 2024",
+            category: "Technology",
+            content: "Electric vehicles are rapidly evolving with new battery technologies extending range beyond 400 miles per charge. Tesla, Ford, and Volkswagen are leading the charge with innovative designs that combine performance with sustainability. The latest models feature enhanced autonomous driving capabilities and integrated renewable energy solutions.",
+            images: ["https://placehold.co/600x400?text=Electric+Car"],
+            author: "Jane Smith",
+            date: "2023-11-15"
+          },
+          {
+            id: "article-2",
+            title: "Top 10 Family SUVs for 2024",
+            category: "Buyer's Guide",
+            content: "Family SUVs continue to dominate the market with spacious interiors and advanced safety features. The Toyota Highlander, Honda Pilot, and Kia Telluride top our list with excellent crash test ratings and fuel economy. New models feature enhanced entertainment systems and configurable seating arrangements to accommodate growing families.",
+            images: ["https://placehold.co/600x400?text=Family+SUV"],
+            author: "David Wilson",
+            date: "2023-12-03"  
+          }
+        ];
+        
+        // Add articles to search content
+        mockArticles.forEach(article => {
+          allContent.push({
+            id: article.id,
+            title: article.title,
+            type: 'article',
+            category: article.category,
+            date: article.date,
+            images: article.images,
+            snippet: createSnippet([article.title, article.content], query),
+            author: article.author,
+            relevanceScore: calculateRelevanceSimple(article.title + " " + article.content + " " + article.category, query)
+          });
+        });
+        
+        // Mock news data for search
+        const mockNews = [
+          {
+            id: "news-1",
+            title: "BMW Unveils Revolutionary Hydrogen-Powered Concept",
+            category: "Industry News",
+            content: "BMW has revealed a groundbreaking hydrogen fuel cell concept vehicle that promises 500 miles of range with refueling times under 5 minutes. The concept features a sleek aerodynamic design with sustainable materials throughout the cabin. BMW plans to begin production within the next three years, positioning the vehicle as a premium alternative to battery electric vehicles.",
+            images: ["https://placehold.co/600x400?text=BMW+Concept"],
+            author: "Michael Chang",
+            date: "2023-12-01"
+          },
+          {
+            id: "news-2",
+            title: "Ford F-150 Lightning Sets New Sales Record",
+            category: "Market Trends",
+            content: "The Ford F-150 Lightning has become the best-selling electric truck in North America, surpassing 100,000 units sold in 2023. Fleet customers account for nearly 40% of sales, citing lower operating costs and maintenance requirements. Ford has announced plans to expand production capacity by 50% to meet growing demand in both consumer and commercial markets.",
+            images: ["https://placehold.co/600x400?text=F150+Lightning"],
+            author: "Sarah Johnson",
+            date: "2023-11-28"
+          }
+        ];
+        
+        // Add news to search content
+        mockNews.forEach(news => {
+          allContent.push({
+            id: news.id,
+            title: news.title,
+            type: 'news',
+            category: news.category,
+            date: news.date,
+            images: news.images,
+            snippet: createSnippet([news.title, news.content], query),
+            author: news.author,
+            relevanceScore: calculateRelevanceSimple(news.title + " " + news.content + " " + news.category, query)
+          });
+        });
+        
+        // Filter content by search query across all fields
+        const searchResults = allContent.filter(item => {
+          // Create a combined text of all searchable fields
+          const searchableText = [
+            item.title,
+            item.category,
+            item.description,
+            item.snippet,
+            item.author
+          ]
+            .filter(Boolean)
+            .join(' ')
+            .toLowerCase();
+          
+          // Check if query matches any part of the searchable text
+          return searchableText.includes(query.toLowerCase());
+        });
+        
+        // Sort by relevance score
+        return searchResults.sort((a, b) => {
+          return (b.relevanceScore || 0) - (a.relevanceScore || 0);
+        });
+      }
+      
+      throw {
+        message: 'Failed to search content',
+        status: error.response?.status,
+        details: error.message
+      } as ApiError;
+    }
+  },
+  
+  // Advanced search with filters (unchanged)
+  advancedSearch: async (params: {
+    query: string,
+    type?: 'article' | 'news' | 'review' | 'all',
+    category?: string,
+    dateFrom?: string,
+    dateTo?: string,
+    limit?: number,
+    page?: number
+  }): Promise<{results: SearchResult[], total: number, page: number, totalPages: number}> => {
+    try {
+      // Build query string from params
+      const queryParams = new URLSearchParams();
+      
+      if (params.query) queryParams.append('q', params.query);
+      if (params.type && params.type !== 'all') queryParams.append('type', params.type);
+      if (params.category) queryParams.append('category', params.category);
+      if (params.dateFrom) queryParams.append('dateFrom', params.dateFrom);
+      if (params.dateTo) queryParams.append('dateTo', params.dateTo);
+      if (params.limit) queryParams.append('limit', params.limit.toString());
+      if (params.page) queryParams.append('page', params.page.toString());
+      
+      const response = await axios.get(getApiUrl(`/api/search/advanced?${queryParams.toString()}`));
+      
+      if (response.data && Array.isArray(response.data.results)) {
+        return response.data;
+      }
+      
+      throw new Error('Unexpected API response format');
+    } catch (error: any) {
+      console.error('Error performing advanced search:', error);
+      
+      // Return fallback data during development
+      if (import.meta.env.DEV) {
+        // Use the same approach as the basic search but with filtering
+        const basicResults = await searchApi.search(params.query);
+        
+        // Apply type filter if specified
+        let filteredResults = params.type && params.type !== 'all' 
+          ? basicResults.filter(item => item.type === params.type)
+          : basicResults;
+        
+        // Apply category filter if specified
+        if (params.category) {
+          filteredResults = filteredResults.filter(item => 
+            item.category.toLowerCase() === params.category?.toLowerCase()
+          );
+        }
+        
+        // Apply date filters if specified
+        if (params.dateFrom || params.dateTo) {
+          filteredResults = filteredResults.filter(item => {
+            if (!item.date) return false;
+            
+            const itemDate = new Date(item.date).getTime();
+            const fromDate = params.dateFrom ? new Date(params.dateFrom).getTime() : 0;
+            const toDate = params.dateTo ? new Date(params.dateTo).getTime() : Infinity;
+            
+            return itemDate >= fromDate && itemDate <= toDate;
+          });
+        }
+        
+        // Calculate pagination
+        const page = params.page || 1;
+        const limit = params.limit || 10;
+        const total = filteredResults.length;
+        const totalPages = Math.ceil(total / limit);
+        const startIndex = (page - 1) * limit;
+        const endIndex = startIndex + limit;
+        
+        return {
+          results: filteredResults.slice(startIndex, endIndex),
+          total,
+          page,
+          totalPages
+        };
+      }
+      
+      throw {
+        message: 'Failed to perform advanced search',
+        status: error.response?.status,
+        details: error.message
+      } as ApiError;
+    }
+  }
+};
+
+// Helper functions for search
+
+// Create a snippet from content that highlights the search term
+function createSnippet(contentParts: (string | undefined)[], query: string): string {
+  if (!query) return '';
+  
+  // Join all content parts, filter out undefined, and convert HTML to plain text
+  const fullContent = contentParts
+    .filter(Boolean)
+    .join(' ')
+    .replace(/<[^>]*>/g, '');
+  
+  // If no content, return empty string
+  if (!fullContent) return '';
+  
+  const lowerQuery = query.toLowerCase();
+  const lowerContent = fullContent.toLowerCase();
+  
+  // Find position of the query in the content
+  const position = lowerContent.indexOf(lowerQuery);
+  
+  if (position === -1) {
+    // If query not found as-is, look for any words from the query
+    const queryWords = lowerQuery.split(/\s+/).filter(Boolean);
+    for (const word of queryWords) {
+      if (word.length < 3) continue; // Skip very short words
+      
+      const wordPos = lowerContent.indexOf(word);
+      if (wordPos !== -1) {
+        // Create snippet around the first matching word
+        const start = Math.max(0, wordPos - 40);
+        const end = Math.min(fullContent.length, wordPos + word.length + 60);
+        return (start > 0 ? '...' : '') + 
+               fullContent.substring(start, end).trim() + 
+               (end < fullContent.length ? '...' : '');
+      }
+    }
+    
+    // If still no match, return the first part of the content
+    return fullContent.substring(0, 100) + (fullContent.length > 100 ? '...' : '');
+  }
+  
+  // Create snippet with some context around the query
+  const start = Math.max(0, position - 40);
+  const end = Math.min(fullContent.length, position + query.length + 60);
+  
+  return (start > 0 ? '...' : '') + 
+         fullContent.substring(start, end).trim() + 
+         (end < fullContent.length ? '...' : '');
+}
+
+// Calculate relevance score for a review with multiple possible content fields
+function calculateRelevance(review: any, query: string): number {
+  if (!query) return 0;
+  
+  const lowerQuery = query.toLowerCase();
+  let score = 0;
+  
+  // Check title (highest importance)
+  if (review.title && review.title.toLowerCase().includes(lowerQuery)) {
+    score += 5;
+  }
+  
+  // Check category and brand
+  if (review.category && review.category.toLowerCase().includes(lowerQuery)) {
+    score += 3;
+  }
+  if (review.brand && review.brand.toLowerCase().includes(lowerQuery)) {
+    score += 4;
+  }
+  
+  // Check various content fields
+  const contentFields = [
+    'description', 'overview', 'exterior', 
+    'interior', 'performance', 'safety'
+  ];
+  
+  for (const field of contentFields) {
+    if (review[field] && review[field].toLowerCase().includes(lowerQuery)) {
+      score += 2;
+    }
+  }
+  
+  return score;
+}
+
+// Simpler relevance calculation for basic text content
+function calculateRelevanceSimple(content: string, query: string): number {
+  if (!query || !content) return 0;
+  
+  const lowerQuery = query.toLowerCase();
+  const lowerContent = content.toLowerCase();
+  
+  // Basic relevance: how many times the query appears
+  const occurrences = countOccurrences(lowerContent, lowerQuery);
+  
+  // Title match is worth more
+  const titleBoost = content.substring(0, 100).toLowerCase().includes(lowerQuery) ? 3 : 0;
+  
+  return occurrences + titleBoost;
+}
+
+// Count occurrences of a substring in a string
+function countOccurrences(text: string, subtext: string): number {
+  if (!subtext) return 0;
+  let count = 0;
+  let position = text.indexOf(subtext);
+  
+  while (position !== -1) {
+    count++;
+    position = text.indexOf(subtext, position + 1);
+  }
+  
+  return count;
+}
+
 // Export all API modules
 export default {
   articles: articlesApi,
-  reviews: reviewsApi
-  // Add more API modules here as needed
+  reviews: reviewsApi,
+  news: newsApi,
+  search: searchApi
 };

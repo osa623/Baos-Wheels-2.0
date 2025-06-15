@@ -1,0 +1,62 @@
+/* Mobile menu fixes - critical z-index overrides */
+.mobile-menu-open {
+  overflow: hidden !important;
+  position: relative !important;
+  height: 100% !important;
+}
+
+/* Force highest possible z-index for mobile menu */
+#mobile-menu {
+  z-index: 2147483647 !important; /* Maximum possible z-index */
+  visibility: visible !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  transform: none !important;
+  transition: opacity 0.3s ease !important;
+  opacity: 1 !important;
+}
+
+/* Hide mobile menu when closed using opacity instead of transform */
+#mobile-menu.translate-x-full {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+/* Ensure menu button stays on top */
+.header-menu-button {
+  z-index: 2147483646 !important;  /* Just below the max */
+  position: relative !important;
+}
+
+/* Force backdrop to have high z-index */
+.mobile-menu-backdrop {
+  z-index: 2147483645 !important;  /* High but below menu */
+  position: fixed !important;
+  inset: 0 !important;
+}
+
+/* Reset stacking context for all elements */
+html, body, #root, [data-reactroot], main {
+  isolation: auto !important;
+  z-index: auto !important;
+}
+
+/* Hardware acceleration for smoother animations and proper layering */
+#mobile-menu, .mobile-menu-backdrop {
+  transform: translateZ(0) !important;
+  backface-visibility: hidden !important;
+  perspective: 1000px !important;
+  will-change: opacity !important;
+}
+
+/* Force body to maintain position when menu is open */
+body.menu-open {
+  touch-action: none !important;
+  -ms-touch-action: none !important;
+}
