@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 //images 
 import heroImage from '../assets/furBack.png';
@@ -77,9 +78,8 @@ const Hero = () => {
 
           
           <div className="flex flex-col  py-6  sm:flex-row items-center justify-center gap-4 animate-fade-in">
+              <Link to="/reviews" className="custom-class button-hover">
               <StarBorder
-
-              onClick={() => window.location.href = '/reviews'}
                 as="button"
                 className="custom-class button-hover"
                 color="cyan"
@@ -88,15 +88,18 @@ const Hero = () => {
                 Explore Reviews
 
               </StarBorder>
-            <Button 
-              onClick={() => window.location.href = '/articles'}
-              variant="outline" 
-              size="lg" 
-              className="rounded-full px-8 button-hover"
-            >
-                Explore Articles
-                
-            </Button>
+              </Link>
+           <Link to="/articles" className="custom-class button-hover">
+                <Button 
+                  onClick={() => window.location.href = '/articles'}
+                  variant="outline" 
+                  size="lg" 
+                  className="rounded-full px-8 button-hover"
+                >
+                    Explore Articles
+                    
+                </Button>
+            </Link>
           </div>
         </div>
       </div>
