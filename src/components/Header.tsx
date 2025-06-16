@@ -346,9 +346,11 @@ const Header = () => {
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-4">
-          <Button onClick={() => {window.location.href = '/search'}} variant="ghost" size="icon" className="rounded-full hover:bg-secondary transition-colors">
+          <Link to="/search" className="relative">
+          <Button variant="ghost" size="icon" className="rounded-full hover:bg-secondary transition-colors">
             <Search className="h-5 w-5" />
           </Button>
+          </Link>
           
           {currentUser ? (
             <DropdownMenu>

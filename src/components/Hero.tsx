@@ -91,7 +91,6 @@ const Hero = () => {
               </Link>
            <Link to="/articles" className="custom-class button-hover">
                 <Button 
-                  onClick={() => window.location.href = '/articles'}
                   variant="outline" 
                   size="lg" 
                   className="rounded-full px-8 button-hover"
