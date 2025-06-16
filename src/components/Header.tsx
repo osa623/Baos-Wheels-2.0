@@ -218,19 +218,20 @@ const Header = () => {
       // Add a class to the body to prevent scrolling when menu is open
       document.body.classList.add('mobile-menu-open', 'menu-open');
       document.body.style.overflow = 'hidden';
-      // Ensure wrapper has higher stacking context
-      document.body.style.position = 'relative';
+      // Add menu-open class to header for proper z-indexing
+      document.querySelector('header')?.classList.add('menu-open');
     } else {
       document.body.classList.remove('mobile-menu-open', 'menu-open');
       document.body.style.overflow = '';
-      document.body.style.position = '';
+      // Remove menu-open class from header
+      document.querySelector('header')?.classList.remove('menu-open');
     }
     
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.body.classList.remove('mobile-menu-open', 'menu-open');
       document.body.style.overflow = '';
-      document.body.style.position = '';
+      document.querySelector('header')?.classList.remove('menu-open');
     };
   }, [isMobileMenuOpen]);
 
@@ -279,41 +280,66 @@ const Header = () => {
     return displayName.substring(0, 2).toUpperCase();
   };
 
+  // Add a useEffect to force animation class updates
+  useEffect(() => {
+    // Force animation refresh by removing and re-adding classes
+    const header = document.querySelector('header');
+    if (header) {
+      header.classList.remove('slide-right', 'slide-back');
+      // Trigger reflow
+      void header.offsetWidth;
+      // Add the appropriate class
+      if (isMobileMenuOpen) {
+        header.classList.add('slide-right');
+      } else {
+        header.classList.add('slide-back');
+      }
+    }
+  }, [isMobileMenuOpen]);
+
   return (
     <header 
       className={cn(
-        "fixed top-0 left-0 right-0 z-40 transition-all duration-300 ease-in-out py-2 sm:py-3 md:py-4 px-3 sm:px-6 md:px-12 header-layer",
-        isScrolled ? "bg-white/80 backdrop-blur-md shadow-sm" : "bg-white/80 backdrop-blur-md shadow-sm"
+        "fixed top-0 left-0 right-0 z-40 py-2 sm:py-3 md:py-4 px-3 sm:px-6 md:px-12 header-layer",
+        isScrolled ? "bg-white/80 backdrop-blur-md shadow-sm" : "bg-white/80 backdrop-blur-md shadow-sm",
+        "mobile-header", // Mobile header class
+        // Remove transition-all to prevent conflicts with animations
       )}
+      style={{
+        // Apply inline animation style as a backup
+        animation: isMobileMenuOpen 
+          ? 'headerSlideRight 0.4s cubic-bezier(0.17, 0.67, 0.12, 1.02) forwards' 
+          : 'headerSlideBack 0.3s ease forwards'
+      }}
       aria-label="Main navigation"
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo - improved mobile sizing */}
         <Link to="/" className="flex items-center transition-transform hover:scale-[1.02] z-10">
           <img src={logo} alt="Baos Wheels Logo" className="h-6 sm:h-7 md:h-8 border-3 sm:border-4 w-6 sm:w-7 md:w-8 rounded-full mr-1 sm:mr-2" />
-          <h1 className="text-lg sm:text-xl md:text-2xl font-semibold tracking-tight animate-fade-in truncate">
+          <h1 className="text-lg sm:text-xl md:text-lg font-semibold tracking-tight animate-fade-in truncate">
             Baos Wheels
           </h1>
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-4 lg:space-x-8" aria-label="Desktop navigation">
-          <Link to="/" className={cn("nav-link text-sm", isActive('/') && "text-primary after:w-full")}>
+          <Link to="/" className={cn("nav-link lg:text-sm md:text-xs", isActive('/') && "text-primary after:w-full")}>
             Home
           </Link>
-          <Link to="/community" className={cn("nav-link text-sm", isActive('/community') && "text-primary after:w-full")}>
+          <Link to="/community" className={cn("nav-link lg:text-sm md:text-xs", isActive('/community') && "text-primary after:w-full")}>
             Community
           </Link>
-          <Link to="/reviews" className={cn("nav-link text-sm", isActive('/reviews') && "text-primary after:w-full")}>
+          <Link to="/reviews" className={cn("nav-link lg:text-sm md:text-xs", isActive('/reviews') && "text-primary after:w-full")}>
             Car Reviews
           </Link>
-          <Link to="/articles" className={cn("nav-link text-sm", isActive('/articles') && "text-primary after:w-full")}>
+          <Link to="/articles" className={cn("nav-link lg:text-sm md:text-xs", isActive('/articles') && "text-primary after:w-full")}>
             Auto Articles
           </Link>
-          <Link to="/electric" className={cn("nav-link text-sm", isActive('/electric') && "text-primary after:w-full")}>
+          <Link to="/electric" className={cn("nav-link lg:text-sm md:text-xs", isActive('/electric') && "text-primary after:w-full")}>
             Electric Cars
           </Link>
-          <Link to="/about" className={cn("nav-link text-sm", isActive('/about') && "text-primary after:w-full")}>
+          <Link to="/about" className={cn("nav-link lg:text-sm md:text-xs", isActive('/about') && "text-primary after:w-full")}>
             About
           </Link>
         </nav>
@@ -358,10 +384,6 @@ const Header = () => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/settings" className="w-full cursor-pointer">
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
-                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">

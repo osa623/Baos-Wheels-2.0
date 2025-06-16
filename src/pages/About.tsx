@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import emailjs from 'emailjs-com';
 
 //import images
 import mark from '../assets/mark.jpg';
@@ -11,6 +12,7 @@ import david from '../assets/david.jpg';
 import jane from '../assets/jane.jpg';
 import jessica from '../assets/jessica.jpg';
 import workshop02 from '../assets/workshop02.jpg';
+import logo from '../assets/RoundPhoto_Sep202021_165616.png';
 
 // Mock data for team members
 const teamMembers = [
@@ -43,20 +45,20 @@ const teamMembers = [
 // Mock data for company values
 const companyValues = [
   {
-    title: "Design Excellence",
-    description: "We believe that thoughtful design has the power to improve everyday life. Each product is crafted with attention to form, function, and the small details that make a big difference."
+    title: "Unfiltered Car Reviews",
+    description: "We believe in providing honest and transparent reviews of the latest car models. Our team of experts rigorously tests each vehicle, ensuring that our assessments are thorough and unbiased."
   },
   {
-    title: "Sustainable Practices",
-    description: "We're committed to responsible sourcing, ethical manufacturing, and creating products that are built to last. We continuously work to reduce our environmental impact."
+    title: "Tech Insights",
+    description: "We explore the latest advancements in automotive technology, from electric vehicles to AI-driven features, providing our audience with the knowledge they need to make informed decisions."
   },
   {
-    title: "Intentional Living",
-    description: "We encourage a mindful approach to consumption, creating products that serve a purpose and bring lasting value rather than following fleeting trends."
+    title: "Behind-the-Scenes",
+    description: "We believe in transparency and authenticity. Our audience gets a glimpse into our creative process, from ideation to execution."
   },
   {
-    title: "Transparent Relationships",
-    description: "We believe in honesty and openness with our customers, partners, and team members. We share our processes and practices to build trust and foster connection."
+    title: "Visual Storytelling",
+    description: "Engaging videos on YouTube, TikTok, and Instagram. We use compelling visuals and narratives to bring the automotive world to life for our audience."
   }
 ];
 
@@ -100,6 +102,46 @@ const About = () => {
   const valuesRef = useRef<HTMLDivElement>(null);
   const teamRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
+  const [formSubmit, setFormSubmit] = useState(false);
+  const [formData, setFormData] = useState({
+       user_name: '',
+       user_email: '',
+       message: ''
+     });
+     const [formError, setFormError] = useState('');
+     
+     const handleChange = (e) => {
+       setFormData({
+         ...formData,
+         [e.target.name]: e.target.value
+       });
+     };
+     
+     const handleSubmit = (event) => {
+       event.preventDefault();
+     
+       const { user_name, user_email, message } = formData;
+     
+       // Validate the form fields
+       if (!user_name || !user_email || !message) {
+         setFormError('Please fill in all fields');
+         return;
+       }
+     
+       emailjs.sendForm('service_oq88bb9', 'template_1gsqs0j', event.target, 't9HDMRrmehzRQKGE9')
+         .then((result) => {
+           console.log(result.text);
+           setFormSubmit(true);
+           setFormError('');
+           setFormData({ user_name: '', user_email: '', message: '' });
+     
+           setTimeout(() => {
+             setFormSubmit(false);
+           }, 3000);
+         }, (error) => {
+           console.log(error.text);
+         });
+     }; 
   
   // Intersection Observer for animations
   useEffect(() => {
@@ -133,13 +175,10 @@ const About = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-24 pb-16 px-6 bg-gray-50">
+      <section className="pt-24 pb-2 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-semibold mb-4">Our Story</h1>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Get to know the people and principles behind Roodhy
-            </p>
+            <h1 className="text-3xl md:text-4xl font-semibold mb-4">Who We Are?</h1>
           </div>
           
           {/* Breadcrumbs */}
@@ -152,7 +191,7 @@ const About = () => {
       </section>
       
       {/* Company Story */}
-      <section className="py-20 px-6">
+      <section className="py-12 px-6">
         <div 
           ref={storyRef}
           className="max-w-7xl mx-auto opacity-0"
@@ -163,15 +202,12 @@ const About = () => {
               <span className="inline-block px-3 py-1 mb-6 text-xs font-medium bg-secondary rounded-full">
                 Our Journey
               </span>
-              <h2 className="text-3xl font-semibold mb-6">Crafting Beauty Through Intention</h2>
+              <h2 className="text-3xl font-semibold mb-6">Driven by Passion</h2>
               <p className="text-muted-foreground mb-6">
-                Founded in 2014, Roodhy began as a small studio in Brooklyn with a simple mission: to create home goods that combine beauty, functionality, and sustainability. What started as a passion project has grown into a community of designers, artisans, and conscious consumers who share our vision.
+               Baos Wheels isn't just a platform—it's a journey fueled by a deep love for automobiles. Our passion drives us to create content that resonates with enthusiasts and curious minds alike. We showcase the latest models and tell the stories behind the machines, innovations, and people shaping the automotive world.
               </p>
               <p className="text-muted-foreground mb-6">
-                Our approach is guided by the belief that everyday objects should be both beautiful and useful. We work with skilled craftspeople who share our commitment to quality and detail, creating pieces that are designed to be cherished for years to come.
-              </p>
-              <p className="text-muted-foreground mb-6">
-                As we've grown, our commitment to responsible practices has remained at our core. We continuously seek out sustainable materials and ethical production methods, ensuring that our environmental footprint is minimized at every step.
+                Our team of car enthusiasts and experts brings diverse perspectives, from classic muscle cars to the latest electric vehicles, providing insights and explanations that make complex concepts accessible
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button className="rounded-full button-hover">
@@ -209,10 +245,8 @@ const About = () => {
             <span className="inline-block px-3 py-1 mb-4 text-xs font-medium bg-secondary rounded-full">
               Our Philosophy
             </span>
-            <h2 className="text-3xl font-semibold mb-4">What We Stand For</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Our values guide every decision we make, from design to delivery
-            </p>
+            <h2 className="text-3xl font-semibold mb-4">What We Bring</h2>
+
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -225,8 +259,86 @@ const About = () => {
           </div>
         </div>
       </section>
+
+      {/* Contact Us Page */}
+          <section className="py-20 px-6 bg-white">
+            <div className="max-w-3xl mx-auto">
+              <div className="text-center mb-10">
+                <span className="inline-block px-3 py-1 mb-4 text-xs font-medium bg-secondary rounded-full">
+                  Contact Us
+                </span>
+                <h2 className="text-3xl font-semibold mb-4">Let's Talk</h2>
+                <p className="text-muted-foreground max-w-xl mx-auto">
+                  Have a question, suggestion, or just want to say hello? Fill out the form below and our team will get back to you as soon as possible.
+                </p>
+              </div>
+              <form
+                onSubmit={handleSubmit}
+                className="bg-gray-50 rounded-xl shadow-md p-8 space-y-6"
+                data-aos="fade-left"
+                data-aos-delay="100"
+              >
+                {formError && (
+                  <div className="text-red-500 text-sm mb-2">{formError}</div>
+                )}
+                <div>
+                  <label htmlFor="user_name" className="block text-sm font-medium text-gray-900 mb-1">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    name="user_name"
+                    value={formData.user_name}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="user_email" className="block text-sm font-medium text-gray-900 mb-1">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="user_email"
+                    value={formData.user_email}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-900 mb-1">
+                    Message
+                  </label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={5}
+                    className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                    required
+                  ></textarea>
+                </div>
+                <div className="flex justify-center">
+                  <button
+                    type="submit"
+                    className="inline-flex items-center justify-center px-6 py-2 rounded-full bg-primary text-white font-semibold shadow hover:bg-primary/90 transition-colors"
+                  >
+                    Send Message
+                  </button>
+                </div>
+                {formSubmit && (
+                  <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-800 text-center">
+                    Thank you for your message! We'll get back to you soon.
+                  </div>
+                )}
+              </form>
+            </div>
+          </section>
+
       
-      {/* Team Section */}
+      {/* Team Section
       <section className="py-20 px-6">
         <div 
           ref={teamRef}
@@ -260,53 +372,12 @@ const About = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section>  */}
       
-      {/* Timeline Section */}
-      <section className="py-20 px-6 bg-gray-50">
-        <div 
-          ref={timelineRef}
-          className="max-w-7xl mx-auto opacity-0"
-          style={{ animationFillMode: 'forwards', animationDelay: '0.2s' }}
-        >
-          <div className="text-center mb-16">
-            <span className="inline-block px-3 py-1 mb-4 text-xs font-medium bg-secondary rounded-full">
-              Our Journey
-            </span>
-            <h2 className="text-3xl font-semibold mb-4">Milestones</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Key moments in our journey of growth and evolution
-            </p>
-          </div>
-          
-          <div className="relative">
-            {/* Vertical line */}
-            <div className="absolute left-0 sm:left-1/2 transform sm:-translate-x-1/2 h-full w-px bg-gray-200"></div>
-            
-            {/* Timeline items */}
-            <div className="relative z-10">
-              {companyMilestones.map((milestone, index) => (
-                <div key={index} className={`flex flex-col sm:flex-row mb-12 relative ${index % 2 === 0 ? 'sm:flex-row-reverse' : ''}`}>
-                  {/* Year indicator */}
-                  <div className="flex-shrink-0 sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-white border border-primary mb-4 sm:mb-0 z-20">
-                    <span className="text-sm font-semibold">{milestone.year}</span>
-                  </div>
-                  
-                  {/* Content */}
-                  <div className={`w-full sm:w-[calc(50%-2rem)] ${index % 2 === 0 ? 'sm:pr-0 sm:pl-8' : 'sm:pl-0 sm:pr-8'}`}>
-                    <div className="bg-white p-6 rounded-lg border border-gray-100">
-                      <h3 className="text-lg font-medium mb-2">{milestone.title}</h3>
-                      <p className="text-sm text-muted-foreground">{milestone.description}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+   
+
       
-      {/* Join Our Team Banner */}
+      {/* Join Our Team Banner 
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="bg-primary/5 rounded-xl p-10 md:p-16 text-center">
@@ -319,37 +390,10 @@ const About = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
+
+
       
-      {/* Instagram Section */}
-      <section className="py-20 px-6 bg-gray-50">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-2xl font-semibold mb-4">Follow Our Journey</h2>
-          <p className="text-muted-foreground max-w-xl mx-auto mb-10">
-            Get a behind-the-scenes look at our process and team on Instagram
-          </p>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-            {[...Array(6)].map((_, index) => (
-              <a 
-                key={index}
-                href="#"
-                className="block aspect-square overflow-hidden rounded-lg"
-              >
-                <img 
-                  src={`https://source.unsplash.com/random/300x300?minimalism&sig=${index}`}
-                  alt="Instagram post"
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                />
-              </a>
-            ))}
-          </div>
-          
-          <Button variant="outline" className="mt-8 rounded-full">
-            @Roodhy_design
-          </Button>
-        </div>
-      </section>
       
       <Footer />
     </div>

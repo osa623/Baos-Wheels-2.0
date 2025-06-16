@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -75,6 +75,10 @@ const Articles = () => {
         >
           <div className="flex flex-col md:flex-row md:items-end justify-between">
             <div>
+               <Link to="/" className="inline-flex items-center text-sm mb-1 hover:text-primary transition-colors">
+                 <ChevronLeft className="h-4 w-4 mr-1" />
+                    Back to Home
+              </Link>
               <h2 className="text-3xl font-semibold mb-3">Articles</h2>
               <p className="text-muted-foreground max-w-xl">
                 Our most celebrated articles, showcasing the very best of our automotive insights.

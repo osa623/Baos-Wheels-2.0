@@ -9,7 +9,7 @@ import {
   SelectTrigger, 
   SelectValue 
 } from "@/components/ui/select";
-import { SlidersHorizontal, X } from 'lucide-react';
+import { ChevronLeft, SlidersHorizontal, X } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom';
@@ -153,7 +153,7 @@ const Reviews = () => {
   
   // Reset filters
   const resetFilters = () => {
-    setPriceRange([0, 150000]);
+    setPriceRange([0, 200000]);
     setSelectedCategories([]);
     setSelectedBrands([]);
     setSortBy("featured");
@@ -238,7 +238,11 @@ const Reviews = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between text-center">
             <div className='flex flex-col'>
-              <h1 className="text-3xl text-left font-semibold mt-6 mb-3">Car Reviews</h1>
+              <Link to="/" className="inline-flex items-center text-sm mb-1 hover:text-primary transition-colors">
+                 <ChevronLeft className="h-4 w-4 mr-1" />
+                    Back to Home
+              </Link>
+              <h1 className="text-3xl text-left font-semibold mb-3">Car Reviews</h1>
               <p className="text-muted-foreground text-left max-w-md">
                 Explore our collection of in-depth automotive reviews to help you make informed decisions. 
               </p>
@@ -370,7 +374,7 @@ const Reviews = () => {
             </div>
             
             {/* Mobile Filters Button */}
-            <div className="lg:hidden flex justify-between items-center mb-6">
+            <div className="lg:hidden flex justify-between  items-center mb-6">
               <Button 
                 variant="outline" 
                 className="flex items-center gap-2"
@@ -396,8 +400,8 @@ const Reviews = () => {
             
             {/* Mobile Filters Modal */}
             {isMobileFilterOpen && (
-              <div className="fixed inset-0 bg-black/50 z-50 lg:hidden">
-                <div className="absolute right-0 top-0 bottom-0 w-80 bg-white p-6 animate-slide-in-right">
+              <div className="fixed inset-0 md:overflow-scroll bg-tranparent z-50 lg:hidden">
+                <div className="absolute right-0 top-0 bottom-0 w-80 h-[50rem] bg-white p-6 animate-slide-in-right">
                   <div className="flex justify-between items-center mb-6">
                     <h2 className="text-xl font-semibold">Filters</h2>
                     <Button 
@@ -447,7 +451,7 @@ const Reviews = () => {
                     </div>
                   </div>
 
-                                    <div className="mb-8">
+                  <div className="mb-8">
                     <h3 className="font-medium mb-4">Categories</h3>
                     <div className="space-y-2">
                       {categories.map(category => (

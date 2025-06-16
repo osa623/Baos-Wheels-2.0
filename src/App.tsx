@@ -23,6 +23,9 @@ import Notifications from './pages/Notifications';
 import Search from './pages/Search';
 import Articles from './pages/Articles';
 import ArticleView from './pages/ArticleView';
+import ScrollToTop from './components/ScrollToTop';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfServices from './pages/TermsOfServices';
 
 // Create QueryClient
 const queryClient = new QueryClient({
@@ -42,6 +45,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthProvider>
+          <ScrollToTop />
           <TooltipProvider>
             <Routes>
               <Route path="/" element={<Index />} />
@@ -58,12 +62,15 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/search" element={<Search />} />
               <Route path="/electric" element={<Electriccars />} />
+              <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+              <Route path="/termsofservices" element={<TermsOfServices />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
             <Toaster />
             <Sonner />
           </TooltipProvider>
+          <ScrollToTop />
         </AuthProvider>
       </BrowserRouter>
     </QueryClientProvider>

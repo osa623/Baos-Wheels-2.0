@@ -201,7 +201,7 @@ const Electriccars = () => {
                 Explore the latest articles about the automobile industry, get up-to-date auto news, and discover insights on trends, innovations, and expert tips to keep you informed and inspired.
               </p>
           </div>
-            <Link to="/products" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
+            <Link to="/articles" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
                <StarBorder
                 as="button"
                 className="custom-class"
@@ -259,8 +259,8 @@ const Electriccars = () => {
           className="max-w-7xl mx-auto opacity-0"
           style={{ animationFillMode: 'forwards', animationDelay: '0.2s' }}
         >
-          <div className='flex items-center justify-between'>
-            <Link to="/products" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
+          <div className='flex flex-col lg:flex-row justify-between'>
+            <Link to="/reviews" className="hidden lg:flex items-center mt-4 md:mt-0 text-primary hover:underline">
                <StarBorder
                 as="button"
                 className="custom-class"
@@ -270,15 +270,31 @@ const Electriccars = () => {
                 View All Reviews
               </StarBorder>
             </Link>
-              <div className="text-right mb-12">
-                <h2 className="text-3xl font-semibold mb-3">Latest Reviews</h2>
-                <p className="text-muted-foreground text-right max-w-xl mx-auto">
-                  Discover our latest car reviews, offering expert insights and honest opinions to help you make informed decisions on your next vehicle.
-                </p>
-              </div>
+           <div>
+              <div className='flex flex-col items-end'>
+                <span className="absolute px-3 w-auto border-2 py-1 text-xs font-medium bg-green-700 text-white rounded-full animate-fade-in">
+                Drive Green
+               </span>
+                 <h2 className="text-3xl text-end font-semibold mt-8">Latest Reviews</h2>
+              </div> 
+              <p className="text-muted-foreground text-end max-w-xl mb-6 mt-2 ">
+                Discover the latest reviews on electric vehicles, featuring in-depth analysis, expert opinions, and user experiences to help you make informed decisions about your next eco-friendly ride.
+              </p>
+          </div>
+             <Link to="/reviews" className="lg:hidden md:flex mb-6 items-end justify-end w-full  md:mt-0 text-primary hover:underline">
+               <StarBorder
+                as="button"
+                className="custom-class "
+                color="cyan"
+                speed="5s"
+              >
+                View All Reviews
+              </StarBorder>
+            </Link>
+          
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {fetchReviews.slice(0,8).map((review, index) => (
+            {fetchReviews.filter(review => review.category === 'electric' || review.category === 'Electric').slice(0,8).map((review, index) => (
               <Link 
                 key={review.id}
                 to={`/reviews/${review.id}`}

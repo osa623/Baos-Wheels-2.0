@@ -80,3 +80,45 @@ export const fetchCommentsByUser = async (userId: string) => {
     return []; // Return empty array on error
   }
 };
+
+export const editComment = async (commentId: string, content: string, userId?: string) => {
+  try {
+    // Check if the authenticated user is the comment owner before updating
+    const commentData = await commentFunctions.getCommentById(commentId);
+    
+    if (!commentData) {
+      throw new Error("Comment not found");
+    }
+    
+    // Add security check
+    if (userId && commentData.userId !== userId) {
+      throw new Error("You can only edit your own comments");
+    }
+    
+    return await commentFunctions.updateComment(commentId, { content });
+  } catch (error) {
+    console.error('Error updating comment:', error);
+    throw error;
+  }
+};
+
+export const deleteComment = async (commentId: string, userId?: string) => {
+  try {
+    // Check if the authenticated user is the comment owner before deleting
+    const commentData = await commentFunctions.getCommentById(commentId);
+    
+    if (!commentData) {
+      throw new Error("Comment not found");
+    }
+    
+    // Add security check
+    if (userId && commentData.userId !== userId) {
+      throw new Error("You can only delete your own comments");
+    }
+    
+    return await commentFunctions.deleteComment(commentId);
+  } catch (error) {
+    console.error('Error deleting comment:', error);
+    throw error;
+  }
+};

@@ -11,6 +11,7 @@ import overlayImage from '../assets/overlayImage.png';
 
 //video
 import backgroundVideo from '../assets/Videos/backgroundVideo2.mp4';
+import ScrollVelocity from './ScrollVelocitymin';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -44,17 +45,19 @@ const Hero = () => {
     <section className="relative h-screen">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-transparent">
-        <video src={backgroundVideo} autoPlay loop muted className="w-full h-full object-cover opacity-50" />
+        <video src={backgroundVideo} autoPlay loop muted className="hidden lg:flex w-full h-full object-cover opacity-50" />
         <img src={overlayImage} alt="Hero Background" className="absolute z- lg:flex md:flex w-full h-full object-cover opacity-50" />
         
       </div>
-            <div className="absolute inset-0 bg-transparent">
+
+
+      <div className="absolute inset-0 bg-transparent">
               <img
                 src={heroImageSm}
                 alt="Hero Background Small"
                 className="flex lg:hidden md:hidden w-full h-full object-cover opacity-50"
               />
-            </div>
+      </div>
       
       {/* Hero content */}
       <div 
@@ -75,19 +78,24 @@ const Hero = () => {
           
           <div className="flex flex-col  py-6  sm:flex-row items-center justify-center gap-4 animate-fade-in">
               <StarBorder
+
+              onClick={() => window.location.href = '/reviews'}
                 as="button"
                 className="custom-class button-hover"
                 color="cyan"
                 speed="5s"
               >
                 Explore Reviews
+
               </StarBorder>
             <Button 
+              onClick={() => window.location.href = '/articles'}
               variant="outline" 
               size="lg" 
               className="rounded-full px-8 button-hover"
             >
-              Explore Articles
+                Explore Articles
+                
             </Button>
           </div>
         </div>
@@ -104,6 +112,7 @@ const Hero = () => {
           <ArrowDown className="h-5 w-5" />
         </Button>
       </div>
+
     </section>
   );
 };

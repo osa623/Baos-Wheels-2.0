@@ -736,8 +736,8 @@ const Community = () => {
             <Textarea
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              placeholder="Write a message..."
-              className="flex-1"
+              placeholder="Ask Your Question Here..."
+              className="flex-1 border-4 border-primary/20 focus:border-primary focus:ring-0 rounded-lg p-3 text-sm resize-none"
               maxLength={1000}
             />
             <Button

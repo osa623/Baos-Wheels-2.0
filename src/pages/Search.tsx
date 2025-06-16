@@ -193,11 +193,6 @@ const Search = () => {
           )}
           
           <div className="flex items-center justify-between mt-auto pt-2">
-            {result.date && (
-              <span className="text-xs text-gray-500">
-                {new Date(result.date).toLocaleDateString()}
-              </span>
-            )}
             <Button
               variant="link" 
               className="p-0 h-auto text-primary hover:text-primary/90"
@@ -228,7 +223,7 @@ const Search = () => {
           </svg>
           Back to Home
         </h1>
-        <h1 className="text-3xl font-bold mb-6">Search</h1>
+        <h1 className="text-3xl font-bold mb-6 ml-5">Search</h1>
         
         <form onSubmit={handleSearch} className="mb-8">
           <div className="flex flex-col md:flex-row gap-2">
@@ -255,7 +250,7 @@ const Search = () => {
                 </SelectContent>
               </Select>
               
-              <Button type="submit" disabled={isLoading}>
+              <Button className='w-full' type="submit" disabled={isLoading}>
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -280,26 +275,10 @@ const Search = () => {
             results.length > 0 ? (
               <>
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-medium">
+                  <h2 className="lg:text-xl md:text-xs font-medium">
                     Found {totalResults} results for "{searchQuery}"
                   </h2>
-                  
-                  <Accordion type="single" collapsible className="w-full max-w-[300px]">
-                    <AccordionItem value="filters">
-                      <AccordionTrigger className="text-sm py-2">
-                        <Filter className="h-4 w-4 mr-2" />
-                        Advanced Filters
-                      </AccordionTrigger>
-                      <AccordionContent>
-                        <div className="space-y-4 py-2">
-                          {/* Add more filter options here if needed */}
-                          <p className="text-xs text-muted-foreground">
-                            More filter options will be available in a future update.
-                          </p>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
+
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

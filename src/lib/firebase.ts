@@ -27,7 +27,9 @@ import {
   updateDoc,
   writeBatch,
   limit,
-  onSnapshot
+  onSnapshot,
+  getDoc,
+  deleteDoc
 } from "firebase/firestore";
 
 console.log("Initializing Firebase");
@@ -241,6 +243,57 @@ export const commentFunctions = {
     }
   },
   
+  // Update an existing comment
+  updateComment: async (commentId: string, updates: {content?: string}): Promise<void> => {
+    console.log("Updating comment:", commentId);
+    try {
+      if (!commentId) {
+        throw new Error("Comment ID is required");
+      }
+      
+      const commentRef = doc(db, 'comments', commentId);
+      
+      // Only allow updating specific fields
+      const validUpdates: Record<string, any> = {};
+      if (updates.content !== undefined) {
+        validUpdates.content = updates.content;
+      }
+      
+      // Add an updatedAt field
+      validUpdates.updatedAt = serverTimestamp();
+      
+      await updateDoc(commentRef, validUpdates);
+      console.log("Comment updated successfully:", commentId);
+    } catch (error) {
+      console.error('Error updating comment:', error);
+      throw error;
+    }
+  },
+  
+  // Delete a comment (hard delete only)
+  deleteComment: async (commentId: string): Promise<void> => {
+    console.log("Deleting comment:", commentId);
+    try {
+      if (!commentId) {
+        throw new Error("Comment ID is required");
+      }
+
+      const commentRef = doc(db, 'comments', commentId);
+
+      // Check if the document exists before attempting to delete
+      const commentDoc = await getDoc(commentRef);
+      if (!commentDoc.exists()) {
+        console.warn(`Comment with ID ${commentId} does not exist. Nothing to delete.`);
+        return;
+      }
+
+      await deleteDoc(commentRef);
+      console.log("Comment hard-deleted successfully:", commentId);
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+      throw error;
+    }
+  },
   // Get all comments by a specific user
   getCommentsByUserId: async (userId: string): Promise<Comment[]> => {
     console.log("Fetching comments for user:", userId);
@@ -276,7 +329,41 @@ export const commentFunctions = {
       console.error('Error fetching user comments:', error);
       return [];
     }
-  }
+  },
+
+  // Get a single comment by ID
+  getCommentById: async (commentId: string): Promise<Comment | null> => {
+    console.log("Fetching comment by ID:", commentId);
+    try {
+      if (!commentId) {
+        throw new Error("Comment ID is required");
+      }
+      
+      const commentRef = doc(db, 'comments', commentId);
+      const commentSnap = await getDoc(commentRef);
+      
+      if (!commentSnap.exists()) {
+        console.log("No comment found with ID:", commentId);
+        return null;
+      }
+      
+      const data = commentSnap.data();
+      return {
+        id: commentId,
+        reviewId: data.reviewId,
+        userId: data.userId,
+        userName: data.userName,
+        userAvatar: data.userAvatar,
+        content: data.content,
+        createdAt: data.createdAt instanceof Timestamp 
+          ? data.createdAt.toDate().toISOString()
+          : data.createdAt
+      };
+    } catch (error) {
+      console.error('Error fetching comment by ID:', error);
+      return null;
+    }
+  },
 };
 
 // Notification interface
@@ -382,20 +469,8 @@ export const notificationFunctions = {
       
       return notifications;
     } catch (error) {
-      console.error("Error fetching notifications:", error);
+      console.error("Error fetching all notifications:", error);
       return [];
-    }
-  },
-  
-  // Mark notification as read
-  markAsRead: async (notificationId: string): Promise<void> => {
-    try {
-      await updateDoc(doc(db, 'notifications', notificationId), {
-        isRead: true
-      });
-    } catch (error) {
-      console.error("Error marking notification as read:", error);
-      throw error;
     }
   },
   

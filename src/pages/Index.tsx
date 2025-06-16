@@ -287,9 +287,9 @@ const Index = () => {
           className="max-w-7xl mx-auto opacity-0"
           style={{ animationFillMode: 'forwards', animationDelay: '0.2s' }}
         >
-          <div className='flex items-center justify-between'>
-            <Link to="/reviews" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
-              <StarBorder
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+            <Link to="/reviews" className="hidden lg:flex items-center mt-4 md:mt-0 text-primary hover:underline">
+               <StarBorder
                 as="button"
                 className="custom-class"
                 color="cyan"
@@ -298,12 +298,23 @@ const Index = () => {
                 View All Reviews
               </StarBorder>
             </Link>
-              <div className="text-right mb-12">
-                <h2 className="text-3xl font-semibold mb-3">Latest Reviews</h2>
-                <p className="text-muted-foreground text-right max-w-xl mx-auto">
-                  Discover our latest car reviews, offering expert insights and honest opinions to help you make informed decisions on your next vehicle.
-                </p>
-              </div>
+            <div className='items-end flex flex-col'>
+              <h2 className="text-3xl font-semibold mb-3">Latest Reviews</h2>
+              <p className="text-muted-foreground text-end max-w-xl">
+                Discover our latest car reviews, offering expert insights and honest opinions to help you make informed decisions on your next vehicle.
+              </p>
+          </div>
+           <Link to="/reviews" className="lg:hidden justify-end items-end flex w-full mt-4 md:mt-0 text-primary hover:underline">
+               <StarBorder
+                as="button"
+                className="custom-class w-auto"
+                color="cyan"
+                speed="5s"
+              >
+                View All Reviews
+              </StarBorder>
+            </Link>
+
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {fetchReviews.slice(0,8).map((review) => {
@@ -345,7 +356,7 @@ const Index = () => {
             {/* Banners for below section */}
             <SplitText
               text="What's New"
-              className="text-9xl text-border mt-6  text-nowrap z-20 w-full top-0 overflow-visible font-semibold absolute text-center"
+              className="lg:text-9xl text-5xl text-border mt-6  text-nowrap z-20 w-full top-0 overflow-visible font-semibold absolute text-center"
               delay={100}
               duration={0.6}
               ease="power3.out"
@@ -361,7 +372,7 @@ const Index = () => {
             {/* Banners for below section */}
             <SplitText
               text="What's New"
-              className="text-8xl text-sidebar-border mt-6  text-nowrap z-10 w-full top-0 overflow-visible font-semibold absolute text-center"
+              className="lg:text-8xl text-4xl text-sidebar-border mt-6  text-nowrap z-10 w-full top-0 overflow-visible font-semibold absolute text-center"
               delay={100}
               duration={0.6}
               ease="power3.out"
@@ -460,7 +471,7 @@ const Index = () => {
                           <span className="inline-block px-3 text-xs py-1 mb-2 font-medium bg-green-600 text-white rounded-full">
                             Public
                           </span>
-                          <h2 className="lg:text-4xl md:text-4xl font-semibold font-poppins mb-4 text-white">The BW Community</h2>
+                           <h2 className="text-3xl md:text-4xl font-semibold mb-4 text-white">The BW Community</h2>
                           <p className="text-white/80 mb-8 font-light">
                             Turboss is your go-to place to explore car details from A to Z. From engine specs to the latest tech, we cover everything you need to know about cars in one easy-to-use platform.
                           </p>
@@ -529,12 +540,6 @@ const Index = () => {
               <p className="text-muted-foreground mb-6">
                 {latestNews?.subtitle}
               </p>
-              <Button 
-                variant="outline" 
-                className="rounded-full px-8 button-hover"
-              >
-                Learn more about us
-              </Button>
             </div>
             <div className="relative">
               <div className="aspect-[4/3] rounded-lg overflow-hidden">
@@ -547,7 +552,7 @@ const Index = () => {
               <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-gray-50 rounded-lg p-4 shadow-sm hidden md:block">
                 <div className="h-full flex flex-col justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground">By</p>
+                    <p className="text-sm text-muted-foreground">News By</p>
                     <p className="text-xs font-semibold">{latestNews?.author}</p>
                   </div>
                   <Separator className="my-3" />
@@ -572,7 +577,7 @@ const Index = () => {
           <ScrollVelocity
         texts={['#baoswheels', '#driveYourPassion']} 
         velocity={10} 
-        className="custom-scroll-text font-bold text-border"
+        className="custom-scroll-text  font-bold text-border"
           />
       </div>
       
