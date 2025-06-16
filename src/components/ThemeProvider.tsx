@@ -17,13 +17,13 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     const stored = localStorage.getItem("theme") as Theme;
     const initialTheme = stored || "light";
     setTheme(initialTheme);
-    document.documentElement.classList.toggle("dark", initialTheme === "light");
+    document.documentElement.classList.toggle("light", initialTheme === "light");
   }, []);
 
   const updateTheme = (newTheme: Theme) => {
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "light");
+    document.documentElement.classList.toggle("light", newTheme === "light");
   };
 
   return (
