@@ -582,14 +582,15 @@ const Header = () => {
           )}
 
           {/* Improved touch target for mobile search */}
+          <Link to="/search" className="relative">
           <Button 
             variant="ghost" 
             size="sm" 
             className="rounded-full h-8 w-8 p-1"
-            onClick={() => window.location.href = '/search'}
           >
             <Search className="h-4 w-4" />
           </Button>
+          </Link>
         </div>
 
         {/* Mobile Menu Button - enhanced with higher z-index */}
