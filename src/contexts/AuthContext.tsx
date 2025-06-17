@@ -1,11 +1,12 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { 
   User, 
   onAuthStateChanged,
-  updateProfile,
   sendPasswordResetEmail
 } from 'firebase/auth';
-import { auth, authFunctions } from '@/lib/firebase';
+import { auth, authFunctions, logOut as firebaseLogOut } from '@/lib/firebase';
+import { SessionTimeout } from '@/utils/sessionUtils';
+import { useToast } from '@/hooks/use-toast';
 
 interface AuthContextType {
   currentUser: User | null;
@@ -30,6 +31,21 @@ export function useAuth() {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
+
+  // Session timeout reference
+  const sessionTimeoutRef = useRef<SessionTimeout | null>(null);
+
+  // First define the logout function to avoid circular references
+  const performLogOut = async (): Promise<void> => {
+    console.log("AuthContext: logOut called");
+    try {
+      await firebaseLogOut();
+    } catch (error) {
+      console.error("AuthContext: logOut failed", error);
+      throw error;
+    }
+  };
 
   // Listen for auth state changes
   useEffect(() => {
@@ -45,6 +61,53 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       unsubscribe();
     };
   }, []);
+
+  // Handle logout from session timeout - now using the performLogOut function
+  const handleSessionTimeout = useCallback(() => {
+    console.log('Session timed out due to inactivity');
+    
+    try {
+      // Now toast is properly defined
+      toast({
+        title: "Session Expired",
+        description: "You have been logged out due to inactivity.",
+        duration: 5000,
+      });
+    } catch (e) {
+      console.log('Unable to display toast notification');
+    }
+    
+    // Use the performLogOut function instead of logOut
+    performLogOut();
+  }, [toast]); // Only depend on toast, not on logOut
+
+  // Initialize session timeout when user changes
+  useEffect(() => {
+    // Clean up any existing session timeout
+    if (sessionTimeoutRef.current) {
+      sessionTimeoutRef.current.cleanup();
+    }
+
+    // Only set up the session timeout if we have a logged-in user
+    if (currentUser) {
+      sessionTimeoutRef.current = new SessionTimeout({
+        // 30 minutes of inactivity before logout
+        timeout: 30 * 60 * 1000,
+        onTimeout: handleSessionTimeout,
+        isEnabled: true
+      });
+      
+      console.log('Session timeout monitoring started');
+    }
+
+    // Cleanup on unmount or when user changes
+    return () => {
+      if (sessionTimeoutRef.current) {
+        sessionTimeoutRef.current.cleanup();
+        sessionTimeoutRef.current = null;
+      }
+    };
+  }, [currentUser, handleSessionTimeout]);
 
   const value = {
     currentUser,
@@ -79,15 +142,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         throw error;
       }
     },
-    logOut: async (): Promise<void> => {
-      console.log("AuthContext: logOut called");
-      try {
-        await authFunctions.signOut();
-      } catch (error) {
-        console.error("AuthContext: logOut failed", error);
-        throw error;
-      }
-    },
+    logOut: performLogOut, // Use the already defined function
     resetPassword: async (email: string): Promise<void> => {
       console.log("AuthContext: resetPassword called", { email });
       try {
@@ -112,3 +167,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     </AuthContext.Provider>
   );
 }
+      
