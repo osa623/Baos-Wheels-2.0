@@ -10,8 +10,6 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Index from "./pages/Index";
 import ReviewView from "./pages/ReviewView";
 import Reviews from "./pages/Reviews";
-import Cart from "./pages/Cart";
-import Collections from "./pages/Articles";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -51,8 +49,6 @@ function App() {
               <Route path="/" element={<Index />} />
               <Route path="/reviews" element={<Reviews />} />
               <Route path="/reviews/:id" element={<ReviewView />} />
-              <Route path="/products" element={<Navigate to="/reviews" replace />} />
-              <Route path="/cart" element={<Cart />} />
               <Route path="/articles" element={<Articles />} />
               <Route path="/articles/:id" element={<ArticleView />} />
               <Route path="/notifications" element={<Notifications />} />

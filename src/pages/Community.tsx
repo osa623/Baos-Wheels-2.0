@@ -751,9 +751,11 @@ const Community = () => {
         ) : (
           <Card className="p-4 text-center">
             <p className="text-muted-foreground mb-2">Sign in to join the conversation</p>
-            <Button onClick={() => window.location.href = '/login'}>
-              Log In
-            </Button>
+            <Link to="/login">
+              <Button>
+                Log In
+              </Button>
+            </Link>
           </Card>
         )}
       </div>

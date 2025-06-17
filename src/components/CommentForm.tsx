@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { postComment } from '../api/commentApi';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -69,20 +70,22 @@ const CommentForm = ({ reviewId }: { reviewId: string }) => {
           Sign in to share your thoughts and connect with others.
         </p>
         <div className="flex justify-center space-x-3">
+          <Link to="/login">
           <Button
             variant="default"
             className="px-5 bg-gray-600 hover:bg-gray-700"
-            onClick={() => (window.location.href = '/login')}
           >
             Log In
           </Button>
+          </Link>
+          <Link to="/register">
           <Button
             variant="outline"
             className="px-5 border-gray-300 dark:border-gray-700"
-            onClick={() => (window.location.href = '/register')}
           >
             Register
           </Button>
+          </Link>
         </div>
       </div>
     );

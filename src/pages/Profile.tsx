@@ -14,6 +14,7 @@ import { toast } from '@/components/ui/use-toast';
 import { updateProfile, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const { currentUser } = useAuth();
@@ -116,9 +117,11 @@ const Profile = () => {
               <CardDescription>Please log in to view your profile</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button onClick={() => window.location.href = '/login'}>
-                Log In
-              </Button>
+              <Link to="/login">
+                <Button>
+                  Log In
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         </div>

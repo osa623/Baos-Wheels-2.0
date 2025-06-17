@@ -111,7 +111,7 @@ const Articles = () => {
               {articles.map((article) => (
                 <Link 
                   key={article.id}
-                  to={`/articles/${article.id}`}
+                  to={`/articles/${article._id || article.id}`}
                   className="group bg-white rounded-lg overflow-hidden border border-gray-100 hover:shadow-md transition-all duration-300"
                 >
                   <div className="aspect-[4/3] overflow-hidden">
@@ -127,19 +127,13 @@ const Articles = () => {
                       <span className="px-3 w-auto border-2 py-1 text-xs font-medium bg-gray-400 text-white rounded-full animate-fade-in">
                         {article.category || 'General'}
                       </span>
-                      <Button 
-                        // Fix: Use article.id instead of _id, with fallback if needed
-                        onClick={(e) => {
-                          e.preventDefault(); // Prevent the parent Link from also navigating
-                          window.location.href = `/articles/${article._id || article.id}`;
-                        }}
-                        variant="ghost" 
-                        size="sm" 
+                      <Link 
+                        to={`/articles/${article._id || article.id}`}
                         className="p-0 h-auto hover:bg-transparent group-hover:text-primary transition-colors"
                       >
                         <span>Read Article</span>
                         <ArrowRight className="ml-1 h-4 w-4 opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />
-                      </Button>
+                      </Link>
                     </div>
                   </div>
                 </Link>
