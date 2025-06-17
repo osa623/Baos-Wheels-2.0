@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import { searchApi, SearchResult } from '@/api';
 import { Loader2, Search as SearchIcon, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -64,37 +63,64 @@ const Search = () => {
   };
 
   // Function to highlight the search terms in a text
-  const highlightSearchTerm = (text: string, searchTerm: string) => {
-    if (!text || !searchTerm) return text;
+  const highlightSearchTerm = (text: string | any, searchTerm: string) => {
+    // Check if text is not a string (might be JSX or null/undefined)
+    if (!text || typeof text !== 'string' || !searchTerm) return text;
     
-    // Escape special characters in the search term
-    const escapedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    
-    // Split the search term into words
-    const words = escapedSearchTerm
+    // Filter to words with at least 2 characters
+    const searchWords = searchTerm
       .split(/\s+/)
-      .filter(word => word.length > 2) // Only highlight words with 3+ characters
-      .map(word => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      .filter(word => word.length >= 2);
+      
+    if (searchWords.length === 0) return text;
     
-    if (words.length === 0) return text;
+    // Create regex pattern for all search words
+    const pattern = searchWords
+      .map(word => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) // Escape special characters
+      .join('|');
     
-    // Create a regex to find any of the words
-    const regex = new RegExp(`(${words.join('|')})`, 'gi');
+    const regex = new RegExp(`(${pattern})`, 'gi');
     
-    // Split by the regex matches
-    const parts = text.split(regex);
+    // Use replace with callback function to wrap matches in highlight span
+    let lastIndex = 0;
+    const result = [];
+    let match;
     
-    // Combine with highlighting
-    return parts.map((part, i) => {
-      // Check if this part matches any of the search words
-      const isMatch = words.some(word => 
-        part.toLowerCase() === word.toLowerCase().replace(/\\/g, '')
+    // Create a fresh regex for each iteration to reset lastIndex
+    const findRegex = new RegExp(regex);
+    
+    // Find all matches and build result array
+    let textCopy = text;
+    while ((match = findRegex.exec(textCopy)) !== null) {
+      const matchedText = match[0];
+      const index = match.index;
+      
+      // Add text before match
+      if (index > lastIndex) {
+        result.push(text.substring(lastIndex, index));
+      }
+      
+      // Add highlighted match
+      result.push(
+        <span key={`highlight-${index}`} className="bg-yellow-200 font-medium">
+          {matchedText}
+        </span>
       );
       
-      return isMatch ? 
-        <span key={i} className="bg-yellow-200 font-medium">{part}</span> : 
-        part;
-    });
+      lastIndex = index + matchedText.length;
+      
+      // Avoid infinite loops for zero-width matches
+      if (match.index === findRegex.lastIndex) {
+        findRegex.lastIndex++;
+      }
+    }
+    
+    // Add any remaining text
+    if (lastIndex < text.length) {
+      result.push(text.substring(lastIndex));
+    }
+    
+    return result.length ? result : text;
   };
 
   const performSearch = async (query: string, type: string = 'all') => {
@@ -103,21 +129,73 @@ const Search = () => {
     try {
       console.log(`Performing search for: "${query}" with type: ${type}`);
       
-      if (type === 'all') {
-        // Use simple search for all content types
-        const searchResults = await searchApi.search(query);
-        console.log('Search results:', searchResults);
+      // Build the search URL with query parameters
+      let searchUrl = `https://baosbackend-9f8439698e78.herokuapp.com/api/search?q=${encodeURIComponent(query)}`;
+      
+      // Add content type filter if not "all"
+      if (type !== 'all') {
+        searchUrl += `&type=${type}`;
+      }
+      
+      console.log("Search URL:", searchUrl);
+      
+      // Make direct API call to the backend
+      const response = await fetch(searchUrl);
+      
+      if (!response.ok) {
+        throw new Error(`Search request failed with status: ${response.status}`);
+      }
+      
+      const searchResults = await response.json();
+      console.log('Search results:', searchResults);
+      
+      // Handle different response formats
+      if (Array.isArray(searchResults)) {
+        // Handle array response format
         setResults(searchResults);
         setTotalResults(searchResults.length);
+      } else if (searchResults.results && Array.isArray(searchResults.results)) {
+        // Handle object with results array format
+        setResults(searchResults.results);
+        setTotalResults(searchResults.total || searchResults.results.length);
+      } else if (searchResults.articles || searchResults.news || searchResults.reviews) {
+        // Handle the format with separate arrays for different content types
+        let combinedResults = [];
+        
+        // If a specific type is selected, only include that type
+        if (type !== 'all') {
+          if (type === 'article' && searchResults.articles) {
+            combinedResults = searchResults.articles.map(item => ({...item, type: 'article'}));
+          } else if (type === 'news' && searchResults.news) {
+            combinedResults = searchResults.news.map(item => ({...item, type: 'news'}));
+          } else if (type === 'review' && searchResults.reviews) {
+            combinedResults = searchResults.reviews.map(item => ({...item, type: 'review'}));
+          }
+        } else {
+          // For 'all', combine all types and ensure each has the correct type property
+          if (searchResults.articles) {
+            combinedResults = [...combinedResults, 
+              ...searchResults.articles.map(item => ({...item, type: 'article'}))
+            ];
+          }
+          if (searchResults.news) {
+            combinedResults = [...combinedResults, 
+              ...searchResults.news.map(item => ({...item, type: 'news'}))
+            ];
+          }
+          if (searchResults.reviews) {
+            combinedResults = [...combinedResults, 
+              ...searchResults.reviews.map(item => ({...item, type: 'review'}))
+            ];
+          }
+        }
+        
+        setResults(combinedResults);
+        setTotalResults(searchResults.total || combinedResults.length);
       } else {
-        // Use advanced search with content type filter
-        const advancedResults = await searchApi.advancedSearch({
-          query,
-          type: type as 'article' | 'news' | 'review' | 'all',
-          limit: 30
-        });
-        setResults(advancedResults.results);
-        setTotalResults(advancedResults.total);
+        console.error("Unexpected API response format", searchResults);
+        setResults([]);
+        setTotalResults(0);
       }
     } catch (error) {
       console.error('Search error:', error);
@@ -147,8 +225,23 @@ const Search = () => {
       ? result.images[0] 
       : 'https://placehold.co/600x400?text=No+Image';
 
-    // Use the snippet field from SearchResult interface
-    const contentPreview = result.snippet || result.description || '';
+    // Use the appropriate content field based on content type
+    let contentPreview = '';
+    if (result.type === 'review') {
+      contentPreview = result.content || result.snippet || result.description || '';
+      // Strip HTML tags if present
+      contentPreview = contentPreview.replace(/<[^>]*>/g, '');
+    } else {
+      contentPreview = result.snippet || result.description || '';
+    }
+
+    // Make sure result.type exists with a fallback
+    // Explicitly normalize the type to ensure consistent casing/format
+    let resultType = 'unknown';
+    if (result.type) {
+      // Convert to lowercase and trim for consistency
+      resultType = result.type.toLowerCase().trim();
+    }
 
     // Define type-based styling
     const typeColorMap: Record<string, { bg: string, text: string }> = {
@@ -157,10 +250,63 @@ const Search = () => {
       news: { bg: 'bg-amber-100', text: 'text-amber-700' }
     };
 
-    const typeStyle = typeColorMap[result.type] || { bg: 'bg-gray-100', text: 'text-gray-700' };
+    const typeStyle = typeColorMap[resultType] || { bg: 'bg-gray-100', text: 'text-gray-700' };
+
+    // Get the appropriate ID for the item (handling different API formats)
+    const getItemId = () => {
+      // Let's log the entire result object to see what fields are available
+      console.log("Result object for navigation:", result);
+      
+      // MongoDB typically uses _id as the primary key field
+      if (result._id) return result._id;
+      if (result.id) return result.id;
+      
+      // Check for type-specific ID fields
+      if (result.slug) return result.slug;
+      if (result.articleId) return result.articleId;
+      if (result.newsId) return result.newsId;
+      if (result.reviewId) return result.reviewId;
+      
+      // Log error if no ID is found
+      console.error("No ID found for item:", result);
+      return null;
+    };
+
+    const itemId = getItemId();
+
+    // Handle navigation with appropriate approach
+    const handleNavigation = () => {
+      if (!itemId) {
+        console.error("Cannot navigate: No ID found for:", result);
+        return;
+      }
+      
+      // Ensure we're using the correct type for navigation
+      console.log(`Navigation triggered for ${resultType} with ID: ${itemId}`);
+      
+      // Debug info
+      console.log("Result object:", result);
+      console.log("Result type:", resultType);
+      
+      let url = '/';
+      
+      // Explicitly check the type to ensure correct routing
+      if (resultType === 'review') {
+        url = `/reviews/${itemId}`;
+      } else if (resultType === 'news') {
+        url = `/news/${itemId}`;
+      } else if (resultType === 'article') {
+        url = `/articles/${itemId}`;
+      }
+      
+      console.log("Final navigation URL:", url);
+      
+      // Use window.location for hard navigation to ensure correct loading
+      window.location.href = url;
+    };
 
     return (
-      <div key={`${result.type}-${result.id}`} className="flex flex-col overflow-hidden rounded-lg border border-gray-200 hover:shadow-md transition-shadow h-full">
+      <div key={`${resultType}-${itemId || Math.random()}`} className="flex flex-col overflow-hidden rounded-lg border border-gray-200 hover:shadow-md transition-shadow h-full">
         <div className="relative h-48 overflow-hidden">
           <img 
             src={imageSrc} 
@@ -170,7 +316,7 @@ const Search = () => {
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
             <div className="flex gap-2">
               <span className={`capitalize font-medium text-xs rounded-full px-3 py-1 ${typeStyle.bg} ${typeStyle.text}`}>
-                {result.type}
+                {resultType}
               </span>
               {result.category && (
                 <span className="capitalize text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700 font-medium">
@@ -196,13 +342,7 @@ const Search = () => {
             <Button
               variant="link" 
               className="p-0 h-auto text-primary hover:text-primary/90"
-              onClick={() => {
-                let url = '/';
-                if (result.type === 'review') url = `/reviews/${result.id}`;
-                else if (result.type === 'news') url = `/news/${result.id}`;
-                else if (result.type === 'article') url = `/articles/${result.id}`;
-                window.location.href = url;
-              }}
+              onClick={handleNavigation}
             >
               View details
             </Button>
