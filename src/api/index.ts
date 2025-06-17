@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Article } from '@/components/ArticleCard';
 
 // Base URL settings
-const API_BASE_URL = import.meta.env.API_BASE_URL;
+const API_BASE_URL = "https://baosbackend-9f8439698e78.herokuapp.com";
 
 // Helper to handle API URLs and CORS proxying
 const getApiUrl = (endpoint: string) => {
@@ -464,7 +464,7 @@ export const searchApi = {
 
       console.log('Searching for:', query);
       const sanitizedQuery = encodeURIComponent(query.trim());
-      const response = await axios.get(getApiUrl(`/search?q=${sanitizedQuery}`));
+      const response = await axios.get(getApiUrl(`/api/search?q=${sanitizedQuery}`));
       
       if (Array.isArray(response.data)) {
         return response.data;
