@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Article } from '@/components/ArticleCard';
 
 // Base URL settings
-const API_BASE_URL = "https://baosbackend-9f8439698e78.herokuapp.com";
+const API_BASE_URL = import.meta.env.API_BASE_URL;
 
 // Helper to handle API URLs and CORS proxying
 const getApiUrl = (endpoint: string) => {
