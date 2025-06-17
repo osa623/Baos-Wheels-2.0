@@ -405,7 +405,7 @@ const Index = () => {
                         </span>
                         <h2 className="lg:text-4xl md:text-4xl font-semibold font-poppins mb-4 text-white">The BW Community</h2>
                         <p className="text-white/80 mb-8 font-light">
-                          Turboss is your go-to place to explore car details from A to Z. From engine specs to the latest tech, we cover everything you need to know about cars in one easy-to-use platform.
+                           The BW Community is a vibrant hub for car enthusiasts, owners, and experts to connect, share experiences, and stay updated on the latest trends in the automotive world. 
                         </p>
                         <Link to="/community" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
                         <StarBorder
@@ -472,9 +472,9 @@ const Index = () => {
                             Public
                           </span>
                            <h2 className="text-3xl md:text-4xl font-semibold mb-4 text-white">The BW Community</h2>
-                          <p className="text-white/80 mb-8 font-light">
-                            Turboss is your go-to place to explore car details from A to Z. From engine specs to the latest tech, we cover everything you need to know about cars in one easy-to-use platform.
-                          </p>
+                            <p className="text-white/80 mb-8 font-light">
+                            The BW Community is a vibrant hub for car enthusiasts, owners, and experts to connect, share experiences, and stay updated on the latest trends in the automotive world.
+                            </p>
                           <Link to="/community" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
                           <StarBorder
                             as="button"
@@ -507,16 +507,16 @@ const Index = () => {
                           <p className="text-white/80 mb-8 font-light">
                             Turboss is your go-to place to explore car details from A to Z. From engine specs to the latest tech, we cover everything you need to know about cars in one easy-to-use platform.
                           </p>
-                          <Link to="/community" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
+                          
                           <StarBorder
                             as="button"
                             className="custom-class"
                             color="cyan"
                             speed="5s"
                           >
-                            Check out the Community
+                            Garage will be available soon
                           </StarBorder>
-                        </Link>
+                        
                         </div>
 
                       </div>

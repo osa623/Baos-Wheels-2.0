@@ -1,14 +1,46 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Twitter, Facebook, Mail, Phone, MapPin } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import {reviewsApi , articlesApi } from "@/api/index";;
 import { Input } from "@/components/ui/input";
 
 //importing images
 import logo from '../assets/RoundPhoto_Sep202021_165616.png';
 
 const Footer = () => {
+
+  const [reviews, setReviews] = useState([]);
+  const [articles, setArticles] = useState([]);
+
+  //implementing the logic 
+  useEffect(()=> {
+    const fetchReviews = async () => {
+      try {
+        const response = await reviewsApi.getAll();
+        setReviews(response); // Get the latest 5 reviews
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    };
+
+    const fetchArticles = async () => {
+      try {
+        const response = await articlesApi.getAll();
+        setArticles(response); // Get the latest 5 articles
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+      }
+    };
+
+    fetchReviews();
+    fetchArticles();
+  })
+
+
+
+
   return (
     <footer className="bg-gray-50 z-40 border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
@@ -43,7 +75,7 @@ const Footer = () => {
               </h1>
             </Link>
             <p className="text-muted-foreground mb-6 text-sm">
-              Crafting meaningful products that balance form and function, designed with intention and care for detail.
+              Empowering automotive enthusiasts with the latest reviews, articles, and community insights—your trusted source for everything on wheels.
             </p>
             <div className="flex space-x-4">
               <Button variant="ghost" size="icon" className="rounded-full hover:bg-secondary">
@@ -60,36 +92,36 @@ const Footer = () => {
               </Button>
             </div>
           </div>
-          
-          {/* Shop column */}
-          <div>
+            <div>
             <h3 className="font-medium mb-4">Latest Reviews</h3>
             <ul className="space-y-3 text-sm">
-              <li>
-                <Link to="/products" className="text-muted-foreground hover:text-primary transition-colors">
-                  All Products
+              {[...reviews]
+              .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+              .slice(0, 5)
+              .map((review) => (
+                <li key={review.id}>
+                <Link to={`/reviews/${review.id}`} className="text-muted-foreground hover:text-primary transition-colors">
+                  {review.title}
                 </Link>
-              </li>
-              <li>
-                <Link to="/collections" className="text-muted-foreground hover:text-primary transition-colors">
-                  Collections
-                </Link>
-              </li>
-              <li>
-                <Link to="/new-arrivals" className="text-muted-foreground hover:text-primary transition-colors">
-                  New Arrivals
-                </Link>
-              </li>
-              <li>
-                <Link to="/featured" className="text-muted-foreground hover:text-primary transition-colors">
-                  Featured
-                </Link>
-              </li>
-              <li>
-                <Link to="/sale" className="text-muted-foreground hover:text-primary transition-colors">
-                  Sale
-                </Link>
-              </li>
+                </li>
+              ))}
+            </ul>
+            </div>
+
+        {/* Articles Section */}
+          <div>
+            <h3 className="font-medium mb-4">Latest Articles</h3>
+            <ul className="space-y-3 text-sm">
+              {[...articles]
+                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                .slice(0, 5)
+                .map((article) => (
+                  <li key={article.id}>
+                    <Link to={`/articles/${article.id}`} className="text-muted-foreground hover:text-primary transition-colors">
+                      {article.title}
+                    </Link>
+                  </li>
+                ))}
             </ul>
           </div>
           
@@ -124,19 +156,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          
-          {/* Contact column */}
-          <div>
-            <h3 className="font-medium mb-4">Contact</h3>
-            <ul className="space-y-3 text-sm">
-              <li className="flex items-center">
-                <Mail className="h-4 w-4 mr-2 text-muted-foreground" />
-                <a href="mailto:hello@Roodhy.com" className="text-muted-foreground hover:text-primary transition-colors">
-                  hello@baos.com
-                </a>
-              </li>
-            </ul>
-          </div>
+        
         </div>
         
         {/* Bottom footer */}

@@ -883,7 +883,7 @@ const Header = () => {
             </div>
           )}
 
-          {/* Support info in mobile menu - improved layout */}
+          {/* Support info in mobile menu - improved layout
           <div className="mt-auto p-5 border-t border-gray-100">
             <p className="text-sm text-muted-foreground mb-3">Need help? Contact us:</p>
             <div className="flex flex-col space-y-2">
@@ -904,7 +904,7 @@ const Header = () => {
                 </span>
               </a>
             </div>
-          </div>
+          </div>  */}
         </div>
       </div>
     </header>

@@ -401,7 +401,7 @@ const Reviews = () => {
             {/* Mobile Filters Modal */}
             {isMobileFilterOpen && (
               <div className="fixed inset-0 md:overflow-scroll bg-tranparent z-50 lg:hidden">
-                <div className="absolute right-0 top-0 bottom-0 w-80 h-[50rem] bg-white p-6 animate-slide-in-right">
+                <div className="absolute right-0 top-0 bottom-0 w-80 h-auto bg-white p-6 animate-slide-in-right">
                   <div className="flex justify-between items-center mb-6">
                     <h2 className="text-xl font-semibold">Filters</h2>
                     <Button 
@@ -451,19 +451,19 @@ const Reviews = () => {
                     </div>
                   </div>
 
-                  <div className="mb-8">
-                    <h3 className="font-medium mb-4">Categories</h3>
+                 <div className="mb-8">
+                    <Badge variant="secondary" className="mb-5">Auto Brands</Badge>
                     <div className="space-y-2">
-                      {categories.map(category => (
+                      {brands.map(category => (
                         <div key={category.id} className="flex items-center">
                           <Checkbox 
-                            id={`mobile-category-${category.id}`}
-                            checked={selectedCategories.includes(category.id)}
-                            onCheckedChange={() => handleCategoryChange(category.id)}
+                            id={`category-${category.id}`}
+                            checked={selectedBrands.includes(category.id)}
+                            onCheckedChange={() => handleBrandChange(category.id)}
                             className="mr-2"
                           />
                           <label 
-                            htmlFor={`mobile-category-${category.id}`}
+                            htmlFor={`category-${category.id}`}
                             className="text-sm cursor-pointer"
                           >
                             {category.name}

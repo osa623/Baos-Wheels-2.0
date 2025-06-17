@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 //images 
 import heroImage from '../assets/furBack.png';
-import heroImageSm from '../assets/furBacksm.png';
+import heroImageSm from '../assets/furBacksm.jpg';
 import StarBorder from './StarBorder';
 import overlayImage from '../assets/overlayImage.png';
 
