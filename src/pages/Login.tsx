@@ -304,10 +304,6 @@ const Login = () => {
                   alt="Baoswheels Logo" 
                   className="w-40 h-40 md:w-60 md:h-60 lg:w-72 lg:h-72 rounded-full shadow-lg object-cover" 
                 />
-                <h2 className="text-2xl font-bold mt-8 text-gray-800">Baoswheels</h2>
-                <p className="text-gray-600 mt-3 text-center max-w-md">
-                  Your premium wheel and tire destination
-                </p>
               </div>
             </div>
           </div>
