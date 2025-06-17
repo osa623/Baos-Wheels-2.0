@@ -464,7 +464,7 @@ export const searchApi = {
 
       console.log('Searching for:', query);
       const sanitizedQuery = encodeURIComponent(query.trim());
-      const response = await axios.get(getApiUrl(`/api/search?q=${sanitizedQuery}`));
+      const response = await axios.get(getApiUrl(`/search?q=${sanitizedQuery}`));
       
       if (Array.isArray(response.data)) {
         return response.data;
