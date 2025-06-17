@@ -300,7 +300,7 @@ const Header = () => {
   return (
     <header 
       className={cn(
-        "fixed top-0 left-0 right-0 z-40 py-2 sm:py-3 md:py-4 px-3 sm:px-6 md:px-12 header-layer",
+        "fixed top-0 left-0 right-0 z-50 py-2 sm:py-3 md:py-4 px-3 sm:px-6 md:px-12 header-layer",
         isScrolled ? "bg-white/80 backdrop-blur-md shadow-sm" : "bg-white/80 backdrop-blur-md shadow-sm",
         "mobile-header", // Mobile header class
         // Remove transition-all to prevent conflicts with animations
@@ -395,12 +395,33 @@ const Header = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Link to="/login">
-              <Button variant="outline" size="sm" className="rounded-full px-4 hover:bg-secondary transition-colors">
-                <LogIn className="h-4 w-4 mr-2" />
-                Login
-              </Button>
-            </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full bg-gray-200 hover:bg-gray-300 w-10 h-10 p-0 flex items-center justify-center border-transparent focus:border-transparent focus:ring-0 transform-none"
+                  style={{ outline: 'none' }}
+                  aria-label="Open user menu"
+                >
+                  <User className="h-6 w-6 text-gray-500" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56" sideOffset={8}>
+                <DropdownMenuItem asChild>
+                  <Link to="/login" className="w-full cursor-pointer">
+                    <LogIn className="mr-2 h-4 w-4" />
+                    <span>Login</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/register" className="w-full cursor-pointer">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Register</span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           )}
           
           {currentUser && (
@@ -782,6 +803,7 @@ const Header = () => {
                 </Button>
               </div>
             ) : (
+              <div className='flex flex-col space-y-3'>
               <Link 
                 to="/login" 
                 className="block"
@@ -792,6 +814,17 @@ const Header = () => {
                   Login
                 </Button>
               </Link>
+              <Link 
+                to="/register" 
+                className="block"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <Button variant="outline" className="w-full justify-start">
+                  <User className="h-4 w-4 mr-2" />
+                  Register
+                </Button>
+              </Link>
+              </div>
             )}
           </div>
           

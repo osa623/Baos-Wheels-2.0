@@ -10,7 +10,7 @@ import logo from '../assets/RoundPhoto_Sep202021_165616.png';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-50 z-50 border-t border-gray-100">
+    <footer className="bg-gray-50 z-40 border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
         {/* Newsletter signup 
         <div className="mb-16">
