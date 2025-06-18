@@ -691,9 +691,6 @@ const Header = () => {
             >
               <X className="h-5 w-5" />
             </Button>
-            <div className="ml-4 flex-1 text-center font-medium">
-              Menu
-            </div>
           </div>
           
           {/* Current user display in mobile menu - improved spacing */}
