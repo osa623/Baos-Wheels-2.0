@@ -456,7 +456,7 @@ const Index = () => {
             </section>
 
             {/* Banners for smaller screens */}
-            <section className="md:hidden py-24 px-6 space-y-5 w-full">
+            <section className="lg:hidden py-24 px-6 space-y-5 w-full">
                     <div className="w-[100%] mx-auto animate-slide-down">
                       <div className="relative overflow-hidden rounded-xl bg-black">
                         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent z-20">

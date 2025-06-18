@@ -12,7 +12,7 @@ import david from '../assets/david.jpg';
 import jane from '../assets/jane.jpg';
 import jessica from '../assets/jessica.jpg';
 import workshop02 from '../assets/workshop02.jpg';
-import logo from '../assets/RoundPhoto_Sep202021_165616.png';
+import image from '../assets/sbg.jpg';
 
 // Mock data for team members
 const teamMembers = [
@@ -210,24 +210,18 @@ const About = () => {
                 Our team of car enthusiasts and experts brings diverse perspectives, from classic muscle cars to the latest electric vehicles, providing insights and explanations that make complex concepts accessible
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button className="rounded-full button-hover">
-                  Our Sustainability Commitment
-                </Button>
-                <Button variant="outline" className="rounded-full button-hover">
-                  Contact Us
-                </Button>
               </div>
             </div>
             <div className="relative">
               <div className="aspect-[4/5] rounded-lg overflow-hidden">
                 <img 
-                  src={workshop02}
+                  src={image}
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-gray-50 rounded-lg p-6 shadow-sm hidden md:flex flex-col justify-center">
-                <p className="text-3xl font-semibold mb-2">9+</p>
-                <p className="text-sm text-muted-foreground">Years of crafting products with purpose and intention</p>
+                <p className="text-3xl font-semibold mb-2">4+</p>
+                <p className="text-sm text-muted-foreground">Years of sharing automotive passion and expertise</p>
               </div>
             </div>
           </div>
@@ -261,7 +255,7 @@ const About = () => {
       </section>
 
       {/* Contact Us Page */}
-          <section className="py-20 px-6 bg-white">
+          <section  className="py-20 px-6 bg-white">
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-10">
                 <span className="inline-block px-3 py-1 mb-4 text-xs font-medium bg-secondary rounded-full">
