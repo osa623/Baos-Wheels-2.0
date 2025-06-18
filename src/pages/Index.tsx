@@ -542,11 +542,11 @@ const Index = () => {
               </p>
             </div>
             <div className="relative">
-              <div className="aspect-[4/3] rounded-lg overflow-hidden">
+              <div className="aspect-[4/3] rounded-lg">
                 <img 
                   src={latestNews?.images[1] || workspace}
                   alt="Design workspace"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full border-separate border-double border-8 border-gray-700 object-cover"
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-gray-50 rounded-lg p-4 shadow-sm hidden md:block">
