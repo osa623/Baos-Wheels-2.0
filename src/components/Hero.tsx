@@ -43,7 +43,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative h-screen">
+    <section className="relative h-screen overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-transparent">
         <video src={backgroundVideo} autoPlay loop muted className="hidden lg:flex w-full h-full object-cover opacity-50" />
