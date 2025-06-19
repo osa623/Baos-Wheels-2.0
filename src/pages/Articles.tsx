@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { articlesApi } from '@/api/index';
 import { Article } from '@/components/ArticleCard';
+import { Helmet } from 'react-helmet-async';
 
 const Articles = () => {
   // Refs for sections to animate
@@ -64,6 +65,48 @@ const Articles = () => {
 
   return (
     <div className="min-h-screen py-24">
+
+      <Helmet>
+        <title>Articles | Baos Wheels</title>
+        <meta
+          name="description"
+          content="Discover in-depth automotive articles, expert opinions, and the latest insights from the car world. Baos Wheels brings the auto industry to your fingertips."
+        />
+        <meta
+          name="keywords"
+          content="car articles, automotive insights, Baos Wheels, car reviews, auto tech"
+        />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.baoswheels.com/articles" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="Articles | Baos Wheels" />
+        <meta
+          property="og:description"
+          content="Explore expert-written automotive articles and industry insights."
+        />
+        <meta property="og:url" content="https://www.baoswheels.com/articles" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:image"
+          content="https://www.baoswheels.com/assets/articles-preview.jpg"
+        />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Articles | Baos Wheels" />
+        <meta
+          name="twitter:description"
+          content="Explore expert-written automotive articles and industry insights."
+        />
+        <meta
+          name="twitter:image"
+          content="https://www.baoswheels.com/assets/articles-preview.jpg"
+        />
+      </Helmet>
+
+
+
       <Header />
       
       {/* Featured Articles */}
