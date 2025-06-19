@@ -10,6 +10,7 @@ import Footer from '@/components/Footer';
 import { Article } from '@/api/index';
 import CommentForm from '@/components/CommentForm';
 import CommentList from '@/components/CommentList';
+import { Helmet } from 'react-helmet-async';
 
 const ArticleView = () => {
   const { id } = useParams<{ id: string }>();
@@ -112,6 +113,19 @@ const ArticleView = () => {
   return (
     <>
       <Header />
+
+      {/* Helmet for SEO */}
+      <Helmet>
+        <title>{article.title} | Baos Wheels</title>
+        <meta name="description" content={article.summary || "Read this article on Baos Wheels"} />
+        <meta property="og:title" content={article.title} />
+        <meta property="og:description" content={article.summary || "Read this article on Baos Wheels"} />
+        <meta property="og:image" content={article.images && article.images.length > 0 ? article.images[0] : 'https://placehold.co/1200x800?text=No+Image'} />
+     </Helmet>
+     
+        
+
+
       <div className="min-h-screen pt-24 pb-16">
         <div className="max-w-5xl mx-auto px-4">
           {/* Back navigation */}

@@ -9,6 +9,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { articlesApi, reviewsApi, newsApi } from '@/api';
 import SplitText from '@/components/SplitText';
+import { Helmet } from 'react-helmet-async'; 
 
 //imports 
 import workspace from '../assets/workspace.jpg';
@@ -217,7 +218,29 @@ const Index = () => {
   return (
     <div className="min-h-screen overflow-hidden">
       <Header />
-      
+
+      {/* SEO */}
+      <Helmet>
+        <title>Baoswheels | Latest Car Reviews, Auto News & Community</title>
+        <meta
+          name="description"
+          content="Baoswheels is your trusted source for the latest car reviews, automotive news, and expert insights. Join our community to explore trends, innovations, and connect with fellow car enthusiasts."
+        />
+        <meta
+          name="keywords"
+          content="cars, automotive, car reviews, auto news, car community, vehicle trends, car insights, Baoswheels"
+        />
+        <meta property="og:title" content="Baoswheels | Latest Car Reviews, Auto News & Community" />
+        <meta
+          property="og:description"
+          content="Stay up-to-date with Baoswheels. Read expert car reviews, discover automotive news, and join a passionate car community."
+        />
+        <meta property="og:url" content="https://www.baoswheels.com/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://www.baoswheels.com/og-image.jpg" />
+        <link rel="canonical" href="https://www.baoswheels.com/" />
+      </Helmet>
+
       {/* Hero Section */}
       <Hero />
       

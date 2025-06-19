@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import emailjs from 'emailjs-com';
+import { Helmet } from 'react-helmet-async';
 
 //import images
 import mark from '../assets/mark.jpg';
@@ -173,7 +174,47 @@ const About = () => {
   return (
     <div className="min-h-screen">
       <Header />
-      
+
+      {/* SEO Tags */}
+      <Helmet>
+        <title>About Us | Baos Wheels</title>
+        <meta
+          name="description"
+          content="Learn more about Baos Wheels, our mission, and the team behind the scenes."
+        />
+        <meta
+          name="keywords"
+          content="About Baos Wheels, automotive content, car enthusiasts"
+        />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.baoswheels.com/about" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="About Us | Baos Wheels" />
+        <meta
+          property="og:description"
+          content="Discover the story behind Baos Wheels and our passion for cars."
+        />
+        <meta property="og:url" content="https://www.baoswheels.com/about" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:image"
+          content="https://www.baoswheels.com/assets/about-preview.jpg"
+        />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="About Us | Baos Wheels" />
+        <meta
+          name="twitter:description"
+          content="Learn more about Baos Wheels and our commitment to automotive excellence."
+        />
+        <meta
+          name="twitter:image"
+          content="https://www.baoswheels.com/assets/about-preview.jpg"
+        />
+      </Helmet>
+
       {/* Hero Section */}
       <section className="pt-24 pb-2 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">

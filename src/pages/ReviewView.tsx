@@ -10,6 +10,7 @@ import Footer from '@/components/Footer';
 import { Article } from '@/components/ArticleCard';
 import CommentForm from '@/components/CommentForm';
 import CommentList from '@/components/CommentList';
+import { Helmet } from 'react-helmet-async';
 
 const ReviewView = () => {
   const { id } = useParams<{ id: string }>();
@@ -110,6 +111,25 @@ const ReviewView = () => {
   return (
     <>
       <Header />
+
+      {/* Helmet for SEO and metadata */}
+      <Helmet>
+        <title>{review.title} - {review.brand} Review</title>
+        <meta name="description" content={`Read our in-depth review of the ${review.brand} ${review.title}. Explore its features, performance, and more.`} />
+        <link rel="canonical" href={`${window.location.origin}/reviews/${review.id}`} />
+        <meta property="og:title" content={`${review.title} - ${review.brand} Review`} />
+        <meta property="og:description" content={`Read our in-depth review of the ${review.brand} ${review.title}. Explore its features, performance, and more.`} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`${window.location.origin}/reviews/${review.id}`} />
+        <meta property="og:image" content={review.images && review.images.length > 0 ? review.images[0] : 'https://placehold.co/1200x800?text=No+Image'} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${review.title} - ${review.brand} Review`} />
+        <meta name="twitter:description" content={`Read our in-depth review of the ${review.brand} ${review.title}. Explore its features, performance, and more.`} />
+        <meta name="twitter:image" content={review.images && review.images.length > 0 ? review.images[0] : 'https://placehold.co/1200x800?text=No+Image'} />
+      </Helmet>
+
+
+
       <div className="min-h-screen pt-24 pb-16">
         <div className="max-w-5xl mx-auto px-4">
           {/* Back navigation */}

@@ -6,6 +6,7 @@ import { Loader2, Search as SearchIcon, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { Helmet } from 'react-helmet-async';
 import { 
   Select,
   SelectContent,
@@ -355,6 +356,13 @@ const Search = () => {
   return (
     <div className='relative min-h-screen flex flex-col'>
       <Header />
+
+      {/* Seo metadata */}
+      <Helmet>
+        <title>Search - Baos Wheels</title>
+        <meta name="description" content="Search for cars, reviews, articles, and news on Baos Wheels" />
+        <link rel="canonical" href={`${window.location.origin}/search`} />
+      </Helmet>
       
       <main className="flex-1 container max-w-6xl mx-auto px-4 py-24">
         <h1 onClick={() => window.location.href = '/'} className="text-sm cursor-pointer font-normal mb-1 flex items-center gap-2">

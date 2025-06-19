@@ -13,6 +13,7 @@ import { ChevronLeft, SlidersHorizontal, X } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 //apis
 import { reviewsApi, Review } from '@/api';
@@ -232,6 +233,44 @@ const Reviews = () => {
   return (
     <div className="min-h-screen ">
       <Header />
+
+      {/* SEO Metadata */}
+      <Helmet>
+        <title>Car Reviews & Expert Automotive Analysis | Baos Wheels</title>
+        <meta
+          name="description"
+          content="Explore our comprehensive collection of in-depth automotive reviews, expert ratings, and detailed comparisons to help you make informed decisions when buying your next car. From luxury sedans to electric SUVs, find all the information you need."
+        />
+        <meta
+          name="keywords"
+          content="car reviews, automotive reviews, car ratings, vehicle comparisons, car buying guide, SUV reviews, electric vehicle reviews, luxury car reviews, sedan reviews, sports car reviews, test drives, automotive experts"
+        />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.baoswheels.com/reviews" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.baoswheels.com/reviews" />
+        <meta property="og:title" content="Expert Car Reviews & Automotive Analysis | Baos Wheels" />
+        <meta property="og:description" content="Discover comprehensive automotive reviews with expert ratings, detailed comparisons, and insights to guide your next vehicle purchase." />
+        <meta property="og:image" content="https://www.baoswheels.com/images/reviews-banner.jpg" />
+        
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://www.baoswheels.com/reviews" />
+        <meta property="twitter:title" content="Expert Car Reviews & Automotive Analysis | Baos Wheels" />
+        <meta property="twitter:description" content="Discover comprehensive automotive reviews with expert ratings, detailed comparisons, and insights to guide your next vehicle purchase." />
+        <meta property="twitter:image" content="https://www.baoswheels.com/images/reviews-banner.jpg" />
+        
+        {/* Additional SEO metadata */}
+        <meta name="author" content="Baos Wheels Automotive Team" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="language" content="English" />
+        <meta name="revisit-after" content="7 days" />
+        <meta name="distribution" content="global" />
+        <meta name="rating" content="general" />
+        
+      </Helmet>
       
       {/* Page header */}
       <div className="pt-24 pb-6 px-6 bg-gray-50 z-40">

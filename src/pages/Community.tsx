@@ -15,6 +15,7 @@ import { collection, query, orderBy, addDoc, serverTimestamp, getDocs, deleteDoc
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { createReplyNotification } from '@/utils/notificationUtils';
+import { Helmet } from 'react-helmet-async';
 
 interface Message {
   id: string;
@@ -334,7 +335,30 @@ const Community = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
       <Header/>
-      
+
+
+      {      /* Helmet for SEO */}
+      <Helmet>
+        <title>Community Chat</title>
+        <meta name="description" content="Join our community chat to connect with others, share ideas, and discuss topics of interest." />
+        <meta name="keywords" content="community chat, discussion, ideas, connect" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.baoswheels.com/community" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="Community Chat" />
+        <meta property="og:description" content="Join our community chat to connect with others, share ideas, and discuss topics of interest." />
+        <meta property="og:url" content="https://www.baoswheels.com/community" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://www.baoswheels.com/assets/community-preview.jpg" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Community Chat" />
+        <meta name="twitter:description" content="Join our community chat to connect with others, share ideas, and discuss topics of interest." />
+        <meta name="twitter:image" content="https://www.baoswheels.com/assets/community-preview.jpg" />
+      </Helmet>
+
       <div className="flex-grow mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-12">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
           {/* Back navigation */}

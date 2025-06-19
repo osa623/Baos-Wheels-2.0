@@ -9,6 +9,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { articlesApi, reviewsApi, Review } from '@/api';
 import GridMotion from '@/components/GridMotion';
+import { Helmet } from 'react-helmet-async';
 
 //imports 
 import background01 from '../assets/furBack.jpg';
@@ -182,6 +183,19 @@ const Electriccars = () => {
   return (
     <div className="min-h-screen">
       <Header />
+
+      {/* Helmet for SEO */}
+      <Helmet>
+        <title>Electric Cars | Baoswheels - Reviews, News & Insights</title>
+        <meta name="description" content="Discover the latest electric cars, in-depth reviews, industry news, and expert insights. Stay informed about trends, innovations, and eco-friendly vehicles with Baoswheels." />
+        <meta name="keywords" content="electric cars, EV, electric vehicles, car reviews, auto news, sustainable driving, green cars, Baoswheels" />
+        <meta property="og:title" content="Electric Cars | Baoswheels" />
+        <meta property="og:description" content="Explore electric car reviews, news, and expert articles. Make informed decisions about your next eco-friendly ride." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.baoswheels.com/electric" />
+        <meta property="og:image" content="https://www.baoswheels.com/assets/og-electric-cars.jpg" />
+        <link rel="canonical" href="https://www.baoswheels.com/electric" />
+      </Helmet>
       
       {/* Hero Section */}
       <Herogreen/>
