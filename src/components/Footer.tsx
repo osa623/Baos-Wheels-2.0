@@ -77,19 +77,14 @@ const Footer = () => {
             <p className="text-muted-foreground mb-6 text-sm">
               Empowering automotive enthusiasts with the latest reviews, articles, and community insights—your trusted source for everything on wheels.
             </p>
-            <div className="flex space-x-4">
-              <Button variant="ghost" size="icon" className="rounded-full hover:bg-secondary">
-                <Instagram className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="icon" className="rounded-full hover:bg-secondary">
-                {/* Replace with your TikTok icon component */}
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M16.5 3a5.5 5.5 0 0 0 5.5 5.5v3.25a8.75 8.75 0 1 1-8.75-8.75h3.25zm-3.25 2A6.75 6.75 0 1 0 20 11.75V9.9a7.5 7.5 0 0 1-3.25-.9V16a4.25 4.25 0 1 1-4.25-4.25h.5v2a2.25 2.25 0 1 0 2.25 2.25V5z"/>
-                </svg>
-              </Button>
-              <Button variant="ghost" size="icon" className="rounded-full hover:bg-secondary">
-                <Facebook className="h-4 w-4" />
-              </Button>
+            <div className="flex flex-col space-y-3 mt-4">
+              <h3 className="font-medium mb-1">Contact Us</h3>
+              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                <Mail size={16} />
+                <a href="mailto:info@baoswheels.com" className="hover:text-primary transition-colors">
+                  info@baoswheels.com
+                </a>
+              </div>
             </div>
           </div>
             <div>

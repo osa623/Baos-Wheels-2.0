@@ -34,7 +34,7 @@ const Hero = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
+  
   const scrollToProducts = () => {
     const productsSection = document.getElementById('featured-products');
     if (productsSection) {
