@@ -229,7 +229,7 @@ const Search = () => {
     // Use the appropriate content field based on content type
     let contentPreview = '';
     if (result.type === 'review') {
-      contentPreview = result.content || result.snippet || result.description || '';
+      contentPreview = result.content || result.snippet || result.description || result.overview || '';
       // Strip HTML tags if present
       contentPreview = contentPreview.replace(/<[^>]*>/g, '');
     } else {
