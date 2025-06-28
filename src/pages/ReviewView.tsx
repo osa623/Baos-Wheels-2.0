@@ -115,39 +115,72 @@ const ReviewView = () => {
       {/* Helmet for SEO and metadata */}
       <Helmet>
         <title>{review.brand} {review.title} Review | BaosWheels</title>
-        <meta name="description" content={review.overview ? review.overview.substring(0, 160) : `Read our comprehensive review of the ${review.brand} ${review.title}. Detailed analysis of performance, features, interior, exterior and more.`} />
+        <meta name="description" content={review.overview ? review.overview.substring(0, 160).replace(/"/g, "'") : `Read our comprehensive review of the ${review.brand} ${review.title}. Detailed analysis of performance, features, interior, exterior and more.`} />
         <link rel="canonical" href={`${window.location.origin}/reviews/${review.id}`} />
         
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content={`${review.brand} ${review.title} Review | BaosWheels`} />
-        <meta property="og:description" content={review.overview ? review.overview.substring(0, 300) : `Comprehensive review of the ${review.brand} ${review.title}. Expert analysis covering design, performance, interior quality, and driving experience.`} />
+        {/* Essential Open Graph tags */}
         <meta property="og:url" content={`${window.location.origin}/reviews/${review.id}`} />
-        <meta property="og:image" content={review.images && review.images.length > 0 ? review.images[0] : 'https://placehold.co/1200x800/000000/FFFFFF?text=BaosWheels+Review'} />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={`${review.brand} ${review.title} Review`} />
+        <meta property="og:description" content={review.overview ? review.overview.substring(0, 300).replace(/"/g, "'").replace(/\n/g, ' ') : `Comprehensive review of the ${review.brand} ${review.title}. Expert analysis covering design, performance, interior quality, and driving experience.`} />
+        <meta property="og:image" content={review.images && review.images.length > 0 ? review.images[0] : 'https://via.placeholder.com/1200x630/1a1a1a/ffffff?text=BaosWheels+Car+Review'} />
+        <meta property="og:image:secure_url" content={review.images && review.images.length > 0 ? review.images[0] : 'https://via.placeholder.com/1200x630/1a1a1a/ffffff?text=BaosWheels+Car+Review'} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content={`${review.brand} ${review.title} - Review Image`} />
+        <meta property="og:image:alt" content={`${review.brand} ${review.title} car review image`} />
         <meta property="og:site_name" content="BaosWheels" />
+        <meta property="og:locale" content="en_US" />
+        
+        {/* Article specific meta tags */}
         <meta property="article:author" content={review.author || "BaosWheels Team"} />
-        {review.date && <meta property="article:published_time" content={review.date} />}
         <meta property="article:section" content="Car Reviews" />
         <meta property="article:tag" content={review.brand} />
         <meta property="article:tag" content={review.category} />
-        <meta property="article:tag" content="Car Review" />
-        
-        {/* Twitter */}
+        <meta property="article:tag" content="automotive" />
+        <meta property="article:tag" content="car review" />
+      
+        {/* Twitter Card tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@BaosWheels" />
         <meta name="twitter:creator" content="@BaosWheels" />
         <meta name="twitter:title" content={`${review.brand} ${review.title} Review`} />
-        <meta name="twitter:description" content={review.overview ? review.overview.substring(0, 200) : `Expert review of the ${review.brand} ${review.title}. Performance, design, and features analyzed.`} />
-        <meta name="twitter:image" content={review.images && review.images.length > 0 ? review.images[0] : 'https://placehold.co/1200x800/000000/FFFFFF?text=BaosWheels+Review'} />
-        <meta name="twitter:image:alt" content={`${review.brand} ${review.title} Review`} />
+        <meta name="twitter:description" content={review.overview ? review.overview.substring(0, 200).replace(/"/g, "'").replace(/\n/g, ' ') : `Expert review of the ${review.brand} ${review.title}. Performance, design, and features analyzed.`} />
+        <meta name="twitter:image" content={review.images && review.images.length > 0 ? review.images[0] : 'https://via.placeholder.com/1200x630/1a1a1a/ffffff?text=BaosWheels+Car+Review'} />
+        <meta name="twitter:image:alt" content={`${review.brand} ${review.title} review`} />
         
-        {/* Additional meta tags for better sharing */}
+        {/* Facebook specific */}
+        <meta property="fb:app_id" content="your-facebook-app-id" />
+        
+        {/* Additional meta tags */}
         <meta name="author" content={review.author || "BaosWheels Team"} />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
         <meta name="keywords" content={`${review.brand}, ${review.title}, car review, ${review.category}, automotive review, BaosWheels`} />
+        
+        {/* Schema.org structured data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Review",
+            "itemReviewed": {
+              "@type": "Car",
+              "name": `${review.brand} ${review.title}`,
+              "brand": {
+                "@type": "Brand",
+                "name": review.brand
+              }
+            },
+            "author": {
+              "@type": "Organization",
+              "name": review.author || "BaosWheels Team"
+            },
+            "description": review.overview || `Review of ${review.brand} ${review.title}`,
+            "image": review.images && review.images.length > 0 ? review.images[0] : null,
+            "publisher": {
+              "@type": "Organization",
+              "name": "BaosWheels"
+            }
+          })}
+        </script>
       </Helmet>
 
 
@@ -353,24 +386,22 @@ const ReviewView = () => {
                 const shareData = {
                   title: `${review.brand} ${review.title} Review | BaosWheels`,
                   text: review.overview ? 
-                  `${review.overview.substring(0, 100)}...` : 
-                  `Check out this comprehensive review of the ${review.brand} ${review.title} on BaosWheels`,
+                    `${review.overview.substring(0, 100).trim()}...` : 
+                    `Check out this comprehensive review of the ${review.brand} ${review.title} on BaosWheels`,
                   url: window.location.href,
                 };
-
-                // Add image reference to the shared text if available
-                if (review.images && review.images.length > 0) {
-                  shareData.text += `\n\nImage: ${review.images[0]}`;
-                }
 
                 if (navigator.share) {
                   navigator.share(shareData).catch(err => console.error('Error sharing:', err));
                 } else {
-                  // Fallback: copy to clipboard
-                  navigator.clipboard.writeText(window.location.href).then(() => {
-                    alert('Review link copied to clipboard!');
+                  // Fallback: copy to clipboard with additional info
+                  const fallbackText = `${shareData.title}\n${shareData.text}\n${shareData.url}`;
+                  navigator.clipboard.writeText(fallbackText).then(() => {
+                    alert('Review details copied to clipboard!');
                   }).catch(err => {
                     console.error('Error copying to clipboard:', err);
+                    // Ultimate fallback - just copy the URL
+                    navigator.clipboard.writeText(shareData.url);
                   });
                 }
               }}
