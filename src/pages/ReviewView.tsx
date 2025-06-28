@@ -58,9 +58,9 @@ const ReviewView = () => {
 
         setReview(reviewData);
         setLikeCount(Math.floor(Math.random() * 1));
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error("Error fetching review:", err);
-        setError(err.message || "Failed to load the review. Please try again later.");
+        setError(err instanceof Error ? err.message : "Failed to load the review. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -114,18 +114,40 @@ const ReviewView = () => {
 
       {/* Helmet for SEO and metadata */}
       <Helmet>
-        <title>{review.title} - {review.brand} Review</title>
-        <meta name="description" content={`Read our in-depth review of the ${review.brand} ${review.title}. Explore its features, performance, and more.`} />
+        <title>{review.brand} {review.title} Review | BaosWheels</title>
+        <meta name="description" content={review.overview ? review.overview.substring(0, 160) : `Read our comprehensive review of the ${review.brand} ${review.title}. Detailed analysis of performance, features, interior, exterior and more.`} />
         <link rel="canonical" href={`${window.location.origin}/reviews/${review.id}`} />
-        <meta property="og:title" content={`${review.title} - ${review.brand} Review`} />
-        <meta property="og:description" content={`Read our in-depth review of the ${review.brand} ${review.title}. Explore its features, performance, and more.`} />
+        
+        {/* Open Graph / Facebook */}
         <meta property="og:type" content="article" />
+        <meta property="og:title" content={`${review.brand} ${review.title} Review | BaosWheels`} />
+        <meta property="og:description" content={review.overview ? review.overview.substring(0, 300) : `Comprehensive review of the ${review.brand} ${review.title}. Expert analysis covering design, performance, interior quality, and driving experience.`} />
         <meta property="og:url" content={`${window.location.origin}/reviews/${review.id}`} />
-        <meta property="og:image" content={review.images && review.images.length > 0 ? review.images[0] : 'https://placehold.co/1200x800?text=No+Image'} />
+        <meta property="og:image" content={review.images && review.images.length > 0 ? review.images[0] : 'https://placehold.co/1200x800/000000/FFFFFF?text=BaosWheels+Review'} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={`${review.brand} ${review.title} - Review Image`} />
+        <meta property="og:site_name" content="BaosWheels" />
+        <meta property="article:author" content={review.author || "BaosWheels Team"} />
+        {review.date && <meta property="article:published_time" content={review.date} />}
+        <meta property="article:section" content="Car Reviews" />
+        <meta property="article:tag" content={review.brand} />
+        <meta property="article:tag" content={review.category} />
+        <meta property="article:tag" content="Car Review" />
+        
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${review.title} - ${review.brand} Review`} />
-        <meta name="twitter:description" content={`Read our in-depth review of the ${review.brand} ${review.title}. Explore its features, performance, and more.`} />
-        <meta name="twitter:image" content={review.images && review.images.length > 0 ? review.images[0] : 'https://placehold.co/1200x800?text=No+Image'} />
+        <meta name="twitter:site" content="@BaosWheels" />
+        <meta name="twitter:creator" content="@BaosWheels" />
+        <meta name="twitter:title" content={`${review.brand} ${review.title} Review`} />
+        <meta name="twitter:description" content={review.overview ? review.overview.substring(0, 200) : `Expert review of the ${review.brand} ${review.title}. Performance, design, and features analyzed.`} />
+        <meta name="twitter:image" content={review.images && review.images.length > 0 ? review.images[0] : 'https://placehold.co/1200x800/000000/FFFFFF?text=BaosWheels+Review'} />
+        <meta name="twitter:image:alt" content={`${review.brand} ${review.title} Review`} />
+        
+        {/* Additional meta tags for better sharing */}
+        <meta name="author" content={review.author || "BaosWheels Team"} />
+        <meta name="robots" content="index, follow" />
+        <meta name="keywords" content={`${review.brand}, ${review.title}, car review, ${review.category}, automotive review, BaosWheels`} />
       </Helmet>
 
 
@@ -262,10 +284,10 @@ const ReviewView = () => {
                     <Separator className="mt-5" />
                     {relatedArticles.slice(0, 3).map((article) => (
                         <div 
-                        key={article.id} 
+                        key={article._id} 
                         className='flex-col'>
                         <Link 
-                          to={`/articles/${article.id}`} 
+                          to={`/articles/${article._id}`} 
                           className="flex bg-transparent"
                         >
                             <div className='flex w-[20%] h-24 overflow-hidden'>
@@ -317,8 +339,8 @@ const ReviewView = () => {
           <div className="mb-8">
             <Separator className="my-6" />
             <h3 className="text-xl font-semibold mb-4">Discussion</h3>
-            <CommentForm reviewId={review._id || review.id} />
-            <CommentList reviewId={review._id || review.id} />
+            <CommentForm reviewId={String(review._id || review.id)} />
+            <CommentList reviewId={String(review._id || review.id)} />
           </div>
 
           {/* Interaction buttons */}
@@ -328,11 +350,29 @@ const ReviewView = () => {
               size="sm"
               className="rounded-full"
               onClick={() => {
-                navigator.share({
-                  title: review.title,
-                  text: `Check out this review of the ${review.brand} ${review.title}`,
+                const shareData = {
+                  title: `${review.brand} ${review.title} Review | BaosWheels`,
+                  text: review.overview ? 
+                  `${review.overview.substring(0, 100)}...` : 
+                  `Check out this comprehensive review of the ${review.brand} ${review.title} on BaosWheels`,
                   url: window.location.href,
-                }).catch(err => console.error('Error sharing:', err));
+                };
+
+                // Add image reference to the shared text if available
+                if (review.images && review.images.length > 0) {
+                  shareData.text += `\n\nImage: ${review.images[0]}`;
+                }
+
+                if (navigator.share) {
+                  navigator.share(shareData).catch(err => console.error('Error sharing:', err));
+                } else {
+                  // Fallback: copy to clipboard
+                  navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Review link copied to clipboard!');
+                  }).catch(err => {
+                    console.error('Error copying to clipboard:', err);
+                  });
+                }
               }}
             >
               <Share2 className="h-4 w-4 mr-2" />
