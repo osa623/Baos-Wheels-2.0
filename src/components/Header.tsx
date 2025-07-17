@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ShoppingCart, Search, User, Menu, X, LogIn, LogOut, Settings, UserCircle, Bell, CheckCheck, Loader2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import StarBorder from './StartBorderII';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -347,9 +348,17 @@ const Header = () => {
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-4">
           <Link to="/search" className="relative">
-          <Button variant="ghost" size="icon" className="rounded-full hover:bg-secondary transition-colors">
-            <Search className="h-5 w-5" />
-          </Button>
+
+  
+              <StarBorder
+                as="button"
+                className="custom-class inline-blockt-xs"
+                color="cyan"
+                speed="5s"
+              >
+                <Search className="h-4 w-4 mr-2" />
+                Search
+              </StarBorder>
           </Link>
           
           {currentUser ? (

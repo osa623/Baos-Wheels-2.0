@@ -26,14 +26,17 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ Article, index = 0 }) => {
   const animationDelay = `${index * 0.1}s`;
 
   return (
+    <div className='relative cursor-pointer'>
     <div 
-      className="Article-card group bg-white"
-      style={{ animationDelay }}
+      className="Article-card group rounded-2xl border-2 border-double bg-white"
+      style={{ animationDelay, 
+        boxShadow: ' 4px 6px rgba(204,255,0, 0.9)',
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Article image container */}
-      <div className="relative overflow-hidden aspect-[4/5]">
+      <div className="relative overflow-hidden rounded-2xl aspect-[4/5]">
         {/* Article image */}
         <img 
           src={Article.images && Article.images.length > 0 ? Article.images[1] : 'https://placehold.co/600x800?text=No+Image'}
@@ -64,24 +67,23 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ Article, index = 0 }) => {
         </div>
         
         {/* Category tag */}
-        <div className="absolute top-3 left-3">
-          <span className="inline-block px-2 py-1 text-xs bg-white/90 backdrop-blur-sm rounded">
+        <div className="absolute top-3 left-3 ">
+          <span className="inline-block px-2 border-double border-[#EEF525] border-2 py-1 text-xs bg-white/90 backdrop-blur-sm rounded">
             {Article.category}
           </span>
         </div>
       </div>
+
       
-      {/* Article details */}
-      <div className="p-4">
-        <Link to={`/articles/${Article.id}`}>
-          <h3 className="font-medium text-md hover:text-primary transition-colors">
-            {Article.title}
-          </h3>
-        </Link>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {Article.category}
-        </p>
-      </div>
+      
+
+    </div>
+    <div className='relative z-10'>
+    <div className='absolute w-full mt-3 bg-black px-4 py-2 z-20'>
+      <p className="text-md text-center text-[#ffffff]">{Article.title}</p>
+    </div>    
+    <div className='absolute w-2/3 mt-11 ml-2 border-black border-2 border-dashed bg-gray-300 py-2 z-10 '/>
+    </div>
     </div>
   );
 };

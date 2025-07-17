@@ -245,16 +245,20 @@ const Index = () => {
       <Hero />
       
       {/* Featured Article Section */}
-      <section id="featured-products" className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
+      <section id="featured-products" className="relative py-20 px-6">
+        <div className='absolute inset-0 bg-transparent  w-full overflow-hidden top-0 h-auto  to-transparent z-10'>
+          <div className='absolute inset-0 bg-black -top-40 h-[20%] -rotate-[10deg] md:h-[50%] scale-150 rounded-5xl md:-rotate-[10deg] z-20'></div>
+         <div className='absolute inset-0 bg-gray-300 -top-40 h-[25%] -rotate-[10deg] md:h-[54%] scale-150 rounded-5xl md:-rotate-[8deg] z-10'></div>
+        </div>
+        <div className="relative max-w-7xl mx-auto z-40">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
-              <h2 className="text-3xl font-semibold mb-3">Latest Articles</h2>
-              <p className="text-muted-foreground max-w-xl">
+              <h2 className="text-4xl font-semibold text-[#EEF525] mb-3">Latest Articles</h2>
+              <p className=" text-gray-400 lg:pt-2 max-w-2xl">
                 Explore the latest articles about the automobile industry, get up-to-date auto news, and discover insights on trends, innovations, and expert tips to keep you informed and inspired.
               </p>
           </div>
-            <Link to="/articles" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
+            <Link to="/articles" className="inline-flex items-center mt-8 md:mt-0 text-primary hover:underline">
                <StarBorder
                 as="button"
                 className="custom-class"
@@ -266,7 +270,7 @@ const Index = () => {
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-20 lg:grid-cols-4 lg:gap-6">
             {fetchArticles.slice(0,4).map((article, index) => (
               <div 
                 key={article.id}
@@ -278,11 +282,12 @@ const Index = () => {
             ))}
           </div>
         </div>
+
       </section>
 
         
       {/* Define a velocity value for the ScrollVelocity component */}
-      <div className='flex w-auto h-auto rotate-2 overflow-hidden'>
+      <div className='flex w-auto h-auto rotate-2 z-50 lg:py-20 overflow-hidden'>
           <ScrollVelocity
         texts={['#baoswheels', '#driveYourPassion']} 
         velocity={10} 
@@ -298,16 +303,20 @@ const Index = () => {
           -1px -1px 0 #000,  
            1px -1px 0 #000,
           -1px  1px 0 #000,
-           1px  1px 0 #000;
+           1px  1px 0 #ff0;
           }
         `}
       </style>
       
       {/* Categories Reviews Section */}
-      <section className="py-20 px-6 z-30 bg-gray-50">
+      <section className="py-20 z-20 relative px-6 bg-gray-50">
+        <div className='absolute inset-0 bg-transparent  w-full overflow-hidden top-0 h-auto  to-transparent z-10'>
+          <div className='absolute inset-0 bg-black -top-40 h-[20%] rotate-[10deg] md:h-[50%] scale-150 rounded-5xl md:rotate-[10deg] z-20'></div>
+         <div className='absolute inset-0 bg-gray-300 -top-40 h-[25%] rotate-[10deg] md:h-[54%] scale-150 rounded-5xl md:rotate-[8deg] z-10'></div>
+        </div>
         <div 
           ref={categoryRef}
-          className="max-w-7xl mx-auto opacity-0"
+          className="max-w-7xl relative mx-auto z-20 opacity-0"
           style={{ animationFillMode: 'forwards', animationDelay: '0.2s' }}
         >
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
@@ -322,8 +331,8 @@ const Index = () => {
               </StarBorder>
             </Link>
             <div className='items-end flex flex-col'>
-              <h2 className="text-3xl font-semibold mb-3">Latest Reviews</h2>
-              <p className="text-muted-foreground text-end max-w-xl">
+              <h2 className="text-3xl font-semibold text-[#EEF525] mb-3">Latest Reviews</h2>
+              <p className="text-gray-300 text-end max-w-xl">
                 Discover our latest car reviews, offering expert insights and honest opinions to help you make informed decisions on your next vehicle.
               </p>
           </div>
@@ -379,7 +388,7 @@ const Index = () => {
             {/* Banners for below section */}
             <SplitText
               text="What's New"
-              className="lg:text-9xl text-5xl text-border mt-6  text-nowrap z-20 w-full top-0 overflow-visible font-semibold absolute text-center"
+              className="lg:text-9xl text-5xl text-border mt-6  text-nowrap z-30 w-full top-0 overflow-visible font-semibold absolute text-center"
               delay={100}
               duration={0.6}
               ease="power3.out"
@@ -395,7 +404,7 @@ const Index = () => {
             {/* Banners for below section */}
             <SplitText
               text="What's New"
-              className="lg:text-8xl text-4xl text-sidebar-border mt-6  text-nowrap z-10 w-full top-0 overflow-visible font-semibold absolute text-center"
+              className="lg:text-8xl text-4xl text-sidebar-border mt-6 opacity-20  text-nowrap z-20 w-full top-0 overflow-visible font-semibold absolute text-center"
               delay={100}
               duration={0.6}
               ease="power3.out"
@@ -408,11 +417,18 @@ const Index = () => {
               onLetterAnimationComplete={handleAnimationComplete}
             />
 
+        <div className='absolute inset-0 bg-transparent  w-full overflow-hidden top-0 h-auto  to-transparent z-10'>
+          <div className='absolute inset-0 bg-black -top-40 h-[20%] -rotate-[10deg] md:h-[50%] scale-150 rounded-5xl md:-rotate-[10deg] z-20'></div>
+         <div className='absolute inset-0 bg-gray-300 -top-40 h-[25%] rotate-[10deg] md:h-[54%] scale-150 rounded-5xl md:rotate-[8deg] z-10'></div>
+        </div>
 
 
 
             <section className="hidden z-30 lg:flex py-24 mt-24 px-6 w-full">
-                  <div className="w-[45%] mx-auto animate-slide-down">
+                  <div className="w-[45%] rounded-xl border-2 border-white mx-auto animate-slide-down"
+                  style={{
+                     boxShadow: ' 4px 6px rgba(204,255,0, 0.9)',
+                  }}>
                     <div className="relative overflow-hidden rounded-xl bg-black">
                       <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent z-20">
 
@@ -444,7 +460,10 @@ const Index = () => {
 
                     </div>
                   </div>
-                  <div className="w-[45%] mx-auto animate-slide-up">
+                  <div className="w-[45%] border-2 rounded-xl border-white mx-auto animate-slide-up"
+                  style={{
+                    boxShadow: ' 4px 6px rgba(204,255,0, 0.9)',
+                  }}>
                     <div className="relative overflow-hidden rounded-xl bg-black">
                       <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent z-20">
 
@@ -462,14 +481,14 @@ const Index = () => {
                         <p className="text-white/80 mb-8 font-light">
                           Turboss is your go-to place to explore car details from A to Z. From engine specs to the latest tech, we cover everything you need to know about cars in one easy-to-use platform.
                         </p>
-                        <Link to="/community" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
+                        <Link to="https://www.turboss.baoswheels.com" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
                         <StarBorder
                           as="button"
                           className="custom-class w-[30rem]"
                           color="cyan"
                           speed="5s"
                         >
-                          Digital Garage will be available soon
+                          Go to the Digital Garage
                         </StarBorder>
                       </Link>
                       </div>
@@ -479,9 +498,12 @@ const Index = () => {
             </section>
 
             {/* Banners for smaller screens */}
-            <section className="lg:hidden py-24 px-6 space-y-5 w-full">
+            <section className="lg:hidden py-24 px-6 z-40 space-y-5 w-full">
                     <div className="w-[100%] mx-auto animate-slide-down">
-                      <div className="relative overflow-hidden rounded-xl bg-black">
+                      <div className="relative overflow-hidden rounded-xl bg-black"
+                      style={{
+                                             boxShadow: ' 4px 6px rgba(204,255,0, 0.9)',
+                      }}>
                         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent z-20">
 
                           </div>
@@ -513,7 +535,10 @@ const Index = () => {
                       </div>
                     </div>
                     <div className="w-[100%] mx-auto animate-slide-up">
-                      <div className="relative overflow-hidden rounded-xl bg-black">
+                      <div className="relative overflow-hidden rounded-xl bg-black"
+                      style={{
+                            boxShadow: ' 4px 6px rgba(204,255,0, 0.9)',
+                      }}>
                         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent z-20">
 
                           </div>
@@ -547,20 +572,38 @@ const Index = () => {
             </section>
       </div>
 
+            <style>
+        {`
+          .text-border1 {
+        color: [#EEF525];
+        text-shadow:
+          -1px -1px 0 #000,  
+           1px -1px 0 #000,
+          -1px  1px 0 #000,
+           1px  1px 0 #000;
+          }
+        `}
+      </style>
+
       {/* News Section */}
-      <section className="py-20 px-6">
+      <section className="relative bg-gray-300 py-40 px-6">
+        <div className='absolute inset-0 bg-transparent  w-full overflow-hidden top-0 h-auto  to-transparent z-10'>
+          <div className='absolute inset-0 bg-black -top-40 h-[80%] rounded-br-full  md:h-[80%] scale-150 rounded-5xl  z-20'></div>
+         <div className='absolute inset-0 bg-gray-300 -top-40 h-[25%]  md:h-[84%] scale-150 rounded-5xl  z-10'></div>
+         <div className='absolute inset-0 bg-gray-100 top-0 h-[25%] rounded-bl-full  md:h-[22%]  z-20'></div>
+        </div>
         <div 
           ref={aboutRef}
-          className="max-w-7xl mx-auto opacity-0"
+          className="max-w-7xl relative mx-auto opacity-0 z-20"
           style={{ animationFillMode: 'forwards', animationDelay: '0.2s' }}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="inline-block px-3 py-1 mb-6 text-xs font-medium bg-secondary rounded-full">
+              <span className="inline-block px-3 py-1 mb-6 text-xs border-2 font-medium bg-secondary rounded-full">
                 News of the Day
               </span>
-              <h2 className="text-3xl font-semibold mb-6">{latestNews?.title || 'No News Available'}</h2>
-              <p className="text-muted-foreground mb-6">
+              <h2 className="text-3xl text-border1 text-[#EEF525] font-semibold mb-6">{latestNews?.title || 'No News Available'}</h2>
+              <p className="text-gray-300 mb-6">
                 {latestNews?.subtitle}
               </p>
             </div>
@@ -572,7 +615,10 @@ const Index = () => {
                   className="w-full h-full border-separate rounded-xl border-double border-8 border-gray-700 object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-gray-50 rounded-lg p-4 shadow-sm hidden md:block">
+              <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-gray-50 rounded-lg p-4 shadow-sm hidden md:block"
+              style={{
+                      boxShadow: ' 4px 6px rgba(204,255,0, 0.9)',
+              }}>
                 <div className="h-full flex flex-col justify-between">
                   <div>
                     <p className="text-sm text-muted-foreground">News By</p>
