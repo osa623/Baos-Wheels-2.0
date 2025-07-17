@@ -608,11 +608,11 @@ const Index = () => {
               </p>
             </div>
             <div className="relative">
-              <div className="aspect-[4/3] rounded-lg">
+              <div className="aspect-[4/4] rounded-lg">
                 <img 
                   src={latestNews?.images[1] || workspace}
                   alt="Design workspace"
-                  className="w-full h-full border-separate rounded-xl border-double border-8 border-gray-700 object-cover"
+                  className="w-full h-full border-separate rounded-xl border-double border-8 border-gray-300 object-cover"
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-gray-50 rounded-lg p-4 shadow-sm hidden md:block"
@@ -642,12 +642,17 @@ const Index = () => {
       </section>
 
       {/* Define a velocity value for the ScrollVelocity component */}
-      <div className='flex w-auto h-auto py-24 -rotate-2 overflow-hidden'>
+      <div className='relative bg-gray-300'>
+      <div className='flex relative z-20 w-auto h-auto py-24 -rotate-2 overflow-hidden'>
           <ScrollVelocity
         texts={['#baoswheels', '#driveYourPassion']} 
         velocity={10} 
         className="custom-scroll-text  font-bold text-border"
           />
+      </div>
+      <div className='absolute inset-0 bg-white rounded-tr-full  w-full overflow-hidden top-0 h-auto z-10'>
+          
+      </div>
       </div>
       
       {/* Testimonials Section 
