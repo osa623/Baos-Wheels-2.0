@@ -287,7 +287,7 @@ const Index = () => {
 
         
       {/* Define a velocity value for the ScrollVelocity component */}
-      <div className='flex w-auto h-auto rotate-2 z-50 lg:py-20 overflow-hidden'>
+      <div className='flex w-auto h-auto rotate-2 z-50 py-20 overflow-hidden'>
           <ScrollVelocity
         texts={['#baoswheels', '#driveYourPassion']} 
         velocity={10} 
@@ -500,7 +500,7 @@ const Index = () => {
             {/* Banners for smaller screens */}
             <section className="lg:hidden py-24 px-6 z-40 space-y-5 w-full">
                     <div className="w-[100%] mx-auto animate-slide-down">
-                      <div className="relative overflow-hidden rounded-xl bg-black"
+                      <div className="relative overflow-hidden rounded-xl border-2 border-white bg-black"
                       style={{
                                              boxShadow: ' 4px 6px rgba(204,255,0, 0.9)',
                       }}>
@@ -535,7 +535,7 @@ const Index = () => {
                       </div>
                     </div>
                     <div className="w-[100%] mx-auto animate-slide-up">
-                      <div className="relative overflow-hidden rounded-xl bg-black"
+                      <div className="relative overflow-hidden border-2 border-white rounded-xl bg-black"
                       style={{
                             boxShadow: ' 4px 6px rgba(204,255,0, 0.9)',
                       }}>
