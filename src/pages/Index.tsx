@@ -247,8 +247,8 @@ const Index = () => {
       {/* Featured Article Section */}
       <section id="featured-products" className="relative py-20 px-6">
         <div className='absolute inset-0 bg-transparent  w-full overflow-hidden top-0 h-auto  to-transparent z-10'>
-          <div className='absolute inset-0 bg-black -top-40 h-[20%] -rotate-[10deg] md:h-[50%] scale-150 rounded-5xl md:-rotate-[10deg] z-20'></div>
-         <div className='absolute inset-0 bg-gray-300 -top-40 h-[25%] -rotate-[10deg] md:h-[54%] scale-150 rounded-5xl md:-rotate-[8deg] z-10'></div>
+          <div className='absolute inset-0 bg-black -top-40 h-[20%] -rotate-[10deg] md:h-[50%] scale-150 rounded-full md:-rotate-[10deg] z-20'></div>
+         <div className='absolute inset-0 bg-gray-300 -top-40 h-[25%] -rotate-[10deg] md:h-[54%] scale-150 rounded-full md:-rotate-[8deg] z-10'></div>
         </div>
         <div className="relative max-w-7xl mx-auto z-40">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
@@ -311,8 +311,8 @@ const Index = () => {
       {/* Categories Reviews Section */}
       <section className="py-20 z-20 relative px-6 bg-gray-50">
         <div className='absolute inset-0 bg-transparent  w-full overflow-hidden top-0 h-auto  to-transparent z-10'>
-          <div className='absolute inset-0 bg-black -top-40 h-[20%] rotate-[10deg] md:h-[50%] scale-150 rounded-5xl md:rotate-[10deg] z-20'></div>
-         <div className='absolute inset-0 bg-gray-300 -top-40 h-[25%] rotate-[10deg] md:h-[54%] scale-150 rounded-5xl md:rotate-[8deg] z-10'></div>
+          <div className='absolute inset-0 bg-black rounded-full -top-40 h-[20%] rotate-[10deg] md:h-[50%] scale-150 rounded-5xl md:rotate-[10deg] z-20'></div>
+         <div className='absolute inset-0 bg-gray-300 -top-40 rounded-full h-[25%] rotate-[10deg] md:h-[54%] scale-150 rounded-5xl md:rotate-[8deg] z-10'></div>
         </div>
         <div 
           ref={categoryRef}
