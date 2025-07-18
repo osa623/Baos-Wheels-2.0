@@ -124,7 +124,7 @@ const Hero = () => {
        {/*sm  Hero content */}
       <div 
         ref={heroRef}
-        className="md:hidden relative h-full flex flex-col items-center z-30 justify-center px-6 transition-all duration-300 ease-out"
+        className="md:hidden relative h-full flex flex-col items-center z-30 justify-center px-6 overflow-hidden transition-all duration-300 ease-out"
       >
         <div className="max-w-4xl mx-auto text-center">
           <span className="inline-block px-3 border-2 py-1 mb-3 text-xs font-medium bg-secondary rounded-full animate-fade-in">
