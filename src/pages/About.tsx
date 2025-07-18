@@ -172,7 +172,7 @@ const About = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-32 relative">
       <Header />
 
       {/* SEO Tags */}
@@ -216,23 +216,23 @@ const About = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="pt-24 pb-2 px-6 bg-gray-50">
+      <section className=" relative z-30  pb-2 px-6 bg-transparent">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-semibold mb-4">Who We Are?</h1>
+            <h1 className="text-3xl md:text-4xl text-[#EEF525] font-semibold mb-4">Who We Are?</h1>
           </div>
           
           {/* Breadcrumbs */}
-          <div className="flex justify-center items-center text-sm text-muted-foreground">
-            <a href="/" className="hover:text-primary transition-colors">Home</a>
+          <div className="flex relative z-30 justify-center items-center text-sm text-muted-foreground">
+            <a href="/" className="hover:text-white transition-colors">Home</a>
             <ChevronRight className="h-4 w-4 mx-2" />
-            <span className="text-foreground">About Us</span>
+            <span className="text-white">About Us</span>
           </div>
         </div>
       </section>
       
       {/* Company Story */}
-      <section className="py-12 px-6">
+      <section className="relative z-30 py-12 px-6">
         <div 
           ref={storyRef}
           className="max-w-7xl mx-auto opacity-0"
@@ -243,8 +243,9 @@ const About = () => {
               <span className="inline-block px-3 py-1 mb-6 text-xs font-medium bg-secondary rounded-full">
                 Our Journey
               </span>
-              <h2 className="text-3xl font-semibold mb-6">Driven by Passion</h2>
-              <p className="text-muted-foreground mb-6">
+              <h2 className="text-3xl absolute text-[#EEF525] font-semibold mb-6">Driven by Passion</h2>
+                            <h2 className="text-4xl absolute text-[#ffffff] opacity-10 font-semibold mb-6">Driven by Passion</h2>
+              <p className="text-muted-foreground mt-12">
                Baos Wheels isn't just a platform—it's a journey fueled by a deep love for automobiles. Our passion drives us to create content that resonates with enthusiasts and curious minds alike. We showcase the latest models and tell the stories behind the machines, innovations, and people shaping the automotive world.
               </p>
               <p className="text-muted-foreground mb-6">
@@ -254,13 +255,15 @@ const About = () => {
               </div>
             </div>
             <div className="relative">
-              <div className="aspect-[4/5] rounded-lg overflow-hidden">
+              <div className="aspect-[4/5] rounded-lg border-2 border-double border-white overflow-hidden">
                 <img 
                   src={image}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-gray-50 rounded-lg p-6 shadow-sm hidden md:flex flex-col justify-center">
+              <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-gray-50 rounded-lg p-6 shadow-sm hidden md:flex flex-col justify-center"
+              style={{boxShadow: ' 4px 6px rgba(204,255,0, 0.8)',
+              }}>
                 <p className="text-3xl font-semibold mb-2">4+</p>
                 <p className="text-sm text-muted-foreground">Years of sharing automotive passion and expertise</p>
               </div>
@@ -270,7 +273,7 @@ const About = () => {
       </section>
       
       {/* Values Section */}
-      <section className="py-20 px-6 bg-gray-50">
+      <section className="relative z-30 py-20 px-6 bg-transparent">
         <div 
           ref={valuesRef}
           className="max-w-7xl mx-auto opacity-0"
@@ -280,13 +283,16 @@ const About = () => {
             <span className="inline-block px-3 py-1 mb-4 text-xs font-medium bg-secondary rounded-full">
               Our Philosophy
             </span>
-            <h2 className="text-3xl font-semibold mb-4">What We Bring</h2>
+            <h2 className="text-3xl text-[#EEF525] font-semibold mb-4">What We Bring</h2>
 
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {companyValues.map((value, index) => (
-              <div key={index} className="bg-white p-8 rounded-lg border border-gray-100">
+              <div key={index} className="bg-white p-8 rounded-lg border border-gray-100"
+              style={{
+                    boxShadow: ' 4px 6px rgba(204,255,0, 0.8)',
+              }}>
                 <h3 className="text-xl font-semibold mb-4">{value.title}</h3>
                 <p className="text-muted-foreground">{value.description}</p>
               </div>
@@ -296,7 +302,7 @@ const About = () => {
       </section>
 
       {/* Contact Us Page */}
-          <section  className="py-20 px-6 bg-white">
+          <section  className="relative z-30 py-20 px-6 bg-transparent">
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-10">
                 <span className="inline-block px-3 py-1 mb-4 text-xs font-medium bg-secondary rounded-full">
@@ -371,6 +377,15 @@ const About = () => {
               </form>
             </div>
           </section>
+
+       {/*Upper Backgrounds */}
+       <div className='absolute inset-0 bg-transparent  w-full overflow-hidden top-0 h-auto  to-transparent z-20'>
+          <div className='absolute inset-0 bg-black rounded-full -top-40 h-[30%] rotate-[10deg] md:h-[40%] scale-150 rounded-5xl md:rotate-[10deg] z-30'></div>
+          <div className='absolute inset-0 rounded-full bg-[#EEF525] -top-40 h-[30.1%] rotate-[9deg] md:h-[41%] scale-150 rounded-5xl md:rotate-[9deg] z-20'></div>
+         <div className='absolute inset-0 rounded-full bg-gray-300 -top-40 h-[30.2%] rotate-[8deg] md:h-[42%] scale-150 rounded-5xl md:rotate-[8deg] z-10'></div>
+        </div>
+
+         
 
       
       {/* Team Section
