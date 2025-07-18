@@ -221,8 +221,8 @@ const Hero = () => {
       {/* Scrolling text component */}
       <div className='md:hidden absolute flex -bottom-6 left-0 right-0 z-40 overflow-visible'>
         <ScrollVelocity
-          texts={['Reviews | Articles | News | Updates | Innovations | Community |']} 
-          velocity={12} 
+          texts={['Reviews | Articles | News | Updates | Innovations | Community | ']} 
+          velocity={30} 
           className="custom-scroll-text z-50"
         />
       </div>
