@@ -358,7 +358,10 @@ const Index = () => {
                   key={reviewId}
                   to={`/reviews/${reviewId}`}
                   state={{ reviewId: reviewId }} // Pass the MongoDB ObjectId
-                  className="group relative overflow-hidden rounded-lg aspect-square bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
+                  className="group relative overflow-hidden border-2  rounded-lg aspect-square bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
+                  style={{
+                        boxShadow: ' 4px 6px rgba(204,255,0, 0.8)',
+                  }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10"></div>
                   <img 

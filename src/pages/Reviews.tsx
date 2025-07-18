@@ -231,7 +231,7 @@ const Reviews = () => {
   }, [reviews, priceRange, selectedCategories, selectedBrands, sortBy, searchTerm]);
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen relative">
       <Header />
 
       {/* SEO Metadata */}
@@ -273,16 +273,16 @@ const Reviews = () => {
       </Helmet>
       
       {/* Page header */}
-      <div className="pt-24 pb-6 px-6 bg-gray-50 z-40">
+      <div className="relative pt-24 pb-6 px-6 bg-transparent z-40">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between text-center">
             <div className='flex flex-col'>
-              <Link to="/" className="inline-flex items-center text-sm mb-1 hover:text-primary transition-colors">
+              <Link to="/" className="inline-flex items-center text-white text-sm mb-1 hover:text-primary transition-colors">
                  <ChevronLeft className="h-4 w-4 mr-1" />
                     Back to Home
               </Link>
-              <h1 className="text-3xl text-left font-semibold mb-3">Car Reviews</h1>
-              <p className="text-muted-foreground text-left max-w-md">
+              <h1 className="text-3xl text-left text-[#EEF525] font-semibold mb-3">Car Reviews</h1>
+              <p className="text-gray-300 text-left max-w-md">
                 Explore our collection of in-depth automotive reviews to help you make informed decisions. 
               </p>
             </div>
@@ -313,14 +313,28 @@ const Reviews = () => {
             </div>
         </div>
       </div>
+
+      {/*Upper Backgrounds */}
+       <div className='absolute inset-0 bg-transparent  w-full overflow-hidden top-0 h-auto  to-transparent z-20'>
+          <div className='absolute inset-0 bg-black -top-40 h-[8%] rotate-[10deg] md:h-[20%] scale-150 rounded-5xl md:-rotate-[10deg] z-30'></div>
+          <div className='absolute inset-0 bg-[#EEF525] -top-40 h-[8.1%] rotate-[9deg] md:h-[21%] scale-150 rounded-5xl md:-rotate-[9deg] z-20'></div>
+         <div className='absolute inset-0 bg-gray-300 -top-40 h-[8.2%] rotate-[8deg] md:h-[22%] scale-150 rounded-5xl md:-rotate-[8deg] z-10'></div>
+        </div>
+
+
+        
+
       
       {/* Reviews grid with sidebar */}
-      <div className="px-6 py-10">
+      <div className="relative z-40 px-6 py-10">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row gap-10">
             {/* Desktop Filters Sidebar */}
             <div className="hidden lg:block w-64 flex-shrink-0">
-              <div className="sticky top-24 border-4 bg-gray-50 p-4">
+              <div className="sticky top-24 border-2 bg-white p-4"
+              style={{
+                  boxShadow: ' 4px 6px rgba(204,255,0, 0.8)',
+              }}>
                   <div className='flex w-full'>
                       <h2 className='font-normal px-2 bg-gray-400 p-2 text-white text-sm mb-4'>
                         Choose Your Car
@@ -413,7 +427,7 @@ const Reviews = () => {
             </div>
             
             {/* Mobile Filters Button */}
-            <div className="lg:hidden flex justify-between  items-center mb-6">
+            <div className="lg:hidden flex justify-between z-50 overflow-y-scroll  items-center mb-6">
               <Button 
                 variant="outline" 
                 className="flex items-center gap-2"
@@ -585,7 +599,10 @@ const Reviews = () => {
                         key={reviewId}
                         to={`/reviews/${reviewId}`}
                         state={{ reviewId }}
-                        className="group relative overflow-hidden rounded-lg aspect-square bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
+                        className="group relative overflow-hidden border-2 border-double rounded-lg aspect-square bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
+                        style={{
+                             boxShadow: ' 4px 3px rgba(204,255,0, 0.8)',
+                        }}
                       >
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10"></div>
                         <img 
