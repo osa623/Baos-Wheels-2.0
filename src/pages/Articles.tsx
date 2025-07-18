@@ -111,9 +111,9 @@ const Articles = () => {
 
             {/*Upper Backgrounds */}
        <div className='absolute inset-0 bg-transparent  w-full overflow-hidden top-0 h-auto  to-transparent z-20'>
-          <div className='absolute inset-0 bg-black rounded-full -top-40 h-[8%] rotate-[10deg] md:h-[20%] scale-150 rounded-5xl md:-rotate-[10deg] z-30'></div>
-          <div className='absolute inset-0 rounded-full bg-[#EEF525] -top-40 h-[8.1%] rotate-[9deg] md:h-[21%] scale-150 rounded-5xl md:-rotate-[9deg] z-20'></div>
-         <div className='absolute inset-0 rounded-full bg-gray-300 -top-40 h-[8.2%] rotate-[8deg] md:h-[22%] scale-150 rounded-5xl md:-rotate-[8deg] z-10'></div>
+          <div className='absolute inset-0 bg-black rounded-full -top-40 h-[20%] rotate-[10deg] md:h-[20%] scale-150 rounded-5xl md:-rotate-[10deg] z-30'></div>
+          <div className='absolute inset-0 rounded-full bg-[#EEF525] -top-40 h-[20.1%] rotate-[9deg] md:h-[21%] scale-150 rounded-5xl md:-rotate-[9deg] z-20'></div>
+         <div className='absolute inset-0 rounded-full bg-gray-300 -top-40 h-[20.2%] rotate-[8deg] md:h-[22%] scale-150 rounded-5xl md:-rotate-[8deg] z-10'></div>
         </div>
 
       
