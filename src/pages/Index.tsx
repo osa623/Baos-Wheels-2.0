@@ -558,15 +558,16 @@ const Index = () => {
                           <p className="text-white/80 mb-8 font-light">
                             Turboss is your go-to place to explore car details from A to Z. From engine specs to the latest tech, we cover everything you need to know about cars in one easy-to-use platform.
                           </p>
-                          
+                           <Link to="https://www.turboss.baoswheels.com" className="">
                           <StarBorder
                             as="button"
                             className="custom-class"
                             color="cyan"
                             speed="5s"
                           >
-                            Garage will be available soon
+                            Go to the Digital Garage
                           </StarBorder>
+                          </Link>
                         
                         </div>
 
