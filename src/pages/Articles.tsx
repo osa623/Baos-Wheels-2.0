@@ -64,7 +64,7 @@ const Articles = () => {
   }, []);
 
   return (
-    <div className="min-h-screen py-24">
+    <div className="min-h-screen relative py-24">
 
       <Helmet>
         <title>Articles | Baos Wheels</title>
@@ -108,9 +108,17 @@ const Articles = () => {
 
 
       <Header />
+
+            {/*Upper Backgrounds */}
+       <div className='absolute inset-0 bg-transparent  w-full overflow-hidden top-0 h-auto  to-transparent z-20'>
+          <div className='absolute inset-0 bg-black rounded-full -top-40 h-[8%] rotate-[10deg] md:h-[20%] scale-150 rounded-5xl md:-rotate-[10deg] z-30'></div>
+          <div className='absolute inset-0 rounded-full bg-[#EEF525] -top-40 h-[8.1%] rotate-[9deg] md:h-[21%] scale-150 rounded-5xl md:-rotate-[9deg] z-20'></div>
+         <div className='absolute inset-0 rounded-full bg-gray-300 -top-40 h-[8.2%] rotate-[8deg] md:h-[22%] scale-150 rounded-5xl md:-rotate-[8deg] z-10'></div>
+        </div>
+
       
       {/* Featured Articles */}
-      <section className="py-8 px-6">
+      <section className="relative z-20 py-8 px-6">
         <div 
           ref={featuredRef}
           className="max-w-7xl mx-auto opacity-0"
@@ -118,12 +126,12 @@ const Articles = () => {
         >
           <div className="flex flex-col md:flex-row md:items-end justify-between">
             <div>
-               <Link to="/" className="inline-flex items-center text-sm mb-1 hover:text-primary transition-colors">
+               <Link to="/" className="inline-flex items-center text-white text-sm mb-1 hover:text-primary transition-colors">
                  <ChevronLeft className="h-4 w-4 mr-1" />
                     Back to Home
               </Link>
-              <h2 className="text-3xl font-semibold mb-3">Articles</h2>
-              <p className="text-muted-foreground max-w-xl">
+              <h2 className="text-3xl text-[#EEF525] font-semibold mb-3">Articles</h2>
+              <p className="text-gray-200 max-w-xl">
                 Our most celebrated articles, showcasing the very best of our automotive insights.
               </p>
             </div>
@@ -132,7 +140,7 @@ const Articles = () => {
       </section>
       
       {/* Articles Grid */}
-      <section className="py-16 px-6 bg-gray-50">
+      <section className="py-16 px-6 relative z-20 bg-transparent">
         <div 
           ref={collectionsRef}
           className="max-w-7xl mx-auto opacity-0"
