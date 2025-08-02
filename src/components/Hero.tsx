@@ -9,11 +9,12 @@ import heroImage from '../assets/furBack.png';
 import heroImageSm from '../assets/furBacksm.jpg';
 import heroImageSmII from '../assets/furBacksmII.jpg';
 import StarBorder from './StarBorder';
-import overlayImage from '../assets/overlayImage.png';
+import porsche from '../assets/porsche.png';
 
 //video
 import backgroundVideo from '../assets/Videos/backgroundVideo2.mp4';
 import ScrollVelocity from './ScrollVelocitymin';
+import TextPressure from './TextPressure';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -46,11 +47,101 @@ const Hero = () => {
   return (
     <section className="relative h-screen md:overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-transparent">
-        <video src={backgroundVideo} autoPlay loop muted className="hidden lg:flex w-full h-full object-cover opacity-50" />
-        <img src={overlayImage} alt="Hero Background" className="absolute z- lg:flex md:flex w-full h-full object-cover opacity-50" />
-        
-      </div>
+      <div className="hidden md:flex absolute inset-0 bg-transparent">
+          
+          <img src={porsche} alt="Hero Background" className="hidden lg:flex absolute z-30 md:flex mt-48 w-[100%] h-auto max-h-[85%] object-contain" />
+                 {/* Content Page */}
+            <div className='absolute flex inset-0 items-start bg-transparent w-full  mb-12  h-auto justify-center z-20'>
+            <div className='absolute bottom-0 flex bg-gradient-to-t z-20 from-white via-white h-2/5 w-[90%] to-transparent items-center justify-center'/>
+                  <div className='flex flex-col mt-20 items-start w-full h-auto'>
+                    <div className='flex flex-col items-center justify-center w-full h-auto'>
+                    <div style={{position: 'relative', width: '90%'}}>
+                    <div style={{
+                      textShadow: `
+                      -1px -1px 0 #000,
+                      1px -1px 0 #000,
+                      -1px 1px 0 #000,
+                      1px 1px 0 #000
+                      `
+                    }}>
+                      <TextPressure
+                      className='cursor-pointer text-border-effect'
+                      text="BAOSWHEELS"
+                      flex={true}
+                      alpha={false}
+                      stroke={false}
+                      width={true}
+                      weight={true}
+                      italic={true}
+                      textColor="#fff"
+                      strokeColor="#ff0000"
+                      minFontSize={36}
+                      />
+                    </div>
+                    {/* Image array */}
+                    </div>
+                    <div className='relative' style={{position: 'relative', width: '90%'}}>
+                     
+                    <div style={{
+                      textShadow: `
+                      -1px -1px 0 #000,
+                      1px -1px 0 #000,
+                      -1px 1px 0 #000,
+                      1px 1px 0 #000
+                      `,
+                      transform: 'scaleY(-1)' // Flips the content vertically
+                    }}>
+                      <TextPressure
+                      className=' cursor-pointer blur-sm z-30 text-border-effect'
+                      text="BAOSWHEELS"
+                      flex={true}
+                      alpha={false}
+                      stroke={false}
+                      width={true}
+                      weight={true}
+                      italic={true}
+                      textColor="#fff"
+                      strokeColor="#ff0000"
+                      minFontSize={36}
+                      />
+                    </div>
+                    {/* Image array */}
+                    </div>
+
+                    
+
+                    
+                  <style>
+          {`
+            .text-border2 {
+          color: [#000];
+          text-shadow:
+            -1px -1px 0 #000,  
+             1px -1px 0 #000,
+            -1px  1px 0 #000,
+             1px  1px 0 #000;
+            }
+          `}
+          </style>
+
+
+                    </div>
+
+                   
+
+                    
+                    {/* Additional scrollable content */}
+                   
+                  </div>
+
+
+              
+              
+             
+            </div> 
+
+            <div className='absolute bottom-0 flex bg-gradient-to-t z-40 from-white h-[2rem] w-full to-transparent items-center justify-center'/>
+          </div>
 
 
       <div className="absolute inset-0 bg-transparent">
@@ -68,7 +159,7 @@ const Hero = () => {
       {/*md and lg  Hero content */}
       <div 
         ref={heroRef}
-        className="hidden relative h-full md:flex flex-col items-center z-30 justify-center px-6 transition-all duration-300 ease-out"
+        className="hidden relative h-full  flex-col items-center z-30 justify-center px-6 transition-all duration-300 ease-out"
       >
         <div className="max-w-4xl mx-auto text-center">
           <span className="inline-block px-3 border-2 py-1 mb-3 text-xs font-medium bg-secondary rounded-full animate-fade-in">
