@@ -26,7 +26,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ Article, index = 0 }) => {
   const animationDelay = `${index * 0.1}s`;
 
   return (
-    <div className='relative cursor-pointer'>
+    <div className='relative sm:p7-2 cursor-pointer'>
     <div 
       className="Article-card group rounded-2xl border-2 border-double bg-white"
       style={{ animationDelay, 
@@ -41,7 +41,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ Article, index = 0 }) => {
         <img 
           src={Article.images && Article.images.length > 0 ? Article.images[1] : 'https://placehold.co/600x800?text=No+Image'}
           alt={Article.title}
-          className="w-full h-1/2 object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+          className="w-full h-[20vh] object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
           loading="lazy"
         />
         
@@ -84,6 +84,15 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ Article, index = 0 }) => {
     </div>    
     <div className='absolute w-2/3 mt-11 ml-2 border-black border-2 border-dashed bg-transparent py-2 z-10 '/>
     </div>
+
+
+        <div className='flex mt-16 relative z-10'>
+
+    <div className='absolute w-full mt-3 sm:py-2 border-black bg-transparent z-20'>
+      <p className="text-xs text-start line-clamp-3 text-[#1e1d1d]">{Article.summary}</p>
+    </div>    
+    </div>
+
     </div>
   );
 };

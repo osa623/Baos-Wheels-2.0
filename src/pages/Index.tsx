@@ -41,6 +41,7 @@ import ScrollVelocity from '@/components/ScrollVelocity';
 //images
 import communityBackground from '../assets/communityImage.jpg';
 import turbossImage from '../assets/turbossImage.jpg';
+import ReviewView from './ReviewView';
 
 
 
@@ -348,17 +349,49 @@ const Index = () => {
             </Link>
 
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {fetchReviews.slice(0,8).map((review) => {
+
+          <div className='relative max-w-8xl h-auto'>
+            {/* Placeholder for image */}
+            {fetchReviews.filter(review => review.title === 'Patrol NISMO 2026').map(review => (
+              <div className='flex'>
+              <div className='relative max-w-xl overflow-hidden border-2 border-gray-400 rounded-xl h-3/4'>
+                <img src= {review.images[0]} className='object-cover w-full h-full'/>
+              </div> 
+            
+                <div className='relative flex-col items-start w-auto'>
+                <p className="absolute top-2 bg-white rounded-full px-2 left-4 text-sm text-black/80">{review.category} {review.count && `• ${review.count} Views`}</p>
+               <h3 className="text-5xl flex mt-10 px-4 text-white font-medium mb-1">{review.brand} {review.title}</h3>
+               <p className='text-sm line-clamp-20 max-w-5xl px-4 text-white'>
+                {review.overview}.
+               </p>
+
+               <p className='text-sm line-clamp-3 max-w-5xl mt-4 px-4 text-white'>
+                {review.interior}.
+               </p>
+              
+              </div> 
+            
+            
+            </div>
+            
+            ))}
+          </div>
+
+
+
+
+          <div className="grid grid-cols-1 mt-12 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {fetchReviews.slice(0,12).map((review) => {
               // Handle MongoDB _id format if present
               const reviewId = review._id || review.id;
               
               return (
+                
                 <Link 
                   key={reviewId}
                   to={`/reviews/${reviewId}`}
                   state={{ reviewId: reviewId }} // Pass the MongoDB ObjectId
-                  className="group relative overflow-hidden border-2  rounded-lg aspect-square bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
+                  className="group relative overflow-hidden border-2 h-[20vh]  rounded-lg  bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
                   style={{
                         boxShadow: ' 4px 6px rgba(204,255,0, 0.8)',
                   }}
@@ -369,15 +402,10 @@ const Index = () => {
                     alt={review.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute bottom-0 left-0 right-0 p-6 z-20 text-white">
-                    <h3 className="text-md font-semibold"
-                    style={{
-                      fontWeight:'200'
-                    }}>{review.brand}</h3>
-                    <h3 className="text-xl font-medium mb-1">{review.title}</h3>
-                  </div>
+                 
                   <p className="absolute top-4 bg-white rounded-full px-2 left-4 text-xs text-black/80">{review.category} {review.count && `• ${review.count} Views`}</p>
                 </Link>
+                
               );
             })}
           </div>
