@@ -155,10 +155,10 @@ const Login = () => {
         </div>
         
         {/* Card container with better responsive sizing */}
-        <div className="relative w-full max-w-5xl mt-12 z-10 mx-auto rounded-xl overflow-hidden shadow-lg border border-white/20 animate-fade-in">
+        <div className="relative w-full max-w-2xl mt-12 z-10 mx-auto rounded-xl overflow-hidden shadow-lg border border-white/20 animate-fade-in">
           <div className="flex flex-col lg:flex-row w-full bg-white/5 backdrop-blur-md">
             {/* Login form section */}
-            <div className="p-6 w-full lg:w-1/2 bg-white sm:p-8">
+            <div className="p-6 w-full lg:w-full bg-white sm:p-8">
               <div className="text-center mb-6">
                 <h1 className="text-2xl font-semibold mb-2">Welcome Back</h1>
                 <p className="text-muted-foreground text-sm">
@@ -295,7 +295,7 @@ const Login = () => {
               </div>
             </div>
             
-            {/* Logo/Brand section with improved styling */}
+            {/* Logo/Brand section with improved styling 
             <div className="w-full lg:w-1/2 relative">
               <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm"></div>
               <div className="relative z-10 flex flex-col items-center justify-center w-full h-full py-12 px-6">
@@ -305,7 +305,7 @@ const Login = () => {
                   className="w-40 h-40 md:w-60 md:h-60 lg:w-72 lg:h-72 rounded-full shadow-lg object-cover" 
                 />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>    
       </div>

@@ -174,9 +174,9 @@ const Register = () => {
         </div>
         
         {/* Card container with responsive sizing */}
-        <div className="relative w-full max-w-5xl z-10 mt-12 mx-auto rounded-xl overflow-hidden shadow-lg border border-white/20 animate-fade-in">
-          <div className="flex flex-col-reverse lg:flex-row w-full bg-white/5 backdrop-blur-md">
-            {/* Logo/Brand section with improved styling */}
+        <div className="relative w-full max-w-2xl z-10 mt-12 mx-auto items-center overflow-hidden animate-fade-in">
+          <div className="flex flex-col-reverse lg:flex-row w-full">
+            {/* Logo/Brand section with improved styling
             <div className="w-full lg:w-1/2 relative">
               <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm"></div>
               <div className="relative z-10 flex flex-col items-center justify-center w-full h-full py-12 px-6">
@@ -187,10 +187,10 @@ const Register = () => {
                 />
 
               </div>
-            </div>
+            </div>  */}
             
             {/* Register form section */}
-            <div className="p-6 w-full lg:w-1/2 bg-white sm:p-8">
+            <div className="p-6 w-full rounded-2xl lg:w-full bg-white sm:p-8">
               <div className="text-center mb-6">
                 <h1 className="text-2xl font-semibold mb-2">Create an Account</h1>
                 <p className="text-muted-foreground text-sm">

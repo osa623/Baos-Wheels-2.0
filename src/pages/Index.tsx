@@ -658,8 +658,8 @@ const Index = () => {
           
       </div>
       </div>
-      
-      {/* Testimonials Section 
+
+      {/* Testimonials Section */}
       <section className="py-20 px-6 bg-gray-50">
         <div 
           ref={testimonialsRef}
@@ -693,7 +693,7 @@ const Index = () => {
             ))}
           </div>
         </div>
-      </section> */}
+      </section>
       
       
       <Footer />

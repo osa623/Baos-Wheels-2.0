@@ -36,12 +36,12 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ Article, index = 0 }) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Article image container */}
-      <div className="relative overflow-hidden rounded-2xl aspect-[4/5]">
+      <div className="relative overflow-hidden rounded-2xl">
         {/* Article image */}
         <img 
           src={Article.images && Article.images.length > 0 ? Article.images[1] : 'https://placehold.co/600x800?text=No+Image'}
           alt={Article.title}
-          className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+          className="w-full h-1/2 object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
           loading="lazy"
         />
         
@@ -79,10 +79,10 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ Article, index = 0 }) => {
 
     </div>
     <div className='relative z-10'>
-    <div className='absolute w-full mt-3 bg-black px-4 py-2 z-20'>
-      <p className="text-md text-center text-[#ffffff]">{Article.title}</p>
+    <div className='absolute w-full mt-3 border-2 border-black bg-[#EEF525] px-4 py-2 z-20'>
+      <p className="text-md text-center text-[#1e1d1d]">{Article.title}</p>
     </div>    
-    <div className='absolute w-2/3 mt-11 ml-2 border-black border-2 border-dashed bg-gray-300 py-2 z-10 '/>
+    <div className='absolute w-2/3 mt-11 ml-2 border-black border-2 border-dashed bg-transparent py-2 z-10 '/>
     </div>
     </div>
   );
