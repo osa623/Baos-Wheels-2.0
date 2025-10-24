@@ -353,12 +353,12 @@ const Index = () => {
           <div className='relative max-w-8xl h-auto'>
             {/* Placeholder for image */}
             {fetchReviews.filter(review => review.title === 'Patrol NISMO 2026').map(review => (
-              <div className='flex'>
+              <div key={review._id || review.id} className='hidden flex-col'>
               <div className='relative max-w-xl overflow-hidden border-2 border-gray-400 rounded-xl h-3/4'>
                 <img src= {review.images[0]} className='object-cover w-full h-full'/>
               </div> 
             
-                <div className='relative flex-col items-start w-auto'>
+                <div className='relative flex flex-col items-start w-auto'>
                 <p className="absolute top-2 bg-white rounded-full px-2 left-4 text-sm text-black/80">{review.category} {review.count && `• ${review.count} Views`}</p>
                <h3 className="text-5xl flex mt-10 px-4 text-white font-medium mb-1">{review.brand} {review.title}</h3>
                <p className='text-sm line-clamp-20 max-w-5xl px-4 text-white'>
@@ -375,13 +375,48 @@ const Index = () => {
             </div>
             
             ))}
+
+             {fetchReviews.filter(review => review.title === 'Patrol NISMO 2026').map(review => (
+              <div key={review._id || review.id} className='hidden md:flex'>
+              <div className='relative max-w-xl overflow-hidden border-2 border-gray-400 rounded-xl h-3/4'>
+                <img src= {review.images[0]} className='object-cover w-full h-full'/>
+              </div> 
+            
+                <div className='relative flex flex-col items-start w-auto'>
+                <p className="absolute top-2 bg-white rounded-full px-2 left-4 text-sm text-black/80">{review.category} {review.count && `• ${review.count} Views`}</p>
+               <h3 className="text-5xl flex mt-10 px-4 text-white font-medium mb-1">{review.brand} {review.title}</h3>
+               <p className='text-sm line-clamp-20 max-w-5xl px-4 text-white'>
+                {review.overview}.
+               </p>
+
+               <p className='text-sm line-clamp-3 max-w-5xl mt-4 px-4 text-white'>
+                {review.interior}.
+               </p>
+
+                <Link to= {`/reviews/${review._id || review.id}`} className="absolute bottom-0 right-12 justify-end items-end flex w-full mt-4 md:mt-0 text-primary hover:underline">
+               <StarBorder
+                as="button"
+                className="custom-class w-auto"
+                color="cyan"
+                speed="5s"
+              >
+                View More..
+              </StarBorder>
+            </Link>
+              
+              </div> 
+            
+            
+            </div>
+            
+            ))}
           </div>
 
 
 
 
           <div className="grid grid-cols-1 mt-12 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {fetchReviews.slice(0,12).map((review) => {
+            {fetchReviews.slice(0,8).map((review) => {
               // Handle MongoDB _id format if present
               const reviewId = review._id || review.id;
               
@@ -391,7 +426,7 @@ const Index = () => {
                   key={reviewId}
                   to={`/reviews/${reviewId}`}
                   state={{ reviewId: reviewId }} // Pass the MongoDB ObjectId
-                  className="group relative overflow-hidden border-2 h-[20vh]  rounded-lg  bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
+                  className="group relative overflow-hidden border-2 h-[30vh]  rounded-lg  bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
                   style={{
                         boxShadow: ' 4px 6px rgba(204,255,0, 0.8)',
                   }}
@@ -404,6 +439,12 @@ const Index = () => {
                   />
                  
                   <p className="absolute top-4 bg-white rounded-full px-2 left-4 text-xs text-black/80">{review.category} {review.count && `• ${review.count} Views`}</p>
+
+                  <div className='absolute p-4 flex flex-col bottom-0 left-0 z-20'>
+                  <h2 className="flex bottom-0 bg-[#EEF525]  py-2  border-2 border-gray-300 justify-start px-2 left-4 text-sm text-black">{review.brand}</h2>
+                  <h2 className="flex bottom-4 rounded-full px-2 left-4 text-sm text-white">{review.title}</h2>
+                  </div>
+                       
                 </Link>
                 
               );
@@ -687,7 +728,7 @@ const Index = () => {
       </div>
       </div>
 
-      {/* Testimonials Section */}
+      {/* Testimonials Section 
       <section className="py-20 px-6 bg-gray-50">
         <div 
           ref={testimonialsRef}
@@ -721,7 +762,7 @@ const Index = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
       
       
       <Footer />
