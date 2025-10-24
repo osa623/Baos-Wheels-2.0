@@ -158,7 +158,6 @@ const Footer = () => {
         <div className="border-t border-gray-200 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm flex flex-col text-muted-foreground mb-4 md:mb-0">
             © {new Date().getFullYear()} baoswheels. All rights reserved.
-            <span className='text-sm text-black/25'> - Design and Development by <span className='cursor-pointer text-black'><a  href="https://www.osanda.me">OSANDA</a></span></span>
           </p>
           <div className="flex space-x-6">
             <Link to="/privacypolicy" className="text-sm text-muted-foreground hover:text-primary transition-colors">

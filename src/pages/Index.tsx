@@ -312,8 +312,8 @@ const Index = () => {
       {/* Categories Reviews Section */}
       <section className="py-20 z-20 relative px-6 bg-gray-50">
         <div className='absolute inset-0 bg-transparent  w-full overflow-hidden top-0 h-auto  to-transparent z-10'>
-          <div className='absolute inset-0 bg-black md:rounded-full -top-40 h-[20%] rotate-[10deg] md:h-[50%] scale-150 rounded-5xl md:rotate-[10deg] z-20'></div>
-         <div className='absolute inset-0 bg-gray-300 -top-40 md:rounded-full h-[25%] rotate-[10deg] md:h-[54%] scale-150 rounded-5xl md:rotate-[8deg] z-10'></div>
+          <div className='absolute inset-0 bg-black md:rounded-full -top-40 h-[20%] sm:h-[80vh] rotate-[10deg] md:h-[50%] scale-150 rounded-5xl md:rotate-[10deg] z-20'></div>
+         <div className='absolute inset-0 bg-gray-300 -top-40 md:rounded-full h-[25%] rotate-[10deg] sm:h-[80vh] md:h-[54%] scale-150 rounded-5xl md:rotate-[8deg] z-10'></div>
         </div>
         <div 
           ref={categoryRef}
@@ -353,7 +353,7 @@ const Index = () => {
           <div className='relative max-w-8xl h-auto'>
             {/* Placeholder for image */}
             {fetchReviews.filter(review => review.title === 'Patrol NISMO 2026').map(review => (
-              <div key={review._id || review.id} className='hidden flex-col'>
+              <div key={review._id || review.id} className='lg:hidden flex flex-col'>
               <div className='relative max-w-xl overflow-hidden border-2 border-gray-400 rounded-xl h-3/4'>
                 <img src= {review.images[0]} className='object-cover w-full h-full'/>
               </div> 
