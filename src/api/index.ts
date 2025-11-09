@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Article } from '@/components/ArticleCard';
 
 // Base URL settings
-const API_BASE_URL = import.meta.env.REACT_APP_API;
+const API_BASE_URL = import.meta.env.VITE_API;
 
 // Helper to handle API URLs and CORS proxying
 const getApiUrl = (endpoint: string) => {
