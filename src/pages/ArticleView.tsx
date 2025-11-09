@@ -40,11 +40,10 @@ const ArticleView = () => {
       
       try {
         setLoading(true);
-        console.log("ArticleView: Fetching article with ID:", articleId);
 
         // Use the ID to fetch article
         const articleData = await articlesApi.getById(articleId);
-        console.log("ArticleView: Fetched article data:", articleData);
+        //console.log("ArticleView: Fetched article data:", articleData);
 
         if (!articleData) {
           throw new Error("No article data returned");

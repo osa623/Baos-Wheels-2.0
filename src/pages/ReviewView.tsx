@@ -41,11 +41,11 @@ const ReviewView = () => {
       
       try {
         setLoading(true);
-        console.log("Fetching review with ID:", reviewId);
+       // console.log("Fetching review with ID:", reviewId);
 
         // Use the ID to fetch review
         const reviewData = await reviewsApi.getById(reviewId);
-        console.log("Fetched review data:", reviewData);
+        //console.log("Fetched review data:", reviewData);
 
         if (!reviewData) {
           throw new Error("No review data returned");

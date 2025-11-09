@@ -160,7 +160,6 @@ const Index = () => {
           // Assuming you want to display the first news item
           const firstNews = news[0];
           setLatestNews(firstNews);
-          console.log('Latest News:', firstNews);
         } else {
           setLatestNews(null);
           console.warn('No news available');
@@ -183,7 +182,7 @@ const Index = () => {
         setFetchReviews(reviews);
       } catch (error) {
         console.error('Failed to load reviews:', error);
-        console.error('Review ID:', reviewsApi);
+        
       }
     };
 

@@ -131,7 +131,8 @@ const Search = () => {
       console.log(`Performing search for: "${query}" with type: ${type}`);
       
       // Build the search URL with query parameters
-      let searchUrl = `https://baosbackend-9f8439698e78.herokuapp.com/api/search?q=${encodeURIComponent(query)}`;
+      const API_BASE_URL = import.meta.env.VITE_API;
+      let searchUrl = `${API_BASE_URL}/api/search?q=${encodeURIComponent(query)}`;
       
       // Add content type filter if not "all"
       if (type !== 'all') {
@@ -283,11 +284,11 @@ const Search = () => {
       }
       
       // Ensure we're using the correct type for navigation
-      console.log(`Navigation triggered for ${resultType} with ID: ${itemId}`);
+      //console.log(`Navigation triggered for ${resultType} with ID: ${itemId}`);
       
       // Debug info
-      console.log("Result object:", result);
-      console.log("Result type:", resultType);
+      //console.log("Result object:", result);
+      //console.log("Result type:", resultType);
       
       let url = '/';
       
@@ -300,7 +301,7 @@ const Search = () => {
         url = `/articles/${itemId}`;
       }
       
-      console.log("Final navigation URL:", url);
+     // console.log("Final navigation URL:", url);
       
       // Use window.location for hard navigation to ensure correct loading
       window.location.href = url;

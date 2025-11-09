@@ -24,7 +24,6 @@ const Articles = () => {
       try {
         setLoading(true);
         const response = await articlesApi.getAll();
-        console.log("Fetched Articles:", response);
         setArticles(response);
         setError(null);
       } catch (err) {
