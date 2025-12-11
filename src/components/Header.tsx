@@ -328,9 +328,6 @@ const Header = () => {
           <Link to="/" className={cn("nav-link lg:text-sm md:text-xs", isActive('/') && "text-primary after:w-full")}>
             Home
           </Link>
-          <Link to="/community" className={cn("nav-link lg:text-sm md:text-xs", isActive('/community') && "text-primary after:w-full")}>
-            Community
-          </Link>
           <Link to="/reviews" className={cn("nav-link lg:text-sm md:text-xs", isActive('/reviews') && "text-primary after:w-full")}>
             Car Reviews
           </Link>
@@ -727,14 +724,6 @@ const Header = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Home
-            </Link>
-            <Link 
-              to="/community" 
-              className={cn("text-base font-medium py-3 px-4 rounded-md hover:bg-gray-50", 
-                isActive('/community') && "text-primary bg-primary/5")}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Community
             </Link>
             <Link 
               to="/reviews" 

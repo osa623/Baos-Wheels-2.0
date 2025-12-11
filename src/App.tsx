@@ -16,7 +16,6 @@ import Register from "./pages/Register";
 import Electriccars from "./pages/Electriccars";
 import NotFound from "./pages/NotFound";
 import Profile from './pages/Profile';
-import Community from './pages/Community';
 import Notifications from './pages/Notifications';
 import Search from './pages/Search';
 import Articles from './pages/Articles';
@@ -24,7 +23,6 @@ import ArticleView from './pages/ArticleView';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfServices from './pages/TermsOfServices';
-import AddPost from './pages/AddPost';
 
 // Create QueryClient
 const queryClient = new QueryClient({
@@ -53,11 +51,9 @@ function App() {
               <Route path="/articles" element={<Articles />} />
               <Route path="/articles/:id" element={<ArticleView />} />
               <Route path="/notifications" element={<Notifications />} />
-              <Route path="/community" element={<Community />} />
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path='/addpost' element={<AddPost/>} />
               <Route path="/search" element={<Search />} />
               <Route path="/electric" element={<Electriccars />} />
               <Route path="/privacypolicy" element={<PrivacyPolicy />} />
