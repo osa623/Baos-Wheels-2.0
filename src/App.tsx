@@ -23,6 +23,18 @@ import ArticleView from './pages/ArticleView';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfServices from './pages/TermsOfServices';
+import AddPost from './pages/AddPost';
+import ReviewsSin from './pages-sin/ReviewsSin';
+import ReviewViewSin from './pages-sin/ReviewViewSin';
+import ArticlesSin from './pages-sin/ArticlesSin';
+import ArticleViewSin from './pages-sin/ArticleViewSin';
+import AboutSin from './pages-sin/AboutSin';
+import LoginSin from './pages-sin/LoginSin';
+import RegisterSin from './pages-sin/RegisterSin';
+import AddPostSin from './pages-sin/AddPostSin';
+import SearchSin from './pages-sin/SearchSin';
+import PrivacyPolicySin from './pages-sin/PrivacyPolicySin';
+import ElectriccarsSin from './pages-sin/ElectriccarsSin';
 
 // Create QueryClient
 const queryClient = new QueryClient({
@@ -46,6 +58,8 @@ function App() {
           <TooltipProvider>
             <Routes>
               <Route path="/" element={<Index />} />
+
+              //English Routes
               <Route path="/reviews" element={<Reviews />} />
               <Route path="/reviews/:id" element={<ReviewView />} />
               <Route path="/articles" element={<Articles />} />
@@ -59,6 +73,26 @@ function App() {
               <Route path="/privacypolicy" element={<PrivacyPolicy />} />
               <Route path="/termsofservices" element={<TermsOfServices />} />
               <Route path="/profile" element={<Profile />} />
+
+
+              //Sinhala Routes
+              <Route path="/reviewsSin" element={<ReviewsSin />} />
+              <Route path="/reviewsSin/:id" element={<ReviewViewSin />} />
+              <Route path="/articlesSin" element={<ArticlesSin />} />
+              <Route path="/articlesSin/:id" element={<ArticleViewSin />} />
+              <Route path="/notifications" element={<Notifications />} />
+              <Route path="/aboutSin" element={<AboutSin />} />
+              <Route path="/loginSin" element={<LoginSin />} />
+              <Route path="/registerSin" element={<RegisterSin />} />
+              <Route path='/addpost' element={<AddPostSin/>} />
+              <Route path="/searchSin" element={<SearchSin />} />
+              <Route path="/electricSin" element={<ElectriccarsSin />} />
+              <Route path="/privacypolicySin" element={<PrivacyPolicySin />} />
+              <Route path="/termsofservices" element={<TermsOfServices />} />
+              <Route path="/profile" element={<Profile />} />
+
+
+
               <Route path="*" element={<NotFound />} />
             </Routes>
             <Toaster />
