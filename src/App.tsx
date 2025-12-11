@@ -24,6 +24,7 @@ import ArticleView from './pages/ArticleView';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfServices from './pages/TermsOfServices';
+import AddPost from './pages/AddPost';
 
 // Create QueryClient
 const queryClient = new QueryClient({
@@ -56,6 +57,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path='/addpost' element={<AddPost/>} />
               <Route path="/search" element={<Search />} />
               <Route path="/electric" element={<Electriccars />} />
               <Route path="/privacypolicy" element={<PrivacyPolicy />} />
