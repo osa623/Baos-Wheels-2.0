@@ -16,7 +16,6 @@ import Register from "./pages/Register";
 import Electriccars from "./pages/Electriccars";
 import NotFound from "./pages/NotFound";
 import Profile from './pages/Profile';
-import Community from './pages/Community';
 import Notifications from './pages/Notifications';
 import Search from './pages/Search';
 import Articles from './pages/Articles';
@@ -53,7 +52,6 @@ function App() {
               <Route path="/articles" element={<Articles />} />
               <Route path="/articles/:id" element={<ArticleView />} />
               <Route path="/notifications" element={<Notifications />} />
-              <Route path="/community" element={<Community />} />
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
