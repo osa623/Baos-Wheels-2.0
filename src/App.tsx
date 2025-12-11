@@ -68,7 +68,6 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path='/addpost' element={<AddPost/>} />
               <Route path="/search" element={<Search />} />
               <Route path="/electric" element={<Electriccars />} />
               <Route path="/privacypolicy" element={<PrivacyPolicy />} />
