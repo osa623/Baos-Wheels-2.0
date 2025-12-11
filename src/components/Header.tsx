@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Search, User, Menu, X, LogIn, LogOut, Settings, UserCircle, Bell, CheckCheck, Loader2 } from 'lucide-react';
+import { ShoppingCart, Search, User, Menu, X, LogIn, LogOut, Settings, UserCircle, Bell, CheckCheck, Loader2, LogInIcon, LogsIcon } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import StarBorder from './StartBorderII';
 import { cn } from '@/lib/utils';
@@ -328,9 +328,6 @@ const Header = () => {
           <Link to="/" className={cn("nav-link lg:text-sm md:text-xs", isActive('/') && "text-primary after:w-full")}>
             Home
           </Link>
-          <Link to="/community" className={cn("nav-link lg:text-sm md:text-xs", isActive('/community') && "text-primary after:w-full")}>
-            Community
-          </Link>
           <Link to="/reviews" className={cn("nav-link lg:text-sm md:text-xs", isActive('/reviews') && "text-primary after:w-full")}>
             Car Reviews
           </Link>
@@ -350,88 +347,88 @@ const Header = () => {
           <Link to="/search" className="relative">
 
   
-              <StarBorder
-                as="button"
-                className="custom-class inline-blockt-xs"
-                color="cyan"
-                speed="5s"
+              <button
+                className="custom-class px-6 text-xs items-center flex text-white py-2 bg-slate-500 inline-blockt-xs"
               >
                 <Search className="h-4 w-4 mr-2" />
                 Search
-              </StarBorder>
+              </button>
           </Link>
-          
-          {currentUser ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className="rounded-full bg-gray-200 hover:bg-gray-300 w-10 h-10 p-0 flex items-center justify-center border-transparent focus:border-transparent focus:ring-0 transform-none"
-                  style={{ outline: 'none' }}
-                >
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={currentUser.photoURL || undefined} />
-                    <AvatarFallback>{getUserInitials()}</AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56" sideOffset={8}>
-                <div className="flex items-center justify-start gap-2 p-2">
-                  <div className="flex flex-col space-y-1 leading-none">
-                    <p className="font-medium">{getUserDisplayName()}</p>
-                    {currentUser.email && (
-                      <p className="w-[200px] truncate text-sm text-muted-foreground">
-                        {currentUser.email}
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link to="/profile" className="w-full cursor-pointer">
-                    <UserCircle className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-full bg-gray-200 hover:bg-gray-300 w-10 h-10 p-0 flex items-center justify-center border-transparent focus:border-transparent focus:ring-0 transform-none"
-                  style={{ outline: 'none' }}
-                  aria-label="Open user menu"
-                >
-                  <User className="h-6 w-6 text-gray-500" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56" sideOffset={8}>
-                <DropdownMenuItem asChild>
-                  <Link to="/login" className="w-full cursor-pointer">
-                    <LogIn className="mr-2 h-4 w-4" />
-                    <span>Login</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/register" className="w-full cursor-pointer">
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Register</span>
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
+          <Link to= "/login" className="relative">
+          <button
+                className="custom-class px-4 text-xs items-center flex text-white py-2 bg-black inline-blockt-xs"
+              >
+                <LogInIcon className="h-4 w-4 mr-2" />
+                Login
+              </button>
+         </Link>   
+           <Link to= "/register" className="relative">
+          <button
+                className="custom-class px-4 text-xs items-center flex text-white py-2 bg-black inline-blockt-xs"
+              >
+                <LogsIcon className="h-4 w-4 mr-2" />
+                Sign Up
+              </button>
+         </Link>     
+
+              {/* Language Toggle Button */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="px-3 py-2 text-xs font-medium rounded-md hover:bg-gray-100"
+                onClick={() => {
+                  const currentLang = localStorage.getItem('language') || 'en';
+                  const newLang = currentLang === 'en' ? 'si' : 'en';
+                  localStorage.setItem('language', newLang);
+                  window.location.reload();
+                }}
+              >
+                {localStorage.getItem('language') === 'si' ? '🇱🇰 EN' : '🇱🇰 SI'}
+              </Button>
+
+              {currentUser ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="rounded-full bg-gray-200 hover:bg-gray-300 w-10 h-10 p-0 flex items-center justify-center border-transparent focus:border-transparent focus:ring-0 transform-none"
+                      style={{ outline: 'none' }}
+                    >
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={currentUser.photoURL || undefined} />
+                        <AvatarFallback>{getUserInitials()}</AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56" sideOffset={8}>
+                    <div className="flex items-center justify-start gap-2 p-2">
+                      <div className="flex flex-col space-y-1 leading-none">
+                        <p className="font-medium">{getUserDisplayName()}</p>
+                        {currentUser.email && (
+                          <p className="w-[200px] truncate text-sm text-muted-foreground">
+                            {currentUser.email}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link to="/profile" className="w-full cursor-pointer">
+                        <UserCircle className="mr-2 h-4 w-4" />
+                        <span>Profile</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Log out</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <div className='flex'/>
+              )}
           
           {currentUser && (
             <DropdownMenu open={isNotificationsOpen} onOpenChange={setIsNotificationsOpen}>
@@ -727,14 +724,6 @@ const Header = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Home
-            </Link>
-            <Link 
-              to="/community" 
-              className={cn("text-base font-medium py-3 px-4 rounded-md hover:bg-gray-50", 
-                isActive('/community') && "text-primary bg-primary/5")}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Community
             </Link>
             <Link 
               to="/reviews" 

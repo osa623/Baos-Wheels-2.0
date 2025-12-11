@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <ThemeProvider>
       <HelmetProvider>
     <AuthProvider>
-        <App />
+      <App />
     </AuthProvider>
     </HelmetProvider>
     </ThemeProvider>
