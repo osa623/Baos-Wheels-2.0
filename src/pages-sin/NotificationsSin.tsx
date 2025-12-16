@@ -266,14 +266,14 @@ const NotificationsPage: React.FC = () => {
           <Box display="flex" alignItems="center">
             <NotificationsIcon sx={{ fontSize: 28, mr: 2, color: 'primary.main' }} />
             <Typography variant="h5" component="h1" fontWeight="bold">
-              Notifications
+              දැනුම්දීම්
             </Typography>
             <Badge 
               badgeContent={notifications.filter(n => !n.isRead).length} 
               color="primary"
               sx={{ ml: 2 }}
             >
-              <Chip label="Unread" size="small" color="primary" variant="outlined" />
+              <Chip label="නොකියවූ" size="small" color="primary" variant="outlined" />
             </Badge>
           </Box>
           
@@ -284,7 +284,7 @@ const NotificationsPage: React.FC = () => {
             variant="outlined"
             size="small"
           >
-            Refresh
+            නැවුම් කරන්න
           </Button>
         </Box>
 
@@ -299,7 +299,7 @@ const NotificationsPage: React.FC = () => {
             severity="error"
             action={
               <Button color="inherit" size="small" onClick={fetchNotifications}>
-                Retry
+                නැවත උත්සාහ කරන්න
               </Button>
             }
           >
@@ -308,7 +308,7 @@ const NotificationsPage: React.FC = () => {
         ) : notifications.length === 0 ? (
           <Box textAlign="center" py={4}>
             <Typography variant="body1" color="text.secondary">
-              You don't have any notifications yet.
+              ඔබට තවම දැනුම්දීම් කිසිවක් නොමැත.
             </Typography>
           </Box>
         ) : (

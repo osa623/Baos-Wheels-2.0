@@ -6,6 +6,9 @@ import { cn } from '@/lib/utils';
 import { articlesApi } from '@/api/index'
 
 export interface Article {
+  subtitle: string;
+  description: string;
+  id: Key;
   summary: string;
   _id: number;
   title: string;

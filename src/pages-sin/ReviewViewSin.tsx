@@ -99,10 +99,10 @@ const ReviewViewSin = () => {
   if (error || !review) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center pt-16">
-        <h2 className="text-2xl font-bold mb-4">Error Loading Review</h2>
+        <h2 className="text-2xl font-bold mb-4">සමාලෝචනය පෙන්වේමේ දෝෂයකි</h2>
         <p className="text-muted-foreground mb-6">{error}</p>
         <Link to="/">
-          <Button>Return to Home</Button>
+          <Button>ආපසු මුල් පිටුවට</Button>
         </Link>
       </div>
     );
@@ -190,7 +190,7 @@ const ReviewViewSin = () => {
           {/* Back navigation */}
           <Link to="/" className="inline-flex items-center text-sm mb-8 hover:text-primary transition-colors">
             <ChevronLeft className="h-4 w-4 mr-1" />
-            Back to Reviews
+            සමාලෝචන වෙත ආපසු
           </Link>
           
           {/* Review header */}
@@ -252,9 +252,9 @@ const ReviewViewSin = () => {
           
           <Separator className="" />
             <h2 className='flex flex-col lg:text-2xl text-3xl font-bold py-6'>
-                Specifications
+                විශේෂාංග
                 <p className='font-normal text-xs py-2 lg:w-[60%]'>
-                    The following specifications cover all essential technical and design aspects of the vehicle, including engine performance, dimensions, fuel economy, and advanced features.
+                    පහත විශේෂාංග එන්ජිමේ ක්‍රියාකාරිත්වය, මානයන්, ඉන්ධන කාර්යක්ෂමතාව සහ උසස් විශේෂාංග ඇතුළුව වාහනයේ සියලුම අත්‍යවශ්‍ය තාක්ෂණික සහ සැලසුම් අංග ආවරණය කරයි.
                 </p>
             </h2>
             <div className='hidden lg:grid grid-cols-2 gap-4 mb-8'>
@@ -281,13 +281,13 @@ const ReviewViewSin = () => {
           {/* Review content */}
           <div className="prose max-w-none mb-8">
               <h2 className='flex flex-col text-3xl lg:w-[70%] font-bold py-6'>
-                 <span className='flex items-center'><div className='bg-black border-4 border-gray-500 h-5 w-5 mr-4 rounded-full' /><span>What You’re Really Getting</span></span>
+                 <span className='flex items-center'><div className='bg-black border-4 border-gray-500 h-5 w-5 mr-4 rounded-full' /><span>ඔබ සැබවින්ම ලබා ගන්නා දේ</span></span>
                 <p className='font-light text-lg  py-4 w-[100%]'>
                   {review.overview}
                 </p>
             </h2>
              <h2 className='flex flex-col text-3xl lg:w-[70%] font-bold py-6'>
-                 <span className='flex items-center'><div className='bg-black border-4 border-gray-500 h-5 w-5 mr-4 rounded-full' /><span>What Defines It's Look</span></span>
+                 <span className='flex items-center'><div className='bg-black border-4 border-gray-500 h-5 w-5 mr-4 rounded-full' /><span>එහි පෙනුම නිර්වචනය කරන්නේ කුමක්ද?</span></span>
                 <p className='font-light text-lg py-4 w-[100%]'>
                   {review.exterior}
                 </p>
@@ -301,7 +301,7 @@ const ReviewViewSin = () => {
               />
             </div>
              <h2 className='flex flex-col text-3xl lg:w-[70%] font-extrabold py-6'>
-                 <span className='flex items-center'><div className='bg-black border-4 border-gray-500 h-5 w-5 mr-4 rounded-full' /><span>What Surrounds You</span></span>
+                 <span className='flex items-center'><div className='bg-black border-4 border-gray-500 h-5 w-5 mr-4 rounded-full' /><span>එහි වටා ඇති දේ</span></span>
                 <p className='font-light text-lg  py-4 w-[100%]'>
                   {review.interior}
                 </p>
@@ -310,7 +310,7 @@ const ReviewViewSin = () => {
             <div className='relative flex-col w-full py-8'>
                 
                 <div className='flex bg-transparent'>
-                    <h3 className='flex text-lg text-white w-auto p-2 font-normal bg-gray-600 mb-4'>Check These Related Articles</h3>
+                    <h3 className='flex text-lg text-white w-auto p-2 font-normal bg-gray-600 mb-4'>මෙම සම්බන්දව ලිපි පරීක්ෂා කරන්න</h3>
                 </div>
 
                 <div className='grid grid-cols-1 gap-4'>
@@ -343,7 +343,7 @@ const ReviewViewSin = () => {
             
             </div> 
              <h2 className='flex flex-col text-3xl lg:w-[70%] font-bold py-6'>
-                 <span className='flex items-center'><div className='bg-black border-4 border-gray-500 h-5 w-5 mr-4 rounded-full' /><span>What Drives It </span></span>
+                 <span className='flex items-center'><div className='bg-black border-4 border-gray-500 h-5 w-5 mr-4 rounded-full' /><span>එය මෙහෙයවන දේ </span></span>
                 <p className='font-light  text-lg  py-4 w-[100%]'>
                   {review.performance}
                 </p>
@@ -353,7 +353,7 @@ const ReviewViewSin = () => {
           {/* Additional images */}
           {review.images && review.images.length > 1 && (
             <div className="mb-8">
-              <h3 className="text-xl font-semibold mb-4">Gallery</h3>
+              <h3 className="text-xl font-semibold mb-4">ගැලරිය</h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {review.images.slice(1).map((image, index) => (
                   <div key={index} className="aspect-square rounded-lg overflow-hidden">
@@ -371,7 +371,7 @@ const ReviewViewSin = () => {
           {/* Comment Section - Replace with the fixed components */}
           <div className="mb-8">
             <Separator className="my-6" />
-            <h3 className="text-xl font-semibold mb-4">Discussion</h3>
+            <h3 className="text-xl font-semibold mb-4">සාකච්ඡාව</h3>
             <CommentForm reviewId={String(review._id || review.id)} />
             <CommentList reviewId={String(review._id || review.id)} />
           </div>
@@ -407,7 +407,7 @@ const ReviewViewSin = () => {
               }}
             >
               <Share2 className="h-4 w-4 mr-2" />
-              Share
+              බෙදාගන්න
             </Button>
           </div>
 

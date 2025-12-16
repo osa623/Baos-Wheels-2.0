@@ -113,13 +113,13 @@ const Profile = () => {
         <div className="max-w-6xl mx-auto px-4 py-20 mt-10">
           <Card className="shadow-lg">
             <CardHeader>
-              <CardTitle>Not Logged In</CardTitle>
-              <CardDescription>Please log in to view your profile</CardDescription>
+              <CardTitle>ඇතුල් වී නැත </CardTitle>
+              <CardDescription>ඔබගේ ප්‍රොෆයිලය බැලීමට කරුණාකර ඇතුල් වන්න.</CardDescription>
             </CardHeader>
             <CardContent>
               <Link to="/login">
                 <Button>
-                  Log In
+                  ඇතුල් වන්න
                 </Button>
               </Link>
             </CardContent>
@@ -257,7 +257,7 @@ const Profile = () => {
 
       <div className="pt-24 pb-16">
         <div className="max-w-6xl mx-auto px-4 py-8">
-          <h2 className="text-2xl font-semibold mb-6">Your Profile</h2>
+          <h2 className="text-2xl font-semibold mb-6">ඔබේ  ගිණුම</h2>
           
           <div className="bg-slate-50 rounded-lg shadow-md p-6">
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
@@ -292,7 +292,7 @@ const Profile = () => {
                       onClick={handleUpdateProfile}
                       disabled={isUpdating}
                     >
-                      {isUpdating ? "Saving..." : "Save Changes"}
+                      {isUpdating ? "සුරකිමින්..." : "වෙනස්කම් සුරකින්න"}
                     </Button>
                     <Button 
                       variant="outline" 
@@ -301,7 +301,7 @@ const Profile = () => {
                       onClick={handleEditToggle}
                       disabled={isUpdating}
                     >
-                      Cancel
+                      අවලංගු කරන්න
                     </Button>
                   </div>
                 ) : (
@@ -311,7 +311,7 @@ const Profile = () => {
                     className="rounded-md"
                     onClick={handleEditToggle}
                   >
-                    Edit Profile
+                    ගිණුම සංස්කරණය කරන්න
                   </Button>
                 )}
               </div>
@@ -323,13 +323,13 @@ const Profile = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">Account Information</CardTitle>
+                  <CardTitle className="text-lg">ගිණුම් තොරතුරු</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {isEditing ? (
                     <div className="space-y-4">
                       <div className="space-y-2">
-                        <Label htmlFor="displayName">Display Name</Label>
+                        <Label htmlFor="displayName">ප්‍රදර්ශන නාමය</Label>
                         <Input 
                           id="displayName"
                           value={displayName}
@@ -338,7 +338,7 @@ const Profile = () => {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="photoURL">Profile Photo URL</Label>
+                        <Label htmlFor="photoURL">ගිණුමේ ඡායාරූපය URL</Label>
                         <Input 
                           id="photoURL"
                           value={photoURL}
@@ -346,18 +346,18 @@ const Profile = () => {
                           placeholder="Enter URL to profile photo"
                         />
                         <p className="text-xs text-muted-foreground mt-1">
-                          Enter a direct link to an image for your profile picture.
+                          ඔබගේ ගිණුමේ පින්තූරය සඳහා රූපයකට සෘජු සබැඳියක් ඇතුළත් කරන්න.
                         </p>
                       </div>
                     </div>
                   ) : (
                     <div className="space-y-4">
                       <div>
-                        <p className="text-sm text-muted-foreground">Display Name</p>
+                        <p className="text-sm text-muted-foreground">ප්‍රදර්ශන නාමය</p>
                         <p>{currentUser.displayName || 'Not set'}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground">Member Since</p>
+                        <p className="text-sm text-muted-foreground">සාමාජිකත්වයෙ අරම්බය</p>
                         <p>{currentUser.metadata?.creationTime ? new Date(currentUser.metadata.creationTime).toLocaleDateString() : 'Unknown'}</p>
                       </div>
                     </div>
@@ -367,20 +367,20 @@ const Profile = () => {
               
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">Activity</CardTitle>
+                  <CardTitle className="text-lg">ක්‍රියාකාරකම් </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div>
-                      <p className="text-sm text-muted-foreground">Comments</p>
+                      <p className="text-sm text-muted-foreground">අදහස්</p>
                       {isLoadingComments ? (
-                        <p>Loading...</p>
+                        <p>ඇතුල් වෙමින්...</p>
                       ) : (
-                        <p>{commentCount} comment{commentCount !== 1 ? 's' : ''}</p>
+                        <p>{commentCount} {commentCount === 1 ? 'අදහසක්' : 'අදහස්'}</p>
                       )}
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Last Login</p>
+                      <p className="text-sm text-muted-foreground">අවසන් පිවිසුම</p>
                       <p>{currentUser.metadata?.lastSignInTime ? new Date(currentUser.metadata.lastSignInTime).toLocaleDateString() : 'Unknown'}</p>
                     </div>
                   </div>
@@ -394,11 +394,11 @@ const Profile = () => {
           {/* Password Change Section */}
           {isEditing && (
             <>
-              <h3 className="text-xl font-semibold mb-4 mt-6">Change Password</h3>
+              <h3 className="text-xl font-semibold mb-4 mt-6">මුරපදය වෙනස් කරන්න</h3>
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">Password Management</CardTitle>
-                  <CardDescription>Update your account password</CardDescription>
+                  <CardTitle className="text-lg">මුරපද කළමනාකරණය</CardTitle>
+                  <CardDescription>ඔබගේ ගිණුමේ මුරපදය යාවත්කාලීන කරන්න</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -410,35 +410,35 @@ const Profile = () => {
                     )}
                     
                     <div className="space-y-2">
-                      <Label htmlFor="currentPassword">Current Password</Label>
+                      <Label htmlFor="currentPassword">වත්මන් මුර පදය</Label>
                       <Input 
                         id="currentPassword"
                         type="password"
                         value={currentPassword}
                         onChange={(e) => setCurrentPassword(e.target.value)}
-                        placeholder="Enter current password"
+                        placeholder="වත්මන් මුරපදය ඇතුළත් කරන්න"
                       />
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="newPassword">New Password</Label>
+                      <Label htmlFor="newPassword">නව මුරපදය</Label>
                       <Input 
                         id="newPassword"
                         type="password"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
-                        placeholder="Enter new password"
+                        placeholder="නව මුරපදය ඇතුළත් කරන්න"
                       />
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                      <Label htmlFor="confirmPassword">නව මුරපදය තහවුරු කරන්න</Label>
                       <Input 
                         id="confirmPassword"
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        placeholder="Confirm new password"
+                        placeholder="නව මුරපදය තහවුරු කරන්න"
                       />
                     </div>
                     
@@ -447,7 +447,7 @@ const Profile = () => {
                       disabled={isChangingPassword}
                       className="mt-2"
                     >
-                      {isChangingPassword ? "Changing Password..." : "Change Password"}
+                      {isChangingPassword ? "මුරපදය වෙනස් කරමින්..." : "මුරපදය වෙනස් කරන්න"}
                     </Button>
                   </div>
                 </CardContent>

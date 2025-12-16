@@ -253,9 +253,9 @@ const Index = () => {
         <div className="relative max-w-7xl mx-auto z-40">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
-              <h2 className="text-4xl font-semibold text-[#EEF525] mb-3">Latest Articles</h2>
+              <h2 className="text-4xl font-semibold text-[#EEF525] mb-3">නවතම ලිපි</h2>
               <p className=" text-gray-400 lg:pt-2 max-w-2xl">
-                Explore the latest articles about the automobile industry, get up-to-date auto news, and discover insights on trends, innovations, and expert tips to keep you informed and inspired.
+                මෝටර් රථ කර්මාන්තය පිළිබඳ නවතම ලිපි ගවේෂණය කරන්න, යාවත්කාලීන මෝටර් රථ ප්‍රවෘත්ති , නවෝත්පාදන සහ විශේෂඥ උපදෙස් පිළිබඳ අවබෝධයක් ලබා ගන්න. ඔබට දැනුම  හා ආශ්වාදයක් ලබා ගැනීමට ප්‍රවණතා ඇත.
               </p>
           </div>
             <Link to="/articles" className="inline-flex items-center mt-8 md:mt-0 text-primary hover:underline">
@@ -265,7 +265,7 @@ const Index = () => {
                 color="cyan"
                 speed="5s"
               >
-                View All Articles
+                සියලුම ලිපි බලන්න
               </StarBorder>
             </Link>
           </div>
@@ -327,13 +327,13 @@ const Index = () => {
                 color="cyan"
                 speed="5s"
               >
-                View All Reviews
+                සියලුම සමාලෝචන බලන්න
               </StarBorder>
             </Link>
             <div className='items-end flex flex-col'>
-              <h2 className="text-3xl font-semibold text-[#EEF525] mb-3">Latest Reviews</h2>
+              <h2 className="text-3xl font-semibold text-[#EEF525] mb-3">නවතම සමාලෝචන</h2>
               <p className="text-gray-300 text-end max-w-xl">
-                Discover our latest car reviews, offering expert insights and honest opinions to help you make informed decisions on your next vehicle.
+                ඔබගේ ඊළඟ වාහනය පිළිබඳ දැනුවත් තීරණ ගැනීමට උපකාර කිරීම සඳහා විශේෂඥ අවබෝධයක් සහ අවංක අදහස් ලබා දෙමින් අපගේ නවතම මෝටර් රථ සමාලෝචන සොයා ගන්න.
               </p>
           </div>
            <Link to="/reviews" className="lg:hidden justify-end items-end flex w-full mt-4 md:mt-0 text-primary hover:underline">
@@ -343,7 +343,7 @@ const Index = () => {
                 color="cyan"
                 speed="5s"
               >
-                View All Reviews
+                සියලුම සමාලෝචන බලන්න
               </StarBorder>
             </Link>
 
@@ -399,7 +399,7 @@ const Index = () => {
                 color="cyan"
                 speed="5s"
                >
-                View More..
+                තවත් බලන්න..
               </StarBorder>
             </Link>
               
@@ -515,7 +515,7 @@ const Index = () => {
                         </span>
                         <h2 className="lg:text-4xl md:text-4xl font-semibold font-poppins mb-4 text-white">The BW Community</h2>
                         <p className="text-white/80 mb-8 font-light">
-                           The BW Community is a vibrant hub for car enthusiasts, owners, and experts to connect, share experiences, and stay updated on the latest trends in the automotive world. 
+                           The BW Community යනු මෝටර් රථ ලෝලීන්, හිමිකරුවන් සහ විශේෂඥයින් සඳහා සම්බන්ධ වීමට, අත්දැකීම් බෙදා ගැනීමට සහ මෝටර් රථ ලෝකයේ නවතම ප්‍රවණතා පිළිබඳව යාවත්කාලීනව සිටීමට විචිත්‍රවත් මධ්‍යස්ථානයකි. 
                         </p>
                         <Link to="/community" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
                         <StarBorder
@@ -524,7 +524,7 @@ const Index = () => {
                           color="cyan"
                           speed="5s"
                         >
-                          Check out the Community
+                          BW Community පරීක්ෂා කරන්න
                         </StarBorder>
                       </Link>
                       </div>
@@ -550,7 +550,7 @@ const Index = () => {
                         </span>
                         <h2 className="text-3xl md:text-4xl font-semibold mb-4 text-white">TurBoss Digital Garage</h2>
                         <p className="text-white/80 mb-8 font-light">
-                          Turboss is your go-to place to explore car details from A to Z. From engine specs to the latest tech, we cover everything you need to know about cars in one easy-to-use platform.
+                          A සිට Z දක්වා මෝටර් රථ විස්තර ගවේෂණය කිරීමට Turboss ඔබට යා යුතු ස්ථානයයි. එන්ජින් ස්පෙක්ස්  සිට නවතම තාක්ෂණය දක්වා, භාවිතයට පහසු වේදිකාවක් තුළ මෝටර් රථ ගැන ඔබ දැනගත යුතු සියල්ල අපි ආවරණය කරනවා.
                         </p>
                         <Link to="https://www.turboss.baoswheels.com" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
                         <StarBorder
@@ -559,7 +559,7 @@ const Index = () => {
                           color="cyan"
                           speed="5s"
                         >
-                          Go to the Digital Garage
+                          Digital Garage වෙත යන්න
                         </StarBorder>
                       </Link>
                       </div>
@@ -589,7 +589,7 @@ const Index = () => {
                           </span>
                            <h2 className="text-3xl md:text-4xl font-semibold mb-4 text-white">The BW Community</h2>
                             <p className="text-white/80 mb-8 font-light">
-                            The BW Community is a vibrant hub for car enthusiasts, owners, and experts to connect, share experiences, and stay updated on the latest trends in the automotive world.
+                            The BW Community යනු මෝටර් රථ ලෝලීන්, හිමිකරුවන් සහ විශේෂඥයින් සඳහා සම්බන්ධ වීමට, අත්දැකීම් බෙදා ගැනීමට සහ මෝටර් රථ ලෝකයේ නවතම ප්‍රවණතා පිළිබඳව යාවත්කාලීනව සිටීමට විචිත්‍රවත් මධ්‍යස්ථානයකි.
                             </p>
                           <Link to="/community" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
                           <StarBorder
@@ -598,7 +598,7 @@ const Index = () => {
                             color="cyan"
                             speed="5s"
                           >
-                            Check out the Community
+                            BW Community පරීක්ෂා කරන්න
                           </StarBorder>
                         </Link>
                         </div>
@@ -624,7 +624,7 @@ const Index = () => {
                           </span>
                           <h2 className="text-3xl md:text-4xl font-semibold mb-4 text-white">TurBoss Digital Garage</h2>
                           <p className="text-white/80 mb-8 font-light">
-                            Turboss is your go-to place to explore car details from A to Z. From engine specs to the latest tech, we cover everything you need to know about cars in one easy-to-use platform.
+                            A සිට Z දක්වා මෝටර් රථ විස්තර ගවේෂණය කිරීමට Turboss ඔබට යා යුතු ස්ථානයයි. එන්ජින් ස්පෙක්ස්  සිට නවතම තාක්ෂණය දක්වා, භාවිතයට පහසු වේදිකාවක් තුළ මෝටර් රථ ගැන ඔබ දැනගත යුතු සියල්ල අපි ආවරණය කරනවා.
                           </p>
                            <Link to="https://www.turboss.baoswheels.com" className="">
                           <StarBorder
@@ -633,7 +633,7 @@ const Index = () => {
                             color="cyan"
                             speed="5s"
                           >
-                            Go to the Digital Garage
+                            Digital Garage වෙත යන්න
                           </StarBorder>
                           </Link>
                         
@@ -672,7 +672,7 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <span className="inline-block px-3 py-1 mb-6 text-xs border-2 font-medium bg-secondary rounded-full">
-                News of the Day
+                දවසේ පුවත්
               </span>
               <h2 className="text-3xl text-border1 text-[#EEF525] font-semibold mb-6">{latestNews?.title || 'No News Available'}</h2>
               <p className="text-gray-300 mb-6">

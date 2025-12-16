@@ -133,7 +133,7 @@ const Electriccars = () => {
         const articles = await articlesApi.getAll();
         setFetchArticles(articles);
       } catch (error) {
-        console.error('Failed to load articles:', error);
+        console.error('ලිපි පූරණය කිරීමට අසමත් :', error);
       }
     };
 
@@ -147,7 +147,7 @@ const Electriccars = () => {
         const reviews = await reviewsApi.getAll();
         setFetchReviews(reviews);
       } catch (error) {
-        console.error('Failed to load reviews:', error);
+        console.error('සමාලෝචන පූරණය කිරීමට අසමත්:', error);
       }
     };
 
@@ -209,10 +209,10 @@ const Electriccars = () => {
                 <span className="absolute px-3 w-auto border-2 py-1 text-xs font-medium bg-green-700 text-white rounded-full animate-fade-in">
                 Drive Green
                </span>
-                 <h2 className="text-3xl font-semibold mt-8">Latest Articles</h2>
+                 <h2 className="text-3xl font-semibold mt-8">නවතම ලිපි</h2>
               </div> 
               <p className="text-muted-foreground max-w-xl mt-4">
-                Explore the latest articles about the automobile industry, get up-to-date auto news, and discover insights on trends, innovations, and expert tips to keep you informed and inspired.
+                මෝටර් රථ කර්මාන්තය පිළිබඳ නවතම ලිපි ගවේෂණය කරන්න, යාවත්කාලීන මෝටර් රථ ප්‍රවෘත්ති ලබා ගන්න, සහ ඔබව දැනුවත්ව හා ආශ්වාදයක් ලබා ගැනීමට අති ප්‍රවණතා, නවෝත්පාදන සහ විශේෂඥ උපදෙස් පිළිබඳ අවබෝධයක් ලබ ගන්න.
               </p>
           </div>
             <Link to="/articles" className="inline-flex items-center mt-4 md:mt-0 text-primary hover:underline">
@@ -222,7 +222,7 @@ const Electriccars = () => {
                 color="cyan"
                 speed="5s"
               >
-                View All Articles
+                සියලුම ලිපි බලන්න
               </StarBorder>
             </Link>
           </div>
@@ -281,7 +281,7 @@ const Electriccars = () => {
                 color="cyan"
                 speed="5s"
               >
-                View All Reviews
+                සියලුම ලිපි බලන්න
               </StarBorder>
             </Link>
            <div>
@@ -289,10 +289,10 @@ const Electriccars = () => {
                 <span className="absolute px-3 w-auto border-2 py-1 text-xs font-medium bg-green-700 text-white rounded-full animate-fade-in">
                 Drive Green
                </span>
-                 <h2 className="text-3xl text-end font-semibold mt-8">Latest Reviews</h2>
+                 <h2 className="text-3xl text-end font-semibold mt-8">නවතම ලිපි</h2>
               </div> 
               <p className="text-muted-foreground text-end max-w-xl mb-6 mt-2 ">
-                Discover the latest reviews on electric vehicles, featuring in-depth analysis, expert opinions, and user experiences to help you make informed decisions about your next eco-friendly ride.
+                ඔබේ ඊළඟ පරිසර හිතකාමී ගමන පිළිබඳව දැනුවත් තීරණ ගැනීමට උපකාර කිරීම සඳහා ගැඹුරු විශ්ලේෂණයන්, විශේෂඥ අදහස් සහ පරිශීලක අත්දැකීම් ඇතුළත් විදුලි වාහන පිළිබඳ නවතම සමාලෝචන සොයා ගන්න.
               </p>
           </div>
              <Link to="/reviews" className="lg:hidden md:flex mb-6 items-end justify-end w-full  md:mt-0 text-primary hover:underline">
@@ -302,7 +302,7 @@ const Electriccars = () => {
                 color="cyan"
                 speed="5s"
               >
-                View All Reviews
+                සියලුම ලිපි බලන්න
               </StarBorder>
             </Link>
           

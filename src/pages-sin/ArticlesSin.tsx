@@ -127,11 +127,11 @@ const Articles = () => {
             <div>
                <Link to="/" className="inline-flex items-center text-white text-sm mb-1 hover:text-primary transition-colors">
                  <ChevronLeft className="h-4 w-4 mr-1" />
-                    Back to Home
+                    ආපසු මුල් පිටුවට
               </Link>
-              <h2 className="text-3xl text-[#EEF525] font-semibold mb-3">Articles</h2>
+              <h2 className="text-3xl text-[#EEF525] font-semibold mb-3">ලිපි</h2>
               <p className="text-gray-200 max-w-xl">
-                Our most celebrated articles, showcasing the very best of our automotive insights.
+                අපගේ මෝටර් රථ ක්ෂේත්‍රයේ හොඳම තොරතුරු ඉදිරිපත් කරන අපගේ වඩාත්ම ප්‍රසිද්ධ ලිපි.
               </p>
             </div>
           </div>
@@ -153,7 +153,7 @@ const Articles = () => {
             <div className="text-center py-12">
               <p className="text-red-500">{error}</p>
               <Button onClick={() => window.location.reload()} className="mt-4">
-                Retry
+                නැවත උත්සාහ කරන්න
               </Button>
             </div>
           ) : (
@@ -181,7 +181,7 @@ const Articles = () => {
                         to={`/articles/${article._id || article.id}`}
                         className="p-0 h-auto hover:bg-transparent group-hover:text-primary transition-colors"
                       >
-                        <span>Read Article</span>
+                        <span>ලිපිය කියවන්න</span>
                         <ArrowRight className="ml-1 h-4 w-4 opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />
                       </Link>
                     </div>
@@ -194,7 +194,7 @@ const Articles = () => {
           {/* No articles state */}
           {!loading && !error && articles.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500">No articles found.</p>
+              <p className="text-gray-500">ලිපිය නැත.</p>
             </div>
           )}
         </div>

@@ -100,10 +100,10 @@ const ArticleView = () => {
   if (error || !article) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center pt-16">
-        <h2 className="text-2xl font-bold mb-4">Error Loading Article</h2>
+        <h2 className="text-2xl font-bold mb-4">ලිපිය පූරණය කිරීමේ දෝෂයකි</h2>
         <p className="text-muted-foreground mb-6">{error}</p>
         <Link to="/">
-          <Button>Return to Home</Button>
+          <Button>ආපසු මුල් පිටුවට</Button>
         </Link>
       </div>
     );
@@ -130,7 +130,7 @@ const ArticleView = () => {
           {/* Back navigation */}
           <Link to="/articles" className="inline-flex items-center text-sm mb-8 hover:text-primary transition-colors">
             <ChevronLeft className="h-4 w-4 mr-1" />
-            Back to Articles
+            නැවත ලිපි වෙත
           </Link>
           
           {/* Article header */}
@@ -206,7 +206,7 @@ const ArticleView = () => {
             {/* Fetch related Article section */}
             <div className='relative flex-col w-full py-8'>
                 <div className='flex bg-transparent'>
-                    <h3 className='flex text-lg text-white w-auto p-2 font-normal bg-gray-600 mb-4'>Check These Related Articles</h3>
+                    <h3 className='flex text-lg text-white w-auto p-2 font-normal bg-gray-600 mb-4'>මෙම සම්බන්ධිත ලිපි පරීක්ෂා කරන්න</h3>
                 </div>
 
                 <div className='grid grid-cols-1 gap-4'>
@@ -241,7 +241,7 @@ const ArticleView = () => {
           {/* Additional images */}
           {article.images && article.images.length > 2 && (
             <div className="mb-8">
-              <h3 className="text-xl font-semibold mb-4">Gallery</h3>
+              <h3 className="text-xl font-semibold mb-4">ගැලරිය</h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {article.images.slice(2).map((image, index) => (
                   <div key={index} className="aspect-square rounded-lg overflow-hidden">
@@ -279,7 +279,7 @@ const ArticleView = () => {
               }}
             >
               <Share2 className="h-4 w-4 mr-2" />
-              Share
+              බෙදාගන්න
             </Button>
           </div>
         </div>

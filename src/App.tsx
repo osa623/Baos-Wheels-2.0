@@ -35,6 +35,9 @@ import AddPostSin from './pages-sin/AddPostSin';
 import SearchSin from './pages-sin/SearchSin';
 import PrivacyPolicySin from './pages-sin/PrivacyPolicySin';
 import ElectriccarsSin from './pages-sin/ElectriccarsSin';
+import IndexSin from './pages-sin/IndexSin';
+import NotificationsSin from './pages-sin/NotificationsSin';
+import ProfileSin from './pages-sin/ProfileSin';
 
 // Create QueryClient
 const queryClient = new QueryClient({
@@ -57,22 +60,22 @@ function App() {
           <ScrollToTop />
           <TooltipProvider>
             <Routes>
-              <Route path="/" element={<Index />} />
+              <Route path="/" element={<IndexSin />} />
 
               //English Routes
-              <Route path="/reviews" element={<Reviews />} />
-              <Route path="/reviews/:id" element={<ReviewView />} />
-              <Route path="/articles" element={<Articles />} />
-              <Route path="/articles/:id" element={<ArticleView />} />
-              <Route path="/notifications" element={<Notifications />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/electric" element={<Electriccars />} />
-              <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+              <Route path="/reviews" element={<ReviewsSin />} />
+              <Route path="/reviews/:id" element={<ReviewViewSin />} />
+              <Route path="/articles" element={<ArticlesSin />} />
+              <Route path="/articles/:id" element={<ArticleViewSin />} />
+              <Route path="/notifications" element={<NotificationsSin />} />
+              <Route path="/about" element={<AboutSin />} />
+              <Route path="/login" element={<LoginSin />} />
+              <Route path="/register" element={<RegisterSin />} />
+              <Route path="/search" element={<SearchSin />} />
+              <Route path="/electric" element={<ElectriccarsSin />} />
+              <Route path="/privacypolicy" element={<PrivacyPolicySin />} />
               <Route path="/termsofservices" element={<TermsOfServices />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/profile" element={<ProfileSin />} />
 
 
               //Sinhala Routes

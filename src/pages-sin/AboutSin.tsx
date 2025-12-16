@@ -46,20 +46,20 @@ const teamMembers = [
 // Mock data for company values
 const companyValues = [
   {
-    title: "Unfiltered Car Reviews",
-    description: "We believe in providing honest and transparent reviews of the latest car models. Our team of experts rigorously tests each vehicle, ensuring that our assessments are thorough and unbiased."
+    title: "සත්‍යය  මෝටර් රථ සමාලෝචන",
+    description: "අපි සෑම විටම නවතම මෝටර් රථ මාදිලි පිළිබඳ අවංක සහ විනිවිද සමාලෝචන සපයනවා . අපගේ විශේෂඥ කණ්ඩායම සෑම වාහනයක්ම දැඩි ලෙස පරීක්ෂා කරන අතර, අපගේ තක්සේරු කිරීම් පරිපූර්ණ සහ අපක්ෂපාතී බව සහතික කරනවා."
   },
   {
-    title: "Tech Insights",
-    description: "We explore the latest advancements in automotive technology, from electric vehicles to AI-driven features, providing our audience with the knowledge they need to make informed decisions."
+    title: "තාක්ෂණික දැනුම",
+    description: "අපගේ ප්‍රේක්ෂකයින්ට නිවැරදි තීරණ ගැනීමට අවශ්‍ය දැනුම ලබා දෙමින්, විදුලි බලයෙන් ක්‍රියාකරන වාහන සිට AI විශේෂාංග දක්වා මෝටර් රථ තාක්ෂණයේ නවතම දියුණුව අපි ගවේෂණය කරනවා."
   },
   {
-    title: "Behind-the-Scenes",
-    description: "We believe in transparency and authenticity. Our audience gets a glimpse into our creative process, from ideation to execution."
+    title: "තිරය ​​පිටුපස",
+    description: "අපි විනිවිදභාවයෙන් යුතුව අපගෙ අදහසේ සිට ක්‍රියාත්මක කිරීම දක්වා, අපගේ නිර්මාණාත්මක ක්‍රියාවලිය පිළිබඳ කෙටි අවබෝධයක් අපගේ ප්‍රේක්ෂකයින්ට ලැබේ."
   },
   {
-    title: "Visual Storytelling",
-    description: "Engaging videos on YouTube, TikTok, and Instagram. We use compelling visuals and narratives to bring the automotive world to life for our audience."
+    title: "සිත් ඇදගන්නා සුලු  වීඩියෝ දර්ශන  ",
+    description: "YouTube, TikTok සහ Instagram හි ආකර්ෂණීය වීඩියෝ. අපගේ ප්‍රේක්ෂකයින් සඳහා මෝටර් රථ ලෝකය ජීවමාන කිරීම සඳහා අපි ආකර්ෂණීය වීඩියෝ විස්තරාත්මකව නිර්මනය කරනවා."
   }
 ];
 
@@ -219,14 +219,14 @@ const AboutSin = () => {
       <section className=" relative z-30  pb-2 px-6 bg-transparent">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl text-[#EEF525] font-semibold mb-4">Who We Are?</h1>
+            <h1 className="text-3xl md:text-4xl text-[#EEF525] font-semibold mb-4">අපි කවුරුද?</h1>
           </div>
           
           {/* Breadcrumbs */}
           <div className="flex relative z-30 justify-center items-center text-sm text-muted-foreground">
-            <a href="/" className="hover:text-white transition-colors">Home</a>
+            <a href="/" className="hover:text-white transition-colors">මුල් පිටුව </a>
             <ChevronRight className="h-4 w-4 mx-2" />
-            <span className="text-white">About Us</span>
+            <span className="text-white">අපි ගැන</span>
           </div>
         </div>
       </section>
@@ -241,15 +241,15 @@ const AboutSin = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <span className="inline-block px-3 py-1 mb-6 text-xs font-medium bg-secondary rounded-full">
-                Our Journey
+                අපේ ගමන
               </span>
               <h2 className="text-3xl absolute text-[#EEF525] font-semibold mb-6">Driven by Passion</h2>
                             <h2 className="text-4xl absolute text-[#ffffff] opacity-10 font-semibold mb-6">Driven by Passion</h2>
               <p className="text-muted-foreground mt-12">
-               Baos Wheels isn't just a platform—it's a journey fueled by a deep love for automobiles. Our passion drives us to create content that resonates with enthusiasts and curious minds alike. We showcase the latest models and tell the stories behind the machines, innovations, and people shaping the automotive world.
+               BAOS WHEELS යනු වේදිකාවක් පමණක් නොවේ, එය මෝටර් රථ සඳහා ගැඹුරු ඇල්මක් ඇති ගමනකි. අපගේ ආශාව, උද්යෝගිමත් සහ කුතුහලයෙන් පිරි මනසක්  අති අයට අන්තර්ගතයන් නිර්මාණය කිරීමටයි. අපි නවතම මාදිලි ප්‍රදර්ශනය කරන අතර යන්ත්‍ර, නවෝත්පාදන සහ මෝටර් රථ ලෝකය හැඩගස්වන පුද්ගලයින් ගැන කියනව.
               </p>
               <p className="text-muted-foreground mb-6">
-                Our team of car enthusiasts and experts brings diverse perspectives, from classic muscle cars to the latest electric vehicles, providing insights and explanations that make complex concepts accessible
+                අපගේ මෝටර් රථ විශේෂඥයින් කණ්ඩායම muscle cars සිට නවතම විදුලි බලයෙන් ක්‍රියාකරන වාහන දක්වා අති සංකීර්ණ සංකල්ප හා විවිධ දෘෂ්ටිකෝණ පැහැදිලිව සපයයි.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
               </div>
@@ -265,7 +265,7 @@ const AboutSin = () => {
               style={{boxShadow: ' 4px 6px rgba(204,255,0, 0.8)',
               }}>
                 <p className="text-3xl font-semibold mb-2">4+</p>
-                <p className="text-sm text-muted-foreground">Years of sharing automotive passion and expertise</p>
+                <p className="text-sm text-muted-foreground">වාහන කර්මාන්ත දැනුම සහ විශේෂඥතාව බෙදාගත් වසර ගණන.</p>
               </div>
             </div>
           </div>
@@ -281,9 +281,9 @@ const AboutSin = () => {
         >
           <div className="text-center mb-16">
             <span className="inline-block px-3 py-1 mb-4 text-xs font-medium bg-secondary rounded-full">
-              Our Philosophy
+              අපේ දර්ශනය
             </span>
-            <h2 className="text-3xl text-[#EEF525] font-semibold mb-4">What We Bring</h2>
+            <h2 className="text-3xl text-[#EEF525] font-semibold mb-4">අපි ගෙනෙන දේ</h2>
 
           </div>
           
@@ -306,11 +306,11 @@ const AboutSin = () => {
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-10">
                 <span className="inline-block px-3 py-1 mb-4 text-xs font-medium bg-secondary rounded-full">
-                  Contact Us
+                  අපව අමතන්න
                 </span>
-                <h2 className="text-3xl font-semibold mb-4">Let's Talk</h2>
+                <h2 className="text-3xl font-semibold mb-4">අපට කතා කරන්න</h2>
                 <p className="text-muted-foreground max-w-xl mx-auto">
-                  Have a question, suggestion, or just want to say hello? Fill out the form below and our team will get back to you as soon as possible.
+                  ප්‍රශ්නයක්, යෝජනාවක් තියෙනවද, නැත්නම් අප සමග කත කිරීමට  කැමතිද? පහත පෝරමය පුරවන්න, අපේ කණ්ඩායම හැකි ඉක්මනින් ඔබ හා සම්බන්ධ වනු ඇත
                 </p>
               </div>
               <form
@@ -324,7 +324,7 @@ const AboutSin = () => {
                 )}
                 <div>
                   <label htmlFor="user_name" className="block text-sm font-medium text-gray-900 mb-1">
-                    Name
+                    නම
                   </label>
                   <input
                     type="text"
@@ -337,10 +337,10 @@ const AboutSin = () => {
                 </div>
                 <div>
                   <label htmlFor="user_email" className="block text-sm font-medium text-gray-900 mb-1">
-                    Email
+                    ඊමේල් ලිපිනය 
                   </label>
                   <input
-                    type="email"
+                    type="email" 
                     name="user_email"
                     value={formData.user_email}
                     onChange={handleChange}
@@ -350,7 +350,7 @@ const AboutSin = () => {
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-900 mb-1">
-                    Message
+                    පණිවිඩය
                   </label>
                   <textarea
                     name="message"
@@ -366,12 +366,12 @@ const AboutSin = () => {
                     type="submit"
                     className="inline-flex items-center justify-center px-6 py-2 rounded-full bg-primary text-white font-semibold shadow hover:bg-primary/90 transition-colors"
                   >
-                    Send Message
+                    පණිවිඩය යවන්න
                   </button>
                 </div>
                 {formSubmit && (
                   <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-800 text-center">
-                    Thank you for your message! We'll get back to you soon.
+                    ඔබගේ පණිවිඩයට ස්තූතියි! අපි ඉක්මනින් ඔබ හා සම්බන්ධ වන්නෙමු.
                   </div>
                 )}
               </form>

@@ -20,6 +20,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { SearchResult } from '@/api';
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -346,7 +347,7 @@ const Search = () => {
               className="p-0 h-auto text-primary hover:text-primary/90"
               onClick={handleNavigation}
             >
-              View details
+              විස්තර බලන්න
             </Button>
           </div>
         </div>
@@ -370,9 +371,9 @@ const Search = () => {
           <svg width="18" height="18" viewBox="0 0 20 20" fill="none" className="inline-block text-muted-foreground" xmlns="http://www.w3.org/2000/svg">
             <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
-          Back to Home
+          ආපසු මුල් පිටුවට
         </h1>
-        <h1 className="text-3xl font-bold mb-6 ml-5">Search</h1>
+        <h1 className="text-3xl font-bold mb-6 ml-5">ප්‍රතිඵල සොයන්න</h1>
         
         <form onSubmit={handleSearch} className="mb-8">
           <div className="flex flex-col md:flex-row gap-2">
@@ -380,7 +381,7 @@ const Search = () => {
               <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search for cars, reviews, news..."
+                placeholder="මෝටර් රථ, සමාලෝචන, පුවත් සොයන්න..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
@@ -392,10 +393,10 @@ const Search = () => {
                   <SelectValue placeholder="Content type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Content</SelectItem>
-                  <SelectItem value="review">Reviews</SelectItem>
-                  <SelectItem value="article">Articles</SelectItem>
-                  <SelectItem value="news">News</SelectItem>
+                  <SelectItem value="all">සියලුම අන්තර්ගතය</SelectItem>
+                  <SelectItem value="review">සමාලෝචන</SelectItem>
+                  <SelectItem value="article">ලිපි</SelectItem>
+                  <SelectItem value="news">පුවත්</SelectItem>
                 </SelectContent>
               </Select>
               
@@ -403,10 +404,10 @@ const Search = () => {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Searching
+                    සොයමින්
                   </>
                 ) : (
-                  'Search'
+                  'සොයන්න'
                 )}
               </Button>
             </div>
@@ -425,7 +426,7 @@ const Search = () => {
               <>
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="lg:text-xl md:text-xs font-medium">
-                    Found {totalResults} results for "{searchQuery}"
+                    {totalResults} ප්‍රතිඵල "{searchQuery}" සඳහා
                   </h2>
 
                 </div>
@@ -436,18 +437,18 @@ const Search = () => {
               </>
             ) : (
               <div className="text-center py-12">
-                <h2 className="text-xl font-medium mb-2">No results found</h2>
+                <h2 className="text-xl font-medium mb-2">ප්‍රතිඵල හමු නොවිණි</h2>
                 <p className="text-muted-foreground">
-                  We couldn't find any items matching "{searchQuery}"
+                  අපට ගැලපෙන කිසිදු දෙයක් සොයාගත නොහැකි විය. "{searchQuery}"
                   {contentType !== 'all' && ` in ${contentType}s`}
                 </p>
               </div>
             )
           ) : (
             <div className="text-center py-12">
-              <h2 className="text-xl font-medium mb-2">Start searching</h2>
+              <h2 className="text-xl font-medium mb-2">සෙවීම ආරම්භ කරන්න</h2>
               <p className="text-muted-foreground">
-                Enter a keyword above to search for cars, reviews, articles, and more
+                මෝටර් රථ, සමාලෝචන, ලිපි සහ තවත් දේ සෙවීමට ඉහත මූල පදයක් ඇතුළත් කරන්න.
               </p>
             </div>
           )}

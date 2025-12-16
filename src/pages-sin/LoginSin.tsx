@@ -149,7 +149,7 @@ const Login = () => {
         <div className="fixed inset-0 -z-10 overflow-hidden">
           <video autoPlay loop muted className="w-full h-full object-cover blur-sm">
             <source src={video1} type="video/mp4" />
-            Your browser does not support the video tag.
+            ඔබගේ බ්‍රව්සරය වීඩියෝ ටැගයට සහය නොදක්වයි.
           </video>
           <div className="absolute inset-0 bg-black/20"></div>
         </div>
@@ -160,9 +160,9 @@ const Login = () => {
             {/* Login form section */}
             <div className="p-6 w-full lg:w-full bg-white sm:p-8">
               <div className="text-center mb-6">
-                <h1 className="text-2xl font-semibold mb-2">Welcome Back</h1>
+                <h1 className="text-2xl font-semibold mb-2">සාදරයෙන් පිළිගනිමු</h1>
                 <p className="text-muted-foreground text-sm">
-                  Sign in to your account to continue
+                  ඉදිරියට යාමට ඔබගේ ගිණුමට ඇතුල් වන්න
                 </p>
               </div>
               
@@ -170,7 +170,7 @@ const Login = () => {
                 {/* Email Field */}
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-sm font-medium">
-                    Email Address
+                    ඊතැපැල් ලිපිනය
                   </label>
                   <Input
                     id="email"
@@ -189,10 +189,10 @@ const Login = () => {
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
                     <label htmlFor="password" className="text-sm font-medium">
-                      Password
+                      මුරපදය
                     </label>
                     <Link to="/forgot-password" className="text-xs text-primary hover:underline">
-                      Forgot Password?
+                      මුරපදය අමතක වුණා.
                     </Link>
                   </div>
                   <div className="relative">
@@ -228,7 +228,7 @@ const Login = () => {
                     htmlFor="remember-me"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                    Remember me
+                    මාව මතකතබාගන්න
                   </label>
                 </div>
                 
@@ -238,7 +238,7 @@ const Login = () => {
                   className="w-full rounded-md button-hover"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Signing in..." : "Sign In"}
+                  {isLoading ? "ඇතුල් වෙමින්..." : "ඇතුල් වන්න"}
                 </Button>
               </form>
               
@@ -249,7 +249,7 @@ const Login = () => {
                     <span className="w-full border-t"></span>
                   </div>
                   <div className="relative flex justify-center text-xs">
-                    <span className="bg-white px-2 text-muted-foreground">Or continue with</span>
+                    <span className="bg-white px-2 text-muted-foreground">නැතහොත්</span>
                   </div>
                 </div>
                 
@@ -279,7 +279,7 @@ const Login = () => {
                         fill="#EA4335"
                       />
                     </svg>
-                    Sign in with Google
+                    Google සමඟින් ඇතුල් වන්න
                   </Button>
                 </div>
               </div>
@@ -287,9 +287,9 @@ const Login = () => {
               {/* Sign up link */}
               <div className="text-center mt-6">
                 <p className="text-sm text-muted-foreground">
-                  Don't have an account?{" "}
+                  ගිණුමක් නැද්ද?{" "}
                   <Link to="/register" className="text-primary hover:underline font-medium">
-                    Create an account
+                    ගිණුමක් ආරම්භ කරන්න
                   </Link>
                 </p>
               </div>

@@ -279,17 +279,17 @@ const ReviewsSin = () => {
             <div className='flex flex-col'>
               <Link to="/" className="inline-flex items-center text-white text-sm mb-1 hover:text-primary transition-colors">
                  <ChevronLeft className="h-4 w-4 mr-1" />
-                    Back to Home
+                    ආපසු මුල් පිටුවට
               </Link>
-              <h1 className="text-3xl text-left text-[#EEF525] font-semibold mb-3">Car Reviews</h1>
+              <h1 className="text-3xl text-left text-[#EEF525] font-semibold mb-3">මෝටර් රථ සමාලෝචන</h1>
               <p className="text-gray-300 text-left max-w-md">
-                Explore our collection of in-depth automotive reviews to help you make informed decisions. 
+                නිවැරදි  තීරණ ගැනීමට ඔබට උපකාර කිරීම සඳහා අපගේ ගැඹුරු මෝටර් රථ සමාලෝචන එකතුව ගවේෂණය කරන්න. 
               </p>
             </div>
             <div className="hidden lg:flex items-center mt-6 ml-8 w-full relative">
               <input
               type="text"
-              placeholder="Search reviews..."
+              placeholder="සමාලෝචන සොයන්න..."
               className="border border-gray-300 rounded-md px-4 py-2 w-[100%] focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
@@ -305,7 +305,7 @@ const ReviewsSin = () => {
           <div className="lg:hidden mt-6">
             <input
               type="text"
-              placeholder="Search reviews..."
+              placeholder="සමාලෝචන සොයන්න..."
               className="border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
@@ -337,11 +337,11 @@ const ReviewsSin = () => {
               }}>
                   <div className='flex w-full'>
                       <h2 className='font-normal px-2 bg-gray-400 p-2 text-white text-sm mb-4'>
-                        Choose Your Car
+                        ඔබේ මෝටර් රථය තෝරන්න
                       </h2>
                   </div>
                   <div className="mb-8">
-                    <Badge variant="secondary" className="mb-5">Price Range</Badge>
+                    <Badge variant="secondary" className="mb-5">මිල පරාසය</Badge>
                     <Slider 
                       min={0}
                       max={150000}
@@ -363,17 +363,17 @@ const ReviewsSin = () => {
                       <SelectValue placeholder="Sort by" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="featured">Featured</SelectItem>
-                      <SelectItem value="newest">Newest First</SelectItem>
-                      <SelectItem value="name-a-z">Title: A to Z</SelectItem>
-                      <SelectItem value="name-z-a">Title: Z to A</SelectItem>
-                      <SelectItem value="brand-a-z">Brand: A to Z</SelectItem>
+                      <SelectItem value="featured">විශේෂාංගගත</SelectItem>
+                      <SelectItem value="newest">අලුත්ම මුලින්ම</SelectItem>
+                      <SelectItem value="name-a-z">මාතෘකාව: A සිට Z දක්වා</SelectItem>
+                      <SelectItem value="name-z-a">මාතෘකාව: Z සිට A දක්වා</SelectItem>
+                      <SelectItem value="brand-a-z">වෙළඳ නාමය: A සිට Z දක්වා</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                   
                   <div className="mb-8">
-                    <Badge variant="secondary" className="mb-5">Categories</Badge>
+                    <Badge variant="secondary" className="mb-5">වර්ග</Badge>
                     <div className="space-y-2">
                       {categories.map(category => (
                         <div key={category.id} className="flex items-center">
@@ -395,7 +395,7 @@ const ReviewsSin = () => {
                   </div>
 
                   <div className="mb-8">
-                    <Badge variant="secondary" className="mb-5">Auto Brands</Badge>
+                    <Badge variant="secondary" className="mb-5">වාහන සන්නාම</Badge>
                     <div className="space-y-2">
                       {brands.map(category => (
                         <div key={category.id} className="flex items-center">
@@ -421,7 +421,7 @@ const ReviewsSin = () => {
                   className="w-full"
                   onClick={resetFilters}
                 >
-                  Reset Filters
+                  සියල්ල නැවත සකසන්න
                 </Button>
               </div>
             </div>
@@ -442,11 +442,11 @@ const ReviewsSin = () => {
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="featured">Featured</SelectItem>
-                  <SelectItem value="newest">Newest First</SelectItem>
-                  <SelectItem value="name-a-z">Title: A to Z</SelectItem>
-                  <SelectItem value="name-z-a">Title: Z to A</SelectItem>
-                  <SelectItem value="brand-a-z">Brand: A to Z</SelectItem>
+                  <SelectItem value="featured">විශේෂාංගගත</SelectItem>
+                  <SelectItem value="newest">අලුත්ම මුලින්ම</SelectItem>
+                  <SelectItem value="name-a-z">මාතෘකාව: A සිට Z දක්වා</SelectItem>
+                  <SelectItem value="name-z-a">මාතෘකාව: Z සිට A දක්වා</SelectItem>
+                  <SelectItem value="brand-a-z">වෙළඳ නාමය: A සිට Z දක්වා</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -467,7 +467,7 @@ const ReviewsSin = () => {
                   </div>
                   
                   <div className="mb-8">
-                    <h3 className="font-medium mb-4">Price Range</h3>
+                    <h3 className="font-medium mb-4">මිල පරාසය</h3>
                     <Slider 
                       min={0}
                       max={150000}
@@ -483,7 +483,7 @@ const ReviewsSin = () => {
                   </div>
                   
                   <div className="mb-8">
-                    <h3 className="font-medium mb-4">Categories</h3>
+                    <h3 className="font-medium mb-4">වර්ග</h3>
                     <div className="space-y-2">
                       {categories.map(category => (
                         <div key={category.id} className="flex items-center">
@@ -505,7 +505,7 @@ const ReviewsSin = () => {
                   </div>
 
                  <div className="mb-8">
-                    <Badge variant="secondary" className="mb-5">Auto Brands</Badge>
+                    <Badge variant="secondary" className="mb-5">වාහන සන්නාම</Badge>
                     <div className="space-y-2">
                       {brands.map(category => (
                         <div key={category.id} className="flex items-center">
@@ -533,7 +533,7 @@ const ReviewsSin = () => {
                         setIsMobileFilterOpen(false);
                       }}
                     >
-                      Apply Filters
+                      සකසුම් ඉල්ලුම් කරන්න 
                     </Button>
                     <Button 
                       variant="outline" 
@@ -542,7 +542,7 @@ const ReviewsSin = () => {
                         resetFilters();
                       }}
                     >
-                      Reset Filters
+                      සියල්ල නැවත සකසන්න
                     </Button>
                   </div>
                 </div>
@@ -555,7 +555,7 @@ const ReviewsSin = () => {
              {/* Desktop Sort */}
               <div className="hidden lg:flex justify-between items-center mb-6">
                 <p className="text-muted-foreground">
-                  Showing {filteredReviews.length} reviews
+                  සමාලෝචන {filteredReviews.length} පෙන්වමින්
                 </p>
 
                 
@@ -575,16 +575,16 @@ const ReviewsSin = () => {
               ) : error ? (
                 <div className="py-12 text-center">
                   <p className="text-lg text-red-500 mb-4">{error}</p>
-                  <Button onClick={() => window.location.reload()}>Try Again</Button>
+                  <Button onClick={() => window.location.reload()}>නැවත උත්සාහ කරන්න</Button>
                 </div>
               ) : filteredReviews.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20">
-                  <p className="text-lg mb-4">No reviews match your filters.</p>
+                  <p className="text-lg mb-4">ඔබගේ ඉල්ලුම් වලට ගැලපෙන සමාලෝචන නොමැත.</p>
                   <Button 
                     variant="outline" 
                     onClick={resetFilters}
                   >
-                    Reset Filters
+                    සියල්ල නැවත සකසන්න
                   </Button>
                 </div>
               ) : (

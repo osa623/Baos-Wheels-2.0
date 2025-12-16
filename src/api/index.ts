@@ -76,6 +76,12 @@ export interface Article {
 
 // Search result interface - represents any searchable content
 export interface SearchResult {
+  content: string;
+  overview: any;
+  slug: any;
+  articleId: any;
+  newsId: any;
+  reviewId: any;
   id: string | number;
   _id?: string;
   title: string;

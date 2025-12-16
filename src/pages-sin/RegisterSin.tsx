@@ -168,7 +168,7 @@ const Register = () => {
         <div className="fixed inset-0 -z-10 overflow-hidden">
           <video autoPlay loop muted className="w-full h-full object-cover blur-sm">
             <source src={video2} type="video/mp4" />
-            Your browser does not support the video tag.
+            ඔබගේ බ්‍රව්සරය වීඩියෝ ටැගයට සහය නොදක්වයි
           </video>
           <div className="absolute inset-0 bg-black/20"></div>
         </div>
@@ -192,9 +192,9 @@ const Register = () => {
             {/* Register form section */}
             <div className="p-6 w-full rounded-2xl lg:w-full bg-white sm:p-8">
               <div className="text-center mb-6">
-                <h1 className="text-2xl font-semibold mb-2">Create an Account</h1>
+                <h1 className="text-2xl font-semibold mb-2">ගිණුමක් සාදන්න</h1>
                 <p className="text-muted-foreground text-sm">
-                  Join Baoswheels and discover our automotive insights
+                  Baos Wheels හා සම්බන්ධ වී අපගේ මෝටර් රථ දැනුම සොයා ගන්න
                 </p>
               </div>
               
@@ -202,12 +202,12 @@ const Register = () => {
                 {/* Name Field */}
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium">
-                    Full Name
+                    සම්පූර්ණ නම
                   </label>
                   <Input
                     id="name"
                     type="text"
-                    placeholder="Your Name"
+                    placeholder="ඔබගේ නම"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className={`rounded-md ${errors.name ? 'border-red-500' : ''}`}
@@ -220,7 +220,7 @@ const Register = () => {
                 {/* Email Field */}
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-sm font-medium">
-                    Email Address
+                    ඊතැපැල් ලිපිනය
                   </label>
                   <Input
                     id="email"
@@ -238,7 +238,7 @@ const Register = () => {
                 {/* Password Field */}
                 <div className="space-y-2">
                   <label htmlFor="password" className="text-sm font-medium">
-                    Password
+                    මුරපදය
                   </label>
                   <div className="relative">
                     <Input
@@ -265,7 +265,7 @@ const Register = () => {
                 {/* Confirm Password Field */}
                 <div className="space-y-2">
                   <label htmlFor="confirmPassword" className="text-sm font-medium">
-                    Confirm Password
+                    මුරපදය තහවුරු කරන්න
                   </label>
                   <div className="relative">
                     <Input
@@ -303,13 +303,13 @@ const Register = () => {
                         htmlFor="terms"
                         className="text-sm font-medium leading-tight peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
-                        I agree to the 
+                        මම එකඟ වෙමි 
                         <Link to="/terms" className="text-primary hover:underline mx-1">
-                          Terms of Service
+                          සේවා කොන්දේසි
                         </Link>
-                        and
+                        සහ
                         <Link to="/privacy" className="text-primary hover:underline ml-1">
-                          Privacy Policy
+                          රහස්යතා ප්‍රතිපත්තියතිය
                         </Link>
                       </label>
                     </div>
@@ -335,7 +335,7 @@ const Register = () => {
                       <span className="w-full border-t"></span>
                     </div>
                     <div className="relative flex justify-center text-xs">
-                      <span className="bg-white px-2 text-muted-foreground">Or continue with</span>
+                      <span className="bg-white px-2 text-muted-foreground">නැතහොත්</span>
                     </div>
                   </div>
                   
@@ -365,7 +365,7 @@ const Register = () => {
                           fill="#EA4335"
                         />
                       </svg>
-                      Sign up with Google
+                      Google සමඟින් ඇතුල් වන්න
                     </Button>
                   </div>
                 </div>
@@ -374,9 +374,9 @@ const Register = () => {
               {/* Login link */}
               <div className="text-center mt-6">
                 <p className="text-sm text-muted-foreground">
-                  Already have an account?{" "}
+                  දැනටමත් ගිණුමක් තිබේද?{" "}
                   <Link to="/login" className="text-primary hover:underline font-medium">
-                    Sign in
+                    ඇතුල් වන්න
                   </Link>
                 </p>
               </div>
