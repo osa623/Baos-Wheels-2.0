@@ -203,6 +203,8 @@ const ArticleView = () => {
               </div>
             )}
 
+
+            {/* Fetch related Article section twiceeee */}
             {/* Fetch related Article section */}
             <div className='relative flex-col w-full py-8'>
                 <div className='flex bg-transparent'>
